@@ -1,1 +1,4 @@
-This is our first commit for our project!
+Deep Space Nine's Project
+
+Project rules:
+
