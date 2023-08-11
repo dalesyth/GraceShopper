@@ -1,9 +1,9 @@
  const client = require("./client");
  
- async fuction createTables() {
+ async function createTables() {
     try {
         
-    console.log("Starting to build tables...")
+    console.log("Starting to build tables...");
     await client.query(`
     CREATE TABLE users (
         id SERIAL PRIMARY KEY
