@@ -1,9 +1,31 @@
  const client = require("./client");
  
+async function dropTables() {
+  console.log("Drop tables section");
+  try {
+    console.log("Starting to drop tables...");
+
+    await client.query(`
+    DROP TABLE IF EXISTS category;
+    DROP TABLE IF EXISTS item_category;
+    DROP TABLE IF EXISTS items;
+    DROP TABLE IF EXISTS ordered_items;
+    DROP TABLE IF EXISTS orders;
+    DROP TABLE IF EXISTS users
+    );
+    `);
+
+    console.log("Finished dropping tables");
+  } catch (error) {
+    console.error("Error dropping tables");
+    throw error;
+  }
+}
+
  async function createTables() {
     try {
+        console.log("Starting to build tables...");
         
-    console.log("Starting to build tables...");
     await client.query(`
     CREATE TABLE users (
         id SERIAL PRIMARY KEY,
