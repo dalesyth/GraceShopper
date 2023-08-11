@@ -6,14 +6,17 @@
     console.log("Starting to build tables...");
     await client.query(`
     CREATE TABLE users (
-        id SERIAL PRIMARY KEY
+        id SERIAL PRIMARY KEY,
         username varchar(255) UNIQUE NOT NULL,
-        password varchar(255)
-        email varchar(255)
-        first_name varchar(255)
-        last_name varchar(255)
-        address_1
-        address_2
+        password varchar(255),
+        email varchar(255),
+        first_name varchar(255),
+        last_name varchar(255),
+        address_1,
+        address_2,
+        city varchar(255),
+        state varchar(255),
+        zip_code INTEGER
         );
       `);
 
@@ -35,6 +38,17 @@
       qty INTEGER
       );
       `);
+
+      await client.query(`
+      CREATE TABLE items,
+      id SERIAL PRIMARY KEY, 
+      title varchar(255)
+      price INTEGER
+      inventory INTEGER
+      product_category varchar(255)
+      [image name] nvarchar(100)
+      [image] varbinary(max)
+      `)
 
     // create table Item
 
