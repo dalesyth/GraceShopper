@@ -23,15 +23,15 @@
         shipping_city varchar(255) NOT NULL,
         shipping_state varchar(255) NOT NULL,
         shipping_zip_code INTEGER,
-        shipping_counry varchar(255) NOT NULL,
+        shipping_counry varchar(255) NOT NULL
         );
       `);
 
       await client.query(`
-      CREATE TABLE orders,
+      CREATE TABLE orders (
       id SERIAL PRIMARY KEY,
-      order_item_id SERIAL PRIMARY KEY,
-      User_id SERIAL PRIMARY KEY,
+      "order_item_id" INTEGER REFERENCES ordered_items(id),
+      "User_id" INTEGER REFERENCES users(Id),
       billing_address_1 INTEGER NOT NULL,
       billing_address_2 INTEGER NOT NULL,
       billing_city TEXT NOT NULL,
@@ -54,22 +54,22 @@
       `);
 
       await client.query(`
-      CREATE TABLE ordered_items,
+      CREATE TABLE ordered_items (
       id SERIAL PRIMARY KEY,
-      "itemId" INTEGER REFERENCES item(Id),
-      "orderId" INTEGER REFERENCES item(Id),
+      "itemId" INTEGER REFERENCES items(Id),
+      "orderId" INTEGER REFERENCES orders(Id),
       price INTEGER,
       qty INTEGER
       );
       `);
 
       await client.query(`
-      CREATE TABLE items,
+      CREATE TABLE items (
       id SERIAL PRIMARY KEY, 
       title varchar(255),
       price INTEGER,
       inventory INTEGER,
-      product_category varchar(255),
+      "item_category" REFERENCES category(name),
       [image name] nvarchar(100),
       [image] varbinary(max)
       );
@@ -77,15 +77,15 @@
 
     // create table item_category
       await client.query(`
-      CREATE TABLE item_category,
+      CREATE TABLE item_category (
       id SERIAL PRIMARY KEY,
-      product_id "INTEGER REFERENCES" item(id),
-      categoty_id SERIAL PRIMARY KEY
+      "item_id" INTEGER REFERENCES item(id),
+      "category_id" INTEGER REFERENCES category(id)
       );
       `)
     //create table category
       await client.query(`
-      CREATE TABLE category,
+      CREATE TABLE category (
       id SERIAL PRIMARY KEY,
       name varchar(255) UNIQUE NOT NULL
       );
