@@ -37,7 +37,6 @@
       billing_city TEXT NOT NULL,
       billing_state TEXT NOT NULL,
       billing_zip_code INTEGER NOT NULL,
-      billing_country,
       email varchar(255),
       shipping_address_1 varchar(255) NOT NULL,
       shipping_address_2 varchar(255) NOT NULL,
@@ -69,7 +68,6 @@
       title varchar(255),
       price INTEGER,
       inventory INTEGER,
-      "item_category" REFERENCES category(name),
       [image name] nvarchar(100),
       [image] varbinary(max)
       );
