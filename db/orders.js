@@ -52,3 +52,7 @@ async function createOrder({
     throw error;
   }
 }
+
+module.exports = {
+  createOrder,
+};
