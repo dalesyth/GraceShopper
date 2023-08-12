@@ -1,3 +1,4 @@
+ /* eslint-disable */
  const client = require("./client");
  
 async function dropTables() {
@@ -34,13 +35,13 @@ async function dropTables() {
         email varchar(255),
         first_name varchar(255),
         last_name varchar(255),
-        address_1 INTEGER,
-        address_2 INTEGER,
+        address_1 varchar(255),
+        address_2 varchar(255),
         city varchar(255) NOT NULL,
         state varchar(255) NOT NULL,
         zip_code INTEGER,
         country varchar(255) NOT NULL,
-        shipping_address_1  INTEGER,
+        shipping_address_1 varchar(255) NOT NULL,
         shipping_address_2 varchar(255) NOT NULL,
         shipping_city varchar(255) NOT NULL,
         shipping_state varchar(255) NOT NULL,
@@ -54,7 +55,7 @@ async function dropTables() {
       id SERIAL PRIMARY KEY,
       "order_item_id" INTEGER REFERENCES ordered_items(id),
       "User_id" INTEGER REFERENCES users(Id),
-      billing_address_1 INTEGER NOT NULL,
+      billing_address_1 varchar(255),
       billing_address_2 INTEGER NOT NULL,
       billing_city TEXT NOT NULL,
       billing_state TEXT NOT NULL,
@@ -79,7 +80,7 @@ async function dropTables() {
       id SERIAL PRIMARY KEY,
       "itemId" INTEGER REFERENCES items(Id),
       "orderId" INTEGER REFERENCES orders(Id),
-      price INTEGER,
+      price MONEY,
       qty INTEGER
       );
       `);
@@ -88,10 +89,9 @@ async function dropTables() {
       CREATE TABLE items (
       id SERIAL PRIMARY KEY, 
       title varchar(255),
-      price INTEGER,
+      price MONEY,
       inventory INTEGER,
-      [image name] nvarchar(100),
-      [image] varbinary(max)
+      [image name] varchar(100)
       );
       `);
 
@@ -116,4 +116,9 @@ async function dropTables() {
         throw error;
     }
 
+
+    module.exports = {
+      dropTables,
+      createTables
+    }
  }
