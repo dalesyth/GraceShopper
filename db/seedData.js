@@ -1,5 +1,4 @@
-//import { client } from "../client";
-import { createUser } from "./users/createUser";
+import { createUser } from "./users/createUser.js";
 
 async function createInitialUsers() {
   console.log("Starting to create users...");
@@ -19,17 +18,13 @@ async function createInitialUsers() {
   }
 }
 
-
 async function populateDB() {
   try {
     await createInitialUsers();
-    
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
   }
 }
 
-export {
-  populateDB,
-}
+export { populateDB };

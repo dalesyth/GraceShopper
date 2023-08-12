@@ -1,8 +1,17 @@
-/* 
-DO NOT CHANGE THIS FILE
-*/
-import { client } from './client';
-import { rebuildDB }  from './seedData';
+import { client } from "./client.js";
+//import { createTables } from './createTables.js'
+import { populateDB } from "./seedData.js";
+
+async function rebuildDB() {
+  try {
+    populateDB();
+    //await createTables();
+   
+  } catch (error) {
+    console.log("Error during rebuildDB");
+    throw error;
+  }
+}
 
 rebuildDB()
   .catch(console.error)
