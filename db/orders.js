@@ -117,7 +117,7 @@ async function getOrderByUser(username) {
   }
 }
 
-// Delete a specific order
+// Delete an order by order id
 async function deleteOrder(id) {
   try {
     await client.query(
