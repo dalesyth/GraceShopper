@@ -43,8 +43,16 @@ async function getAllOpenOrders() {
   try {
     const { rows: orders } = await client.query(
       `
-            SELECT *
-            FROM orders 
+            SELECT 
+              orders.*,
+              ordered_items.price AS item_price,
+              ordered_items.qty AS item_quantity,
+              items.title AS item_title
+            FROM orders
+              JOIN ordered_items ON orders.id = ordered_items."orderId"
+              JOIN items ON ordered_items."itemId" = items.id
+            WHERE
+              orders.order_fulfilled = TRUE; 
             `
     );
 
@@ -54,17 +62,23 @@ async function getAllOpenOrders() {
   }
 }
 
-async function getOrderById(id) {
+async function getOrderById(orderId) {
   try {
     const {
       rows: [order],
     } = await client.query(
       `
-            SELECT *
-            FROM orders
-            WHERE id=$1;  
-            `,
-      [id]
+    SELECT 
+      orders.*, 
+      ordered_items.price AS item_price,
+      ordered_items.qty AS item_quantity,
+      items.title AS item_title
+    FROM orders
+      JOIN ordered_items ON orders.id = ordered_items."orderId"
+      JOIN items ON ordered_items."itemId" = items.id
+    WHERE orders.id = $1; 
+  `,
+      [orderId]
     );
     return order;
   } catch (error) {
@@ -72,18 +86,25 @@ async function getOrderById(id) {
   }
 }
 
-async function getOrderByUser(user_name) {
+async function getOrderByUser(username) {
   try {
     const {
       rows: [order],
     } = await client.query(
       `
-            SELECT orders.*, users.user_name
+            SELECT 
+              orders.*, 
+              ordered_items.price AS item_price,
+              ordered_items.qty AS item_quantity,
+              items.title AS item_title
             FROM orders
-            JOIN users ON orders.user_id = users.id
-            WHERE user_name=$1; 
+              JOIN ordered_items ON orders.id = ordered_items."orderId"
+              JOIN items ON ordered_items."itemId" = items.id
+              JOIN users ON orders."User_id" = users.id
+            WHERE 
+              users.username = $1; 
             `,
-      [user_name]
+      [username]
     );
 
     return order;
@@ -98,7 +119,7 @@ async function deleteOrder(id) {
       `
             DELETE FROM orders
             WHERE id=$1 
-            RETURNING * 
+            RETURNING *; 
             `,
       [id]
     );
@@ -112,4 +133,5 @@ module.exports = {
   getAllOpenOrders,
   getOrderById,
   getOrderByUser,
+  deleteOrder,
 };
