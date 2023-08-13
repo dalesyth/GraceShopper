@@ -1,7 +1,27 @@
-
 import { client } from "../client";
 import * as bcrypt from "bcrypt"; 
 
+
+async function getAllUsers() {
+    
+    try {
+        console.log("Getting all users...")
+
+        const { users } = await client.query(`
+        SELECT * FROM users;
+        `)
+
+        if (!users) {
+            return null;
+        }
+
+        return users;
+        
+    } catch (error) {
+        console.log("Error getting all users!")
+        throw error
+    }
+}
 
 async function getUser({ username, password }) {
   
@@ -64,6 +84,7 @@ async function getUserById({userId}) {
 }
 
 export {
+    getAllUsers,
     getUser, 
     getUserById,
     getUserByUsername
