@@ -1,6 +1,7 @@
 /* eslint-disable */
-const client = require("./client");
+import { client } from "./client";
 
+// Create a new order
 async function createOrder({ ...fields }) {
   const orderFields = {
     order_item_id,
@@ -39,6 +40,7 @@ async function createOrder({ ...fields }) {
   }
 }
 
+// Get all open orders
 async function getAllOpenOrders() {
   try {
     const { rows: orders } = await client.query(
@@ -52,7 +54,7 @@ async function getAllOpenOrders() {
               JOIN ordered_items ON orders.id = ordered_items."orderId"
               JOIN items ON ordered_items."itemId" = items.id
             WHERE
-              orders.order_fulfilled = TRUE; 
+              orders.order_fulfilled = FALSE; 
             `
     );
 
@@ -62,6 +64,7 @@ async function getAllOpenOrders() {
   }
 }
 
+// Get an order by a specific order ID
 async function getOrderById(orderId) {
   try {
     const {
@@ -86,6 +89,7 @@ async function getOrderById(orderId) {
   }
 }
 
+// Get orders for a specific user
 async function getOrderByUser(username) {
   try {
     const {
@@ -113,6 +117,7 @@ async function getOrderByUser(username) {
   }
 }
 
+// Delete a specific order
 async function deleteOrder(id) {
   try {
     await client.query(
@@ -128,9 +133,10 @@ async function deleteOrder(id) {
   }
 }
 
-module.exports = {
+export {
   createOrder,
   getAllOpenOrders,
   getOrderById,
   getOrderByUser,
+  deleteOrder,
 };
