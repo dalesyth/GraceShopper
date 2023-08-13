@@ -119,7 +119,7 @@ async function deleteOrder(id) {
       `
             DELETE FROM orders
             WHERE id=$1 
-            RETURNING * 
+            RETURNING *; 
             `,
       [id]
     );
@@ -133,4 +133,5 @@ module.exports = {
   getAllOpenOrders,
   getOrderById,
   getOrderByUser,
+  deleteOrder,
 };
