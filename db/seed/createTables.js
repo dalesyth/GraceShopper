@@ -1,6 +1,5 @@
- /* eslint-disable */
- const client = require("./client");
- 
+import { client } from "../client.js";
+
 async function dropTables() {
   console.log("Drop tables section");
   try {
@@ -23,10 +22,10 @@ async function dropTables() {
   }
 }
 
- async function createTables() {
-    try {
-        console.log("Starting to build tables...");
-        
+async function createTables() {
+  try {
+    console.log("Starting to build tables...");
+
     await client.query(`
     CREATE TABLE users (
         id SERIAL PRIMARY KEY,
@@ -50,7 +49,7 @@ async function dropTables() {
         );
       `);
 
-      await client.query(`
+    await client.query(`
       CREATE TABLE orders (
       id SERIAL PRIMARY KEY,
       "order_item_id" INTEGER REFERENCES ordered_items(id),
@@ -75,7 +74,7 @@ async function dropTables() {
       );
       `);
 
-      await client.query(`
+    await client.query(`
       CREATE TABLE ordered_items (
       id SERIAL PRIMARY KEY,
       "itemId" INTEGER REFERENCES items(Id),
@@ -85,7 +84,7 @@ async function dropTables() {
       );
       `);
 
-      await client.query(`
+    await client.query(`
       CREATE TABLE items (
       id SERIAL PRIMARY KEY, 
       title varchar(255),
@@ -96,29 +95,24 @@ async function dropTables() {
       `);
 
     // create table item_category
-      await client.query(`
+    await client.query(`
       CREATE TABLE item_category (
       id SERIAL PRIMARY KEY,
       "item_id" INTEGER REFERENCES item(id),
       "category_id" INTEGER REFERENCES category(id)
       );
-      `)
+      `);
     //create table category
-      await client.query(`
+    await client.query(`
       CREATE TABLE category (
       id SERIAL PRIMARY KEY,
       name varchar(255) UNIQUE NOT NULL
       );
-      `)
+      `);
+  } catch (error) {
+    console.error("Error creating tables");
+    throw error;
+  }
+}
 
-    } catch (error) {
-        console.error("Error creating tables")
-        throw error;
-    }
-
-
-    module.exports = {
-      dropTables,
-      createTables
-    }
- }
+export { dropTables, createTables };
