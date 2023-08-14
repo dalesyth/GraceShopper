@@ -1,15 +1,11 @@
-/* eslint-disable */
-const { Pool } = require("pg");
+import dotenv from "dotenv";
+dotenv.config();
+import pg from "pg";
+const { Pool } = pg;
 
-const connectionString =
-  process.env.DATABASE_URL || "https://localhost:5432/graceshopper";
+  const connection = process.env.REACT_APP_CONNECTION_STRING;
 
-const client = new Pool({
-  connectionString,
-  ssl:
-    process.env.NODE_ENV === "production"
-      ? { rejectUnauthorized: false }
-      : undefined,
-});
+  console.log("CONNECTION",connection)
+const client = new Pool({connection});
 
-module.exports = client;
+export { client };
