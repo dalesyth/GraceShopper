@@ -1,9 +1,9 @@
-/* eslint-disable */
-const client = require("./client");
+import { client } from "./client.js";
 
-async function createOrder({ ...fields }) {
-  const orderFields = {
-    order_item_id,
+async function createOrder( ...fields ) {
+  const dataArray = Object.values(fields);
+  console.log('ORDERFIELDS', dataArray)
+  const orderFields = `
     user_id,
     billing_address_1,
     billing_address_2,
@@ -17,99 +17,69 @@ async function createOrder({ ...fields }) {
     shipping_state,
     shipping_zip_code,
     shipping_country,
-    order_total,
-  };
+    order_total
+  `;
 
-  try {
-    const {
-      rows: [order],
-    } = await client.query(
-      `
+  const orderSQL = `
         INSERT INTO orders
-        (orderFields)
-        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+        (${orderFields})
+        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
         RETURNING *;
-        `,
-      [orderFields]
-    );
+        `;
 
-    return order;
-  } catch (error) {
-    throw error;
-  }
+  const {rows: [order] } = await client.query(orderSQL, [fields]);
+  return order;
 }
 
 async function getAllOpenOrders() {
-  try {
-    const { rows: orders } = await client.query(
-      `
-            SELECT *
-            FROM orders 
-            `
-    );
-
-    return orders;
-  } catch (error) {
-    throw error;
-  }
+  const { rows: orders } = await client.query(
+    `
+      SELECT *
+      FROM orders 
+    `
+  );
+  return orders;
 }
 
 async function getOrderById(id) {
-  try {
-    const {
-      rows: [order],
-    } = await client.query(
-      `
-            SELECT *
-            FROM orders
-            WHERE id=$1;  
-            `,
-      [id]
-    );
-    return order;
-  } catch (error) {
-    throw error;
-  }
+  const { rows: [order], } = await client.query(
+    `
+      SELECT *
+      FROM orders
+      WHERE id=$1;  
+    `,
+    [id]
+  );
 }
 
 async function getOrderByUser(user_name) {
-  try {
-    const {
-      rows: [order],
-    } = await client.query(
-      `
-            SELECT orders.*, users.user_name
-            FROM orders
-            JOIN users ON orders.user_id = users.id
-            WHERE user_name=$1; 
-            `,
-      [user_name]
-    );
-
-    return order;
-  } catch (error) {
-    throw error;
-  }
+  const { rows: [order], } = await client.query(
+    `
+      SELECT orders.*, users.user_name
+      FROM orders
+      JOIN users ON orders.user_id = users.id
+      WHERE user_name=$1; 
+    `,
+    [user_name]
+  );
+  return order;
 }
 
 async function deleteOrder(id) {
-  try {
-    await client.query(
-      `
-            DELETE FROM orders
-            WHERE id=$1 
-            RETURNING * 
-            `,
-      [id]
-    );
-  } catch (error) {
-    throw error;
-  }
+  await client.query(
+    `
+      DELETE FROM orders
+      WHERE id=$1 
+      RETURNING * 
+    `,
+    [id]
+  );
 }
 
-module.exports = {
+export {
   createOrder,
   getAllOpenOrders,
   getOrderById,
   getOrderByUser,
+  deleteOrder,
 };
