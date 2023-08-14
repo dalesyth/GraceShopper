@@ -1,10 +1,11 @@
-/* eslint-disable */
-import { client } from "./client";
 
-// Create a new order
-async function createOrder({ ...fields }) {
-  const orderFields = {
-    order_item_id,
+import { client } from "./client.js";
+
+async function createOrder( ...fields ) {
+  const dataArray = Object.values(fields);
+  console.log('ORDERFIELDS', dataArray)
+  const orderFields = `
+
     user_id,
     billing_address_1,
     billing_address_2,
@@ -18,119 +19,69 @@ async function createOrder({ ...fields }) {
     shipping_state,
     shipping_zip_code,
     shipping_country,
-    order_total,
-  };
+    order_total
+  `;
 
-  try {
-    const {
-      rows: [order],
-    } = await client.query(
-      `
+  const orderSQL = `
         INSERT INTO orders
-        (orderFields)
-        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+        (${orderFields})
+        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
         RETURNING *;
-        `,
-      [orderFields]
-    );
+        `;
 
-    return order;
-  } catch (error) {
-    throw error;
-  }
+  const {rows: [order] } = await client.query(orderSQL, [fields]);
+  return order;
 }
 
 // Get all open orders
 async function getAllOpenOrders() {
-  try {
-    const { rows: orders } = await client.query(
-      `
-            SELECT 
-              orders.*,
-              ordered_items.price AS item_price,
-              ordered_items.qty AS item_quantity,
-              items.title AS item_title
-            FROM orders
-              JOIN ordered_items ON orders.id = ordered_items."orderId"
-              JOIN items ON ordered_items."itemId" = items.id
-            WHERE
-              orders.order_fulfilled = FALSE; 
-            `
-    );
 
-    return orders;
-  } catch (error) {
-    throw error;
-  }
+  const { rows: orders } = await client.query(
+    `
+      SELECT *
+      FROM orders 
+    `
+  );
+  return orders;
 }
 
-// Get an order by a specific order ID
-async function getOrderById(orderId) {
-  try {
-    const {
-      rows: [order],
-    } = await client.query(
-      `
-    SELECT 
-      orders.*, 
-      ordered_items.price AS item_price,
-      ordered_items.qty AS item_quantity,
-      items.title AS item_title
-    FROM orders
-      JOIN ordered_items ON orders.id = ordered_items."orderId"
-      JOIN items ON ordered_items."itemId" = items.id
-    WHERE orders.id = $1; 
-  `,
-      [orderId]
-    );
-    return order;
-  } catch (error) {
-    throw error;
-  }
+async function getOrderById(id) {
+  const { rows: [order], } = await client.query(
+    `
+      SELECT *
+      FROM orders
+      WHERE id=$1;  
+    `,
+    [id]
+  );
 }
 
-// Get orders for a specific user
-async function getOrderByUser(username) {
-  try {
-    const {
-      rows: [order],
-    } = await client.query(
-      `
-            SELECT 
-              orders.*, 
-              ordered_items.price AS item_price,
-              ordered_items.qty AS item_quantity,
-              items.title AS item_title
-            FROM orders
-              JOIN ordered_items ON orders.id = ordered_items."orderId"
-              JOIN items ON ordered_items."itemId" = items.id
-              JOIN users ON orders."User_id" = users.id
-            WHERE 
-              users.username = $1; 
-            `,
-      [username]
-    );
+async function getOrderByUser(user_name) {
+  const { rows: [order], } = await client.query(
+    `
+      SELECT orders.*, users.user_name
+      FROM orders
+      JOIN users ON orders.user_id = users.id
+      WHERE user_name=$1; 
+    `,
+    [user_name]
+  );
+  return order;
 
-    return order;
-  } catch (error) {
-    throw error;
-  }
 }
 
 // Delete an order by order id
 async function deleteOrder(id) {
-  try {
-    await client.query(
-      `
-            DELETE FROM orders
-            WHERE id=$1 
-            RETURNING *; 
-            `,
-      [id]
-    );
-  } catch (error) {
-    throw error;
-  }
+
+  await client.query(
+    `
+      DELETE FROM orders
+      WHERE id=$1 
+      RETURNING * 
+    `,
+    [id]
+  );
+
 }
 
 export {
