@@ -1,9 +1,11 @@
+
 import { client } from "./client.js";
 
 async function createOrder( ...fields ) {
   const dataArray = Object.values(fields);
   console.log('ORDERFIELDS', dataArray)
   const orderFields = `
+
     user_id,
     billing_address_1,
     billing_address_2,
@@ -31,7 +33,9 @@ async function createOrder( ...fields ) {
   return order;
 }
 
+// Get all open orders
 async function getAllOpenOrders() {
+
   const { rows: orders } = await client.query(
     `
       SELECT *
@@ -63,9 +67,12 @@ async function getOrderByUser(user_name) {
     [user_name]
   );
   return order;
+
 }
 
+// Delete an order by order id
 async function deleteOrder(id) {
+
   await client.query(
     `
       DELETE FROM orders
@@ -74,6 +81,7 @@ async function deleteOrder(id) {
     `,
     [id]
   );
+
 }
 
 export {
