@@ -51,7 +51,7 @@ async function createTables() {
     await client.query(`
       CREATE TABLE orders (
       id SERIAL PRIMARY KEY,
-      user_id INTEGER REFERENCES users(Id),
+      "User_id" INTEGER REFERENCES users(Id),
       billing_address_1 varchar(255),
       billing_address_2 INTEGER NOT NULL,
       billing_city TEXT NOT NULL,
