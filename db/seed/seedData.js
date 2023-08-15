@@ -63,10 +63,49 @@ async function createInitialOrders() {
   }
 }
 
+async function createInitialItems() {
+  console.log("Starting to create Orders...");
+  try {
+    const ordersToCreate = [
+      {
+        title: "Power paint & HVLP sprayers",
+        price: 101.2,
+        inventory: 5,
+        image_name: "sprayer.jpg",
+      },
+      {
+        title: "AMOLEN Wood Walnut PLA",
+        price: 25.75,
+        inventory: 10,
+        image_name: "wood_filament.jpg",
+      },
+      {
+        title: "Four outlet extension cord",
+        price: 21.55,
+        inventory: 51,
+        image_name: "extension_plugs.jpg",
+      },
+      {
+        title: "Green Shield, Shade Clot Plastic Clips",
+        price: 12.75,
+        inventory: 300,
+        image_name: "extension_plugs.jpg",
+      },
+    ];
+    await Promise.all(ordersToCreate.map(createItem));
+
+    console.log("Finished creating initial orders!");
+  } catch (error) {
+    console.error("Error creating initial orders!");
+    throw error;
+  }
+}
+
   async function populateDB() {
     try {
       await createInitialUsers();
       await createInitialOrders();
+      await createInitialItems();
     } catch (error) {
       console.log("Error during rebuildDB");
       throw error;

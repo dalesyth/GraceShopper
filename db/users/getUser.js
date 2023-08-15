@@ -1,5 +1,5 @@
-import { client } from "../client";
-import * as bcrypt from "bcrypt"; 
+import { client } from "../client.js";
+import * as bcrypt from "bcrypt.js"; 
 
 
 async function getAllUsers() {
