@@ -18,7 +18,7 @@ async function createOrder({ ...fields }) {
     shipping_state,
     shipping_zip_code,
     shipping_country,
-    order_total,
+    order_total
   `;
 
   const {
@@ -26,11 +26,11 @@ async function createOrder({ ...fields }) {
   } = await client.query(
     `
         INSERT INTO orders
-        (orderFields)
-        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+        (${orderFields})
+        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
         RETURNING *;
         `,
-    [orderFields]
+    dataArray
   );
   return order;
 }

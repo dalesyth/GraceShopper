@@ -47,32 +47,32 @@ async function createTables() {
         shipping_counry varchar(255) NOT NULL
         );
       `);
-    console.log("users table crated")
+    console.log("users table crated");
     await client.query(`
       CREATE TABLE orders (
       id SERIAL PRIMARY KEY,
-      "User_id" INTEGER REFERENCES users(Id),
+      user_id INTEGER REFERENCES users(Id),
       billing_address_1 varchar(255),
-      billing_address_2 INTEGER NOT NULL,
+      billing_address_2 varchar(255),
       billing_city TEXT NOT NULL,
       billing_state TEXT NOT NULL,
       billing_zip_code INTEGER NOT NULL,
-      shipping_address_1 varchar(255) NOT NULL,
-      shipping_address_2 varchar(255) NOT NULL,
+      shipping_address_1 varchar(255),
+      shipping_address_2 varchar(255),
       shipping_city varchar(255) NOT NULL,
       shipping_state varchar(255) NOT NULL,
       shipping_zip_code INTEGER NOT NULL,
       shipping_country varchar(255) NOT NULL,
       email varchar(255) UNIQUE NOT NULL,
-      order_total INTEGER,
+      order_total MONEY,
       use_default_address BOOLEAN DEFAULT FALSE,
       checkout_complete BOOLEAN DEFAULT FALSE,
       order_fulfilled BOOLEAN DEFAULT FALSE
       );
       `);
-      console.log('orders table crated')
+    console.log("orders table crated");
 
-      await client.query(`
+    await client.query(`
       CREATE TABLE items (
         id SERIAL PRIMARY KEY, 
         title varchar(255),
@@ -81,8 +81,8 @@ async function createTables() {
         image_name varchar(100)
       );
       `);
-    console.log('items table created')
-    
+    console.log("items table created");
+
     await client.query(`
       CREATE TABLE ordered_items (
       id SERIAL PRIMARY KEY,
@@ -100,7 +100,7 @@ async function createTables() {
       name varchar(255) UNIQUE NOT NULL
       );
       `);
-    console.log("category table created");  
+    console.log("category table created");
     // create table item_category
     await client.query(`
       CREATE TABLE item_category (
@@ -112,7 +112,6 @@ async function createTables() {
     console.log("item_category table created");
 
     //create table category
-    
   } catch (error) {
     console.error("Error creating tables");
     throw error;
