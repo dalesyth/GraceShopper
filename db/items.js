@@ -120,7 +120,8 @@ async function getItemByCategory(categoryId) {
   }
 }
 
-async function attachItemToOrder({ itemId, orderId, price, quantity }) {
+async function attachItemToOrder({ itemId, orderId, price, qty }) {
+  console.log('ORDER_ITEM: ', qty)
   try {
     const { rows } = await client.query(
       `
@@ -129,7 +130,7 @@ async function attachItemToOrder({ itemId, orderId, price, quantity }) {
             VALUES ($1, $2, $3, $4)
             RETURNING *;
             `,
-      [itemId, orderId, price, quantity]
+      [itemId, orderId, price, qty]
     );
 
     return rows;
