@@ -1,29 +1,31 @@
 import { createUser } from "../users/createUser.js";
 import { createOrder } from "../orders.js";
+import { createItem } from "../items.js";
 async function createInitialUsers() {
   console.log("Starting to create users...");
   try {
     const usersToCreate = [
-    { username: 'albert',
-      password: 'soxAreGreat',
-      email: 'albert@myurl.com',
-      first_name: 'albert',
-      last_name: 'soxs',
-      address_1: '353 My Street',
-      address_2: 'apt. 2',
-      city: 'Hit',
-      state: 'IA',
-      zip_code: 50613,
-      country: 'USA',
-      shipping_address_1: '250 Yourstreet',
-      shipping_address_2: null,
-      shipping_city: 'Mantua',
-      shipping_state: 'UT',
-      shipping_zip_code: 84324,
-      shipping_counry: 'USA'
-    }    
+      {
+        username: "albert",
+        password: "soxAreGreat",
+        email: "albert@myurl.com",
+        first_name: "albert",
+        last_name: "soxs",
+        address_1: "353 My Street",
+        address_2: "apt. 2",
+        city: "Hit",
+        state: "IA",
+        zip_code: 50613,
+        country: "USA",
+        shipping_address_1: "250 Yourstreet",
+        shipping_address_2: null,
+        shipping_city: "Mantua",
+        shipping_state: "UT",
+        shipping_zip_code: 84324,
+        shipping_counry: "USA",
+      },
     ];
-    
+
     await Promise.all(usersToCreate.map(createUser));
 
     console.log("Finished creating users!");
@@ -64,7 +66,7 @@ async function createInitialOrders() {
 }
 
 async function createInitialItems() {
-  console.log("Starting to create Orders...");
+  console.log("Starting to create items...");
   try {
     const ordersToCreate = [
       {
@@ -94,24 +96,22 @@ async function createInitialItems() {
     ];
     await Promise.all(ordersToCreate.map(createItem));
 
-    console.log("Finished creating initial orders!");
+    console.log("Finished creating initial items!");
   } catch (error) {
-    console.error("Error creating initial orders!");
+    console.error("Error creating initial items!");
     throw error;
   }
 }
 
-  async function populateDB() {
-    try {
-      await createInitialUsers();
-      await createInitialOrders();
-      await createInitialItems();
-    } catch (error) {
-      console.log("Error during rebuildDB");
-      throw error;
-    }
+async function populateDB() {
+  try {
+    await createInitialUsers();
+    await createInitialOrders();
+    await createInitialItems();
+  } catch (error) {
+    console.log("Error during rebuildDB");
+    throw error;
   }
-
-
+}
 
 export { populateDB };
