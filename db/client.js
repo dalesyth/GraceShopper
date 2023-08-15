@@ -3,9 +3,10 @@ dotenv.config();
 import pg from "pg";
 const { Pool } = pg;
 
-  const connection = process.env.REACT_APP_CONNECTION_STRING;
+const connectionString = process.env.REACT_APP_CONNECTION_STRING;
 
-  console.log("CONNECTION",connection)
-const client = new Pool({connection});
+console.log("CONNECTION", connectionString);
+
+const client = new Pool({ connectionString }); // Use connectionString here
 
 export { client };
