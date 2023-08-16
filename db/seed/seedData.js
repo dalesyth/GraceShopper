@@ -1,6 +1,11 @@
 import { createUser } from "../users/createUser.js";
 import { createOrder } from "../orders.js";
-import { createItem } from "../items.js";
+import {
+  createItem,
+  attachItemToOrder,
+  attachItemToCategory,
+} from "../items.js";
+import { createCategory } from "../categories.js";
 async function createInitialUsers() {
   console.log("Starting to create users...");
   try {
@@ -103,11 +108,108 @@ async function createInitialItems() {
   }
 }
 
+async function createInitialOrderItem() {
+  console.log("Starting to create items...");
+  try {
+    const ordersToCreate = [
+      {
+        itemId: 1,
+        orderId: 1,
+        price: 101.2,
+        qty: 2,
+      },
+      {
+        itemId: 2,
+        orderId: 1,
+        price: 25.75,
+        qty: 3,
+      },
+      {
+        itemId: 3,
+        orderId:1,
+        price: 21.55,
+        qty: 1,
+      },
+      {
+        itemId: 4,
+        orderId:1,
+        price: 12.75,
+        qty: 10,
+      },
+    ];
+    await Promise.all(ordersToCreate.map(attachItemToOrder));
+
+    console.log("Finished creating initial order_item!");
+  } catch (error) {
+    console.error("Error creating initial order_item");
+    throw error;
+  }
+}
+
+
+async function createInitialCategories() {
+  console.log("Starting to create categories!");
+  try {
+    const ordersToCreate = [
+      {
+        name: "3D Printing",
+      },
+      {
+        name: "Paint Guns",
+      },
+      {
+        name: "Home Electronics"
+      },
+      {
+        name: "Out Door Equipment"
+      },
+    ];
+    await Promise.all(ordersToCreate.map(createCategory));
+
+    console.log("Finished creating initial Categories!");
+  } catch (error) {
+    console.error("Error creating initial Categories");
+    throw error;
+  }
+}
+
+async function createItemCategoryLinks() {
+  console.log("Starting to create categories!");
+  try {
+    const ordersToCreate = [
+      {
+        itemId: 1,
+        categoryId: 2, 
+      },
+      {
+        itemId: 2,
+        categoryId: 3, 
+      },
+      {
+        itemId: 3,
+        categoryId: 1, 
+      },
+      {
+        itemId: 4,
+        categoryId: 4 
+      },
+    ];
+    await Promise.all(ordersToCreate.map(attachItemToCategory));
+
+    console.log("Finished creating item_category lines!");
+  } catch (error) {
+    console.error("Error creating item_category link");
+    throw error;
+  }
+}
 async function populateDB() {
   try {
     await createInitialUsers();
     await createInitialOrders();
     await createInitialItems();
+    await createInitialOrderItem();
+    await createInitialCategories();
+    await createItemCategoryLinks();
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
