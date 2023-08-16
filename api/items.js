@@ -146,3 +146,5 @@ itemsRouter.patch("/:itemId", async (req, res, next) => {
     next({ name, message });
   }
 });
+
+export { itemsRouter };
