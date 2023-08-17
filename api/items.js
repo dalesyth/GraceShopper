@@ -7,7 +7,7 @@ import {
   getItemById,
   getItemByTitle,
   getItemByCategory,
-} from "./db/items.js";
+} from "../db/items.js";
 
 //GET ROUTES
 
