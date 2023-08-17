@@ -1,20 +1,24 @@
-/* eslint-disable no-undef */
-require("dotenv").config();
-const express = require("express");
+import dotenv from "dotenv";
+dotenv.config();
+import express from "express";
+// import { SERVER_PORT } from "./env";
+const SERVER_PORT = 3000;
+
 const server = express();
-// eslint-disable-next-line no-unused-vars
-const { client } = require("./db");
-const { SERVER_PORT } = process.env;
-const morgan = require("morgan");
 
-
+import morgan from "morgan";
 server.use(morgan("dev"));
 
-const cors = require("cors");
-
+import cors from "cors";
 server.use(cors());
 
 server.use(express.json());
+
+import apiRouter from "./api/index.js";
+server.use("/api", apiRouter);
+
+import { client } from "./db/client.js";
+client.connect();
 
 server.listen(SERVER_PORT, () => {
   console.log(`Server is running on port: ${SERVER_PORT}`);

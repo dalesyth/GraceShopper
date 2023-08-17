@@ -1,21 +1,30 @@
 import express from "express";
 
-const router = express.Router();
+const apiRouter = express.Router();
+
+// GET /api/health
+apiRouter.get("/health", async (req, res, next) => {
+  res.send({ message: "All is well" });
+});
 
 // ROUTER: /api/users
 import { usersRouter } from "./users.js";
-router.use("/users", usersRouter);
+apiRouter.use("/users", usersRouter);
 
 // ROUTER: /api/orders
 import { ordersRouter } from "./orders.js";
-router.use("/orders", ordersRouter);
+apiRouter.use("/orders", ordersRouter);
 
 // ROUTER: /api/items
 import { itemsRouter } from "./items.js";
-router.use("/items", itemsRouter);
+apiRouter.use("/items", itemsRouter);
 
 // ROUTER: /api/categories
 import { categoriesRouter } from "./categories.js";
-router.use("/categories", categoriesRouter);
+apiRouter.use("/categories", categoriesRouter);
 
-export { router };
+// ROUTER: /api/itemCategoryRouter
+import { itemCategoryRouter } from "./categoryitems.js";
+apiRouter.use("/categoryitems", itemCategoryRouter);
+
+export default apiRouter;
