@@ -6,7 +6,6 @@ import {
   itemInCategory,
 } from "./db/items.js";
 
-
 // POST ROUTES
 
 // POST /api/categoryitems - Add item to category.
@@ -31,58 +30,17 @@ itemCategoryRouter.post("/", async (req, res, next) => {
   }
 });
 
-// PATCH ROUTES
+// Delete ROUTES
 
-// PATCH /api/items/:itemId - Update an existing item
-itemsRouter.patch("/:itemId", async (req, res, next) => {
-  const { itemId } = req.params;
-
-  const { title, price, inventory, image_name } = req.body;
-
-  const updateFields = {};
-
-  if (itemId) {
-    updateFields.id = itemId;
-  }
-
-  if (title) {
-    updateFields.title = title;
-  }
-
-  if (price) {
-    updateFields.price = price;
-  }
-
-  if (inventory) {
-    updateFields.inventory = inventory;
-  }
-
-  if (image_name) {
-    updateFields.image_name = image_name;
-  }
-
-  const existingItemId = await getItemById(itemId);
-
-  const existingItemTitle = await getItemByTitle(title);
-
-  if (!existingItemId) {
-    next({
-      name: "itemIdDoesNotExistError",
-      message: `Item ${itemId} not found`,
-    });
-  }
-
-  if (existingItemTitle) {
-    next({
-      name: "itemTitleAlreadyExistsError",
-      message: `An item with title ${title} already exists`,
-    });
-  }
+// DELETE /api/categoryitems/
+// DELETE /api/categories/:categoryId - Delete a category by ID
+itemCategoryRouter.delete("/:itemID/:categoryID", async (req, res, next) => {
+  const { itemId, categoryId  } = req.params;
 
   try {
-    const updatedItem = await updateItem(updateFields);
+    const deletedItemCategory = await removeItemFromCategory(itemId, categoryId);
 
-    res.send(updatedItem);
+    res.send(deletedItemCategory);
   } catch ({ name, message }) {
     next({ name, message });
   }
