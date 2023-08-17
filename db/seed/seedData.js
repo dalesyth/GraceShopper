@@ -1,4 +1,4 @@
-import { createUser } from "../users/createUser.js";
+import { createUser } from "../users.js";
 import { createOrder } from "../orders.js";
 import {
   createItem,
