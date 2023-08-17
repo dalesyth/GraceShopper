@@ -1,9 +1,10 @@
 import express from "express";
 
+import * as jwt from 'jsonwebtoken';
 const usersRouter = express.Router();
 
 import {
-    getAllUsers,
+    
     getUser, 
     getUserById,
     getUserByUsername  
@@ -13,41 +14,95 @@ import {createUser} from "./db/createUser.js";
 
 // POST /api/users/register
 
-usersRouter.post("/users/register", async (req, res, next) => {
-    try {
-        const newUser = createUser(username, password)
 
-        return newUser;
-    } catch (error) {
-    next (error);
+usersRouter.post("/users/register", async (req, res, next) => {
+    const { username, password } = req.body;
+    try {
+        if (password.length < 8) {
+            next({
+                message: "Password Too Short!",
+                name: "Password too short error",
+                error: "Password Too Short",
+            });
+        }
+        const user = await createUser({ username, password});
+
+        const token = jwt.sign(
+        {
+            id: user.id,
+            username: user.username,
+        }
+        );
+
+        res.send({
+            message: "Thank you for registering",
+            token, 
+            user,
+        });
+
+    } catch ( { name, message } ) {
+    next ({ name, message });
     }
 });
 
 // POST /api/users/login
 
 usersRouter.post("/login", async (req, res, next) => {
-    try {
-        const user_username = req.body;
+    
+        const { username, password } = req.body;
         
-        if (!(user_username)) {
-            res.status(400).send("Username required");}
-        
-        const existingUser = await username.findOne({ user_username});
+        if (!username || !password) {
+            next({
+                message: "Please provide a username and password",
+                name: "Missing credentials error",
+                eror: "Please provide a username and password",
+            });
+        }
+            try {
+                 const user = await getUser({ username, password });
 
-        if (existingUser)
-        return res.status(409).send("User already exists. Please login");
+    if (user.username == username) {
+      const token = jwt.sign({ id: user.id, username });
 
-        return
-    } catch (error) {
-        throw error;
-        next (error);
+      res.send({ message: "you're logged in!", token, user });
+    } else {
+      next({
+        message: "Your username or password is incorrect",
+        name: "Incorrect username or password error",
+        error: " Your username or password is incorrect"
+      });
     }
-}
+  } catch ({ name, message }) {
+    
+    next({ name, message });
+  }
+});           
 
-// GET /api/users/me
+// GET /api/users/
 
-// GET /api/users/userId
+usersRouter.get("/me", async (req, res, next) => {
 
-// DELETE /api/users/userId
+    const user = getUserByUsername();
+
+    try {
+        res.send(user);
+    } catch ({ name, message }) {
+        next({ name, message });
+    }
+});
+
+// GET /api/users/:userId
+
+usersRouter.get("/userid", async (req, res, next) => {
+  const { userId } = req.params;
+
+  try {
+    const userById = await getUserById(userId);
+
+    res.send(userById);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 
 export { usersRouter };
