@@ -199,7 +199,26 @@ async function itemInCategory({ itemId, categoryId }){
   //if row === 0 then there are no records.  so result is the item is NOT in the category
   rows.length === 0? result = false : result = true;
   return item_category.id
+}
+
+async function deleteItem(itemId) {
+  try {
+    const { rows: [item]} = await client.query(
+      `
+      DELETE FROM items
+      WHERE id = $1
+      RETURNING *; 
+      `,
+      [itemId]
+    )
+
+    return item;
+  } catch (error) {
+    throw error
   }
+}
+
+
 
 
 export {
@@ -214,4 +233,5 @@ export {
   attachItemToCategory,
   removeItemFromCategory,
   itemInCategory,
+  deleteItem,
 };
