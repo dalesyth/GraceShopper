@@ -1,5 +1,4 @@
 import express from "express";
-import { useParams } from "react-router-dom";
 const ordersRouter = express.Router();
 
 import {
@@ -9,13 +8,13 @@ import {
   getOrderByUser,
   deleteOrder,
 } from "./db/orders";
-import { itemsRouter } from "./items";
+
 
 //POST/api/orders
 
 ordersRouter.post("/", async (req, res, next)=> {
     
- const request =  object.value(req.body)
+ const request =  Object.values(req.body)
     try {
         const newOrder = await createOrder(request);
         // *****If error try changing to destructure all fields for orders from db*****
@@ -28,7 +27,7 @@ ordersRouter.post("/", async (req, res, next)=> {
 
 // GET/api/orders
 
-itemsRouter.get("/", async (req, res, next) => {
+ordersRouter.get("/", async (req, res, next) => {
     try {
         const allOpenOrders = await getAllOpenOrders();
 
@@ -38,13 +37,38 @@ itemsRouter.get("/", async (req, res, next) => {
     }
 });
 
-// GET/api/orders/:orderid
-getOrderById();
+// GET/api/orders/:orderid - Get order by Id
+
+ordersRouter.get("/:orderid", async (req, res, next) => {
+ const orderId = req.params;
+
+ try {
+   const orderById = await getOrderById(orderId);
+
+   res.send(orderById);
+ } catch ({ name, message }) {
+   next({ name, message });
+ }
+});
+
+// GET/api/orders/:orderUser - Get order by User
+
+ordersRouter.get("/:orderUser", async ( req, res, next) => {
+    const orderUser = req.params; })
 
 // PATCH/api/orders/:orderid
-getOrderByUser();
 
-// DELETE/api/orders/:orderid
-deleteOrder();
+// DELETE/api/orders/:orderid - Delete an order by Id
+ordersRouter.delete("/:orderId", async (req, res, next) => {
+  const { orderId } = req.params;
+
+  try {
+    const deletedOrder = await deleteOrder(orderId);
+
+    res.send(deletedOrder);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 
 export { ordersRouter };
