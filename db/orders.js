@@ -2,7 +2,6 @@ import { client } from "./client.js";
 
 // Create a new order
 async function createOrder({ ...fields }) {
-  
   const dataArray = Object.values(fields);
   // console.log("ORDERFIELDS", dataArray);
   // const orderFields = Object.keys(fields);
@@ -36,10 +35,9 @@ async function createOrder({ ...fields }) {
   //   order_total
   // `;
 
- console.log(`columnNames: ${columnNames}`)
- console.log(`valuePlaceHolders: ${valuePlaceHolders}`)
- console.log(`dataArray: ${dataArray}`)
-
+  console.log(`columnNames: ${columnNames}`);
+  console.log(`valuePlaceHolders: ${valuePlaceHolders}`);
+  console.log(`dataArray: ${dataArray}`);
 
   const {
     rows: [order],
@@ -52,7 +50,7 @@ async function createOrder({ ...fields }) {
         `,
     dataArray
   );
-  console.log(`order from createOrder: ${order}`)
+  console.log(`order from createOrder: ${order}`);
   return order;
 }
 

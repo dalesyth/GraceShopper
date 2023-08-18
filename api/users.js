@@ -42,7 +42,7 @@ usersRouter.post("/register", async (req, res, next) => {
       user,
     });
   } catch ({ name, message }) {
-    console.error({ name, message })
+    console.error({ name, message });
     next({ name, message });
   }
 });
@@ -75,7 +75,6 @@ usersRouter.post("/login", async (req, res, next) => {
       });
     }
   } catch ({ name, message }) {
-    
     next({ name, message });
   }
 });
@@ -84,9 +83,8 @@ usersRouter.post("/login", async (req, res, next) => {
 
 usersRouter.get("/", async (req, res, next) => {
   const user = await getAllUsers();
-  
+
   try {
-    
     res.send(user);
   } catch ({ name, message }) {
     next({ name, message });

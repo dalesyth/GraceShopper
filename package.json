@@ -8,7 +8,7 @@
     "build": "vite build",
     "seed:dev": "nodemon ./db/seed/seed.js",
     "start:dev": "nodemon server.js",
-    "seed": "node ./db/seed.js",
+    "seed": "node ./db/seed/seed.js",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
