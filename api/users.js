@@ -80,7 +80,7 @@ usersRouter.post("/login", async (req, res, next) => {
   }
 });
 
-// GET /api/users/
+// GET http://localhost:3000/api/users
 
 usersRouter.get("/", async (req, res, next) => {
   const user = await getAllUsers();
