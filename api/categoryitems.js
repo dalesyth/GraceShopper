@@ -4,7 +4,7 @@ import {
   attachItemToCategory,
   removeItemFromCategory,
   itemInCategory,
-} from "./db/items.js";
+} from "../db/items.js";
 
 // POST ROUTES
 
