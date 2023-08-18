@@ -90,9 +90,8 @@ async function getOrderByUser(username) {
             FROM orders
               JOIN ordered_items ON orders.id = ordered_items."orderId"
               JOIN items ON ordered_items."itemId" = items.id
-              JOIN users ON orders."User_id" = users.id
-            WHERE 
-              users.username = $1; 
+              JOIN users ON orders.user_id = users.id
+            WHERE users.username = $1; 
             `,
     [username]
   );
