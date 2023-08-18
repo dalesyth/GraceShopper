@@ -14,9 +14,9 @@ import { itemsRouter } from "./items.js";
 //POST/api/orders
 
 ordersRouter.post("/", async (req, res, next) => {
-  const request = Object.values(req.body);
+  
   try {
-    const newOrder = await createOrder(request);
+    const newOrder = await createOrder(req.body);
     // *****If error try changing to destructure all fields for orders from db*****
     res.send(newOrder);
   } catch (error) {
@@ -43,10 +43,10 @@ ordersRouter.get("/", async (req, res, next) => {
 // GET/api/orders/:orderid - Get order by Id
 
 ordersRouter.get("/:orderid", async (req, res, next) => {
- const orderId = req.params;
-
+ const { orderid } = req.params;
+  console.log(`orderId from getOrderById: ${orderid}`)
  try {
-   const orderById = await getOrderById(orderId);
+   const orderById = await getOrderById(orderid);
 
    res.send(orderById);
  } catch ({ name, message }) {

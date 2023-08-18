@@ -37,14 +37,19 @@ async function getAllUsers() {
   try {
     console.log("Getting all users...");
 
-    const { users } = await client.query(`
+    const {
+      rows: users,
+    } = await client.query(`
         SELECT * FROM users;
         `);
 
     if (!users) {
-      return null;
+      console.log("null rows");
+      // return null;
     }
 
+    
+    console.log(`users from getAllUsers: ${Object.values(users)}`)
     return users;
   } catch (error) {
     console.log("Error getting all users!");
@@ -54,6 +59,7 @@ async function getAllUsers() {
 
 async function getUser({ username, password }) {
   console.log("inside getUser");
+  console.log(`username inside getUser: ${username}`);
   const user = await getUserByUsername(username);
   const hashedPassword = user.password;
   const isValid = await bcrypt.compare(password, hashedPassword);
@@ -70,14 +76,18 @@ async function getUser({ username, password }) {
   }
 }
 
-async function getUserByUsername({ username }) {
+async function getUserByUsername(username) {
+  console.log(`username inside getUserByUsername: ${username}`);
   try {
     console.log("Inside getUserByUsername");
     const {
       rows: [user],
-    } = await client.query(`
-SELECT id, username, password FROM users WHERE username = ${username};
-`);
+    } = await client.query(
+      `
+SELECT * FROM users WHERE username = $1;
+`,
+      [username]
+    );
 
     if (!user) {
       return null;
@@ -89,18 +99,16 @@ SELECT id, username, password FROM users WHERE username = ${username};
   }
 }
 
-async function getUserById({ userId }) {
+async function getUserById(userId) {
   try {
-    console.log("Getting users...");
-
     const {
       rows: [user],
     } = await client.query(
       `
-        SELECT id, username FROM users WHERE id=${userId};`,
+        SELECT * FROM users WHERE id=$1;`,
       [userId]
     );
-    delete user.password;
+    // delete user.password;
 
     return user;
   } catch (error) {

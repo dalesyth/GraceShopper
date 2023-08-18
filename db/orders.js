@@ -2,36 +2,57 @@ import { client } from "./client.js";
 
 // Create a new order
 async function createOrder({ ...fields }) {
+  
   const dataArray = Object.values(fields);
-  console.log("ORDERFIELDS", dataArray);
-  const orderFields = `
-    user_id,
-    billing_address_1,
-    billing_address_2,
-    billing_city,
-    billing_state,
-    billing_zip_code,
-    email,
-    shipping_address_1,
-    shipping_address_2,
-    shipping_city,
-    shipping_state,
-    shipping_zip_code,
-    shipping_country,
-    order_total
-  `;
+  // console.log("ORDERFIELDS", dataArray);
+  // const orderFields = Object.keys(fields);
+  //Build fields list
+  let columnNames = Object.keys(fields)
+    .map((key) => `"${key}"`)
+    .join(", ");
+  //Build VALUES place holder.
+  let i = 1;
+  let valuePlaceHolders = Object.keys(fields)
+    .map(() => {
+      let placeHolder = `$${i}`;
+      i = i + 1;
+      return placeHolder;
+    })
+    .join(", ");
+  // const orderFields = `
+  //   user_id,
+  //   billing_address_1,
+  //   billing_address_2,
+  //   billing_city,
+  //   billing_state,
+  //   billing_zip_code,
+  //   email,
+  //   shipping_address_1,
+  //   shipping_address_2,
+  //   shipping_city,
+  //   shipping_state,
+  //   shipping_zip_code,
+  //   shipping_country,
+  //   order_total
+  // `;
+
+ console.log(`columnNames: ${columnNames}`)
+ console.log(`valuePlaceHolders: ${valuePlaceHolders}`)
+ console.log(`dataArray: ${dataArray}`)
+
 
   const {
     rows: [order],
   } = await client.query(
     `
         INSERT INTO orders
-        (${orderFields})
-        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+        (${columnNames})
+        VALUES(${valuePlaceHolders})
         RETURNING *;
         `,
     dataArray
   );
+  console.log(`order from createOrder: ${order}`)
   return order;
 }
 
