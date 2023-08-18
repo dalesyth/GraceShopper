@@ -7,34 +7,37 @@ import {
   getOrderById,
   getOrderByUser,
   deleteOrder,
-} from "./db/orders";
 
+} from "../db/orders.js";
+import { itemsRouter } from "./items.js";
 
 //POST/api/orders
 
-ordersRouter.post("/", async (req, res, next)=> {
-    
- const request =  Object.values(req.body)
-    try {
-        const newOrder = await createOrder(request);
-        // *****If error try changing to destructure all fields for orders from db*****
-        res.send(newOrder);
-    } catch (error) {
+ordersRouter.post("/", async (req, res, next) => {
+  const request = Object.values(req.body);
+  try {
+    const newOrder = await createOrder(request);
+    // *****If error try changing to destructure all fields for orders from db*****
+    res.send(newOrder);
+  } catch (error) {
+
     next;
-    }
-    
-})
+  }
+});
 
 // GET/api/orders
+
 
 ordersRouter.get("/", async (req, res, next) => {
     try {
         const allOpenOrders = await getAllOpenOrders();
 
-        res.send(allOpenOrders);
-    } catch ({ name, message }) {
-        next({ name, message });
-    }
+
+
+    res.send(allOpenOrders);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
 });
 
 // GET/api/orders/:orderid - Get order by Id
