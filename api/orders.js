@@ -44,7 +44,6 @@ ordersRouter.get("/", async (req, res, next) => {
 
 ordersRouter.get("/:orderid", async (req, res, next) => {
  const { orderid } = req.params;
-  console.log(`orderId from getOrderById: ${orderid}`)
  try {
    const orderById = await getOrderById(orderid);
 

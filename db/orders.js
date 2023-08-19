@@ -2,7 +2,6 @@ import { client } from "./client.js";
 
 // Create a new order
 async function createOrder({ ...fields }) {
-  
   const dataArray = Object.values(fields);
   //Build fields list
   let columnNames = Object.keys(fields)
@@ -12,8 +11,7 @@ async function createOrder({ ...fields }) {
   let valuePlaceHolders = Object.keys(fields)
     .map((keys, index) => {
       return  `$${index + 1}`;
-    })
-    .join(", ");
+    }).join(", ");
   
  const newOrderSQL = `
         INSERT INTO orders
@@ -31,7 +29,6 @@ async function AttachOrderItems(orders) {
   if (!orders?.length) {
     return [];
   }
-  
   //Build VALUES place holder.
   const placeHolders = orders.map((_, index) => `$${index + 1}`).join(", ");
   const data = orders.map((order) => order.id);
@@ -42,7 +39,6 @@ async function AttachOrderItems(orders) {
   
     try {
     const {rows: items }= await client.query(itemSQL, data);
-    console.log({items, line: 45})
     orders.forEach((order) => {
       order.orderItems = items.filter((item) => item.orderId === order.id)
     })
@@ -69,19 +65,11 @@ async function getAllOpenOrders() {
 // Get an order by a specific order ID
 async function getOrderById(orderId) {
   const { rows: order, } = await client.query(
-    `
-    SELECT 
-      orders.*, 
-      ordered_items.price AS item_price,
-      ordered_items.qty AS item_quantity,
-      items.title AS item_title
+    `SELECT 
+      orders.*
     FROM orders
-      JOIN ordered_items ON orders.id = ordered_items."orderId"
-      JOIN items ON ordered_items."itemId" = items.id
-    WHERE orders.id = $1; 
-  `,
-    [orderId]
-  );
+    WHERE orders.id = $1;`,
+    [orderId]);
   
   const result = await AttachOrderItems(order);
   return result;
@@ -89,24 +77,15 @@ async function getOrderById(orderId) {
 
 // Get orders for a specific user
 async function getOrderByUser(username) {
-  const {
-    rows: [order],
-  } = await client.query(
+  const { rows: [order], } = await client.query(
     `
-            SELECT 
-              orders.*, 
-              ordered_items.price AS item_price,
-              ordered_items.qty AS item_quantity,
-              items.title AS item_title
-            FROM orders
-              JOIN ordered_items ON orders.id = ordered_items."orderId"
-              JOIN items ON ordered_items."itemId" = items.id
-              JOIN users ON orders.user_id = users.id
-            WHERE users.username = $1; 
-            `,
-    [username]
+    SELECT * 
+    FROM orders
+    WHERE users.username = $1; 
+    `, [username]
   );
-  return order;
+  const result = await AttachOrderItems(order);
+  return result;
 }
 
 // Delete an order by order id

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { client } from "./client.js";
 
 async function createItem({ title, price, inventory, image_name }) {
@@ -121,7 +120,6 @@ async function getItemByCategory(categoryId) {
 }
 
 async function attachItemToOrder({ itemId, orderId, orderPrice , qty }) {
-  console.log('ORDER_ITEM: ', qty)
   try {
     const { rows } = await client.query(
       `
