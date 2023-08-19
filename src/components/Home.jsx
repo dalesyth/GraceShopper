@@ -19,7 +19,7 @@ const Home = () => {
     getItems();
   }, []);
 
-  return <div>Home</div>;
+  return <div>GraceShopper Home</div>;
 };
 
 export default Home;
