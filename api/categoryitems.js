@@ -16,7 +16,7 @@ itemCategoryRouter.post("/", async (req, res, next) => {
 
   if (!itemAlreadyInCategory) {
     try {
-      const newItem = await attachItemToCategory({ itemId, categoryId, });
+      const newItem = await attachItemToCategory({ itemId, categoryId });
 
       res.send(newItem);
     } catch ({ name, message }) {
@@ -35,16 +35,23 @@ itemCategoryRouter.post("/", async (req, res, next) => {
 // DELETE /api/categoryitems/
 // DELETE /api/categories/:categoryId - Delete a category by ID
 itemCategoryRouter.delete("/:itemId/:categoryId", async (req, res, next) => {
-  const { itemId, categoryId  } = req.params;
+  const { itemId, categoryId } = req.params;
   console.log(`itemId: ${itemId}, categoryId: ${categoryId}`);
 
   try {
-    const deletedItemCategory = await removeItemFromCategory(itemId, categoryId);
-    
+    const deletedItemCategory = await removeItemFromCategory(
+      itemId,
+      categoryId
+    );
+
     if (deletedItemCategory) {
-      res.status(200).send(`Item ${itemId} has been removed from Category ${categoryId}`);
+      res
+        .status(200)
+        .send(`Item ${itemId} has been removed from Category ${categoryId}`);
     } else {
-      throw new Error(`Problem deleting Item ${itemId} from Category ${categoryId}`); 
+      throw new Error(
+        `Problem deleting Item ${itemId} from Category ${categoryId}`
+      );
     }
   } catch ({ name, message }) {
     next({ name, message });
