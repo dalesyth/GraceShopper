@@ -11,8 +11,7 @@ async function createOrder({ ...fields }) {
   let valuePlaceHolders = Object.keys(fields)
     .map((keys, index) => {
       return  `$${index + 1}`;
-    })
-    .join(", ");
+    }).join(", ");
   
  const newOrderSQL = `
         INSERT INTO orders
@@ -22,95 +21,71 @@ async function createOrder({ ...fields }) {
         `;
  
   const { rows: [order], } = await client.query(newOrderSQL, dataArray);
-
   return order;
 }
-
+/////////////////////////////////////////////////
 //retrieve a list of items on an order
-async function getOrderItems(items) {
+async function AttachOrderItems(orders) {
+  if (!orders?.length) {
+    return [];
+  }
   //Build VALUES place holder.
-  let valuePlaceHolders = Object.keys(items)
-    .map((key, index) => { 
-      let placeHolder = `$${index + 1}`;
-      return placeHolder;
-    }).join(", ");
-
-  const itemSQL = `
-      SELECT *
-      FROM items
-      WHERE id IN (${valuePlaceHolders}); 
-      `;
-
-  try {
-    const {rows}= await client.query(itemSQL, items);
-    return rows;
+  const placeHolders = orders.map((_, index) => `$${index + 1}`).join(", ");
+  const data = orders.map((order) => order.id);
+  const itemSQL = `SELECT *
+    FROM items
+    RIGHT JOIN ordered_items  as o_i ON o_i."itemId" = items.id
+    WHERE "orderId" IN (${placeHolders});`;
+  
+    try {
+    const {rows: items }= await client.query(itemSQL, data);
+    orders.forEach((order) => {
+      order.orderItems = items.filter((item) => item.orderId === order.id)
+    })
+    return orders;
   } catch (error) {
     console.error(`Error retrieving items on an order - - - ${error}`);
-    throw error;
   }
 }
+
+// ///////////////////////////////////////////////
 // Get all open orders
 async function getAllOpenOrders() {
   const openOrderSQL = `
-    SELECT orders.*, STRING_AGG(items.id::TEXT, ', ') AS "orderItems"
-    FROM orders
-	    JOIN ordered_items ON orders.id = ordered_items."orderId"
-      JOIN items ON ordered_items."itemId" = items.id
+    SELECT orders.* 
+    FROM orders	    
     WHERE orders.order_fulfilled = FALSE
-    GROUP BY orders.id; 
-    `;
-  console.log("SQL", openOrderSQL)
-  const { rows } = await client.query( openOrderSQL );
-  let result = rows;
-  console.log("ORDERS RESULT: ", orders);
-const itemString = result.orderItems.split (', ')
-const itemArray = itemString.map(Number);
-//result.orderItems = await getOrderItems(itemArray);
-console.log('ORDERS: ', result)
+    GROUP BY orders.id;`;
+  const { rows: orders} = await client.query( openOrderSQL );
+  
+  const result = await AttachOrderItems(orders);
   return result;
 }
 
 // Get an order by a specific order ID
 async function getOrderById(orderId) {
-  const {
-    rows: [order],
-  } = await client.query(
-    `
-    SELECT 
-      orders.*, 
-      ordered_items.price AS item_price,
-      ordered_items.qty AS item_quantity,
-      items.title AS item_title
+  const { rows: order, } = await client.query(
+    `SELECT 
+      orders.*
     FROM orders
-      JOIN ordered_items ON orders.id = ordered_items."orderId"
-      JOIN items ON ordered_items."itemId" = items.id
-    WHERE orders.id = $1; 
-  `,
-    [orderId]
-  );
-  return order;
+    WHERE orders.id = $1;`,
+    [orderId]);
+  
+  const result = await AttachOrderItems(order);
+  return result;
 }
 
 // Get orders for a specific user
 async function getOrderByUser(username) {
-  const {
-    rows: [order],
-  } = await client.query(
+  const { rows: [order], } = await client.query(
     `
-            SELECT 
-              orders.*, 
-              ordered_items.price AS item_price,
-              ordered_items.qty AS item_quantity,
-              items.title AS item_title
-            FROM orders
-              JOIN ordered_items ON orders.id = ordered_items."orderId"
-              JOIN items ON ordered_items."itemId" = items.id
-              JOIN users ON orders.user_id = users.id
-            WHERE users.username = $1; 
-            `,
-    [username]
+    SELECT * 
+    FROM orders
+    WHERE users.username = $1; 
+    `, [username]
   );
-  return order;
+  const result = await AttachOrderItems(order);
+  return result;
 }
 
 // Delete an order by order id
