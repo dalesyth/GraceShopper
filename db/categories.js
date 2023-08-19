@@ -2,7 +2,8 @@
 import { client } from "./client.js";
 
 // Create a new category
-async function createCategory({ name }) {
+async function createCategory(name) {
+  
   try {
     const {
       rows: [category],
@@ -23,7 +24,8 @@ async function createCategory({ name }) {
 }
 
 // Update a category
-async function updateCategory({ id, name }) {
+async function updateCategory(id, name) {
+  console.log(`updateCategory id: ${id}, name: ${name}`)
   try {
     const {
       rows: [category],
@@ -80,6 +82,7 @@ async function getCategoryById(id) {
 
 // Get a category by name
 async function getCategoryByName(name) {
+  
   try {
     const {
       rows: [category],
@@ -91,7 +94,7 @@ async function getCategoryByName(name) {
             `,
       [name]
     );
-
+    
     return category;
   } catch (error) {
     throw error;
@@ -120,6 +123,7 @@ async function getCategoryByItem(itemId) {
 // Delete a category
 async function deleteCategory(id) {
   try {
+    const { rows } =
     await client.query(
       `
             DELETE FROM category
@@ -128,9 +132,12 @@ async function deleteCategory(id) {
             `,
       [id]
     );
+
+    return rows;
   } catch (error) {
     throw error;
   }
+
 }
 
 export {

@@ -27,4 +27,13 @@ apiRouter.use("/categories", categoriesRouter);
 import { itemCategoryRouter } from "./categoryitems.js";
 apiRouter.use("/categoryitems", itemCategoryRouter);
 
+// ERROR HANDLER
+
+apiRouter.use((error, req, res, next) => {
+  res.status(500).json({
+    name: error.name,
+    message: error.message,
+  });
+});
+
 export default apiRouter;

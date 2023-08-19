@@ -9,7 +9,7 @@ import {
   deleteOrder,
 
 } from "../db/orders.js";
-import { itemsRouter } from "./items.js";
+
 
 //POST/api/orders
 
