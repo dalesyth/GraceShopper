@@ -63,7 +63,7 @@ async function createTables() {
       shipping_state varchar(255) NOT NULL,
       shipping_zip_code INTEGER NOT NULL,
       shipping_country varchar(255) NOT NULL,
-      email varchar(255) UNIQUE NOT NULL,
+      email varchar(255) NOT NULL,
       order_total MONEY,
       use_default_address BOOLEAN DEFAULT FALSE,
       checkout_complete BOOLEAN DEFAULT FALSE,

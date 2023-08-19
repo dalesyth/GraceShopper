@@ -3,75 +3,71 @@ import { client } from "./client.js";
 // Create a new order
 async function createOrder({ ...fields }) {
   const dataArray = Object.values(fields);
-  // console.log("ORDERFIELDS", dataArray);
-  // const orderFields = Object.keys(fields);
   //Build fields list
   let columnNames = Object.keys(fields)
     .map((key) => `"${key}"`)
     .join(", ");
   //Build VALUES place holder.
-  let i = 1;
   let valuePlaceHolders = Object.keys(fields)
-    .map(() => {
-      let placeHolder = `$${i}`;
-      i = i + 1;
-      return placeHolder;
+    .map((keys, index) => {
+      return  `$${index + 1}`;
     })
     .join(", ");
-  // const orderFields = `
-  //   user_id,
-  //   billing_address_1,
-  //   billing_address_2,
-  //   billing_city,
-  //   billing_state,
-  //   billing_zip_code,
-  //   email,
-  //   shipping_address_1,
-  //   shipping_address_2,
-  //   shipping_city,
-  //   shipping_state,
-  //   shipping_zip_code,
-  //   shipping_country,
-  //   order_total
-  // `;
-
-  console.log(`columnNames: ${columnNames}`);
-  console.log(`valuePlaceHolders: ${valuePlaceHolders}`);
-  console.log(`dataArray: ${dataArray}`);
-
-  const {
-    rows: [order],
-  } = await client.query(
-    `
+  
+ const newOrderSQL = `
         INSERT INTO orders
         (${columnNames})
         VALUES(${valuePlaceHolders})
         RETURNING *;
-        `,
-    dataArray
-  );
-  console.log(`order from createOrder: ${order}`);
+        `;
+ 
+  const { rows: [order], } = await client.query(newOrderSQL, dataArray);
+
   return order;
 }
 
+//retrieve a list of items on an order
+async function getOrderItems(items) {
+  //Build VALUES place holder.
+  let valuePlaceHolders = Object.keys(items)
+    .map((key, index) => { 
+      let placeHolder = `$${index + 1}`;
+      return placeHolder;
+    }).join(", ");
+
+  const itemSQL = `
+      SELECT *
+      FROM items
+      WHERE id IN (${valuePlaceHolders}); 
+      `;
+
+  try {
+    const {rows}= await client.query(itemSQL, items);
+    return rows;
+  } catch (error) {
+    console.error(`Error retrieving items on an order - - - ${error}`);
+    throw error;
+  }
+}
 // Get all open orders
 async function getAllOpenOrders() {
-  const { rows: orders } = await client.query(
-    `
-            SELECT 
-              orders.*,
-              ordered_items.price AS item_price,
-              ordered_items.qty AS item_quantity,
-              items.title AS item_title
-            FROM orders
-              JOIN ordered_items ON orders.id = ordered_items."orderId"
-              JOIN items ON ordered_items."itemId" = items.id
-            WHERE
-              orders.order_fulfilled = FALSE; 
-            `
-  );
-
-  return orders;
+  const openOrderSQL = `
+    SELECT orders.*, STRING_AGG(items.id::TEXT, ', ') AS "orderItems"
+    FROM orders
+	    JOIN ordered_items ON orders.id = ordered_items."orderId"
+      JOIN items ON ordered_items."itemId" = items.id
+    WHERE orders.order_fulfilled = FALSE
+    GROUP BY orders.id; 
+    `;
+  console.log("SQL", openOrderSQL)
+  const { rows } = await client.query( openOrderSQL );
+  let result = rows;
+  console.log("ORDERS RESULT: ", orders);
+const itemString = result.orderItems.split (', ')
+const itemArray = itemString.map(Number);
+//result.orderItems = await getOrderItems(itemArray);
+console.log('ORDERS: ', result)
+  return result;
 }
 
 // Get an order by a specific order ID

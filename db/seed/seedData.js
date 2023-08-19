@@ -108,7 +108,7 @@ async function createInitialOrders() {
         shipping_city: "Omaha",
         shipping_state: "NE",
         shipping_zip_code: 84324,
-        shipping_counry: "USA",
+        shipping_country: "USA",
         order_total: 2500.36
       }
     ]
