@@ -39,6 +39,8 @@ categoriesRouter.get("/:categoryId", async (req, res, next) => {
 // GET /api/categories/:categoryName - GET category by Name
 categoriesRouter.get("/:categoryName", async (req, res, next) => {
   const { categoryName } = req.params;
+  console.log(`categoryName: ${categoryName}`)
+  
 
   try {
     const categoryByName = await getCategoryByName(categoryName);
@@ -113,7 +115,7 @@ categoriesRouter.patch("/:categoryId", async (req, res, next) => {
   }
 
   try {
-    const updatedCategory = await updateCategory(name);
+    const updatedCategory = await updateCategory(categoryId, name);
 
     res.send(updatedCategory);
   } catch ({ name, message }) {

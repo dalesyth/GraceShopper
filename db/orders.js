@@ -2,7 +2,6 @@ import { client } from "./client.js";
 
 // Create a new order
 async function createOrder({ ...fields }) {
-  
   const dataArray = Object.values(fields);
   //Build fields list
   let columnNames = Object.keys(fields)
@@ -23,6 +22,7 @@ async function createOrder({ ...fields }) {
         `;
  
   const { rows: [order], } = await client.query(newOrderSQL, dataArray);
+
   return order;
 }
 
