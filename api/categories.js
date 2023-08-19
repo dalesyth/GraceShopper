@@ -48,6 +48,7 @@ categoriesRouter.get("/:categoryName", async (req, res, next) => {
     res.send(categoryByName);
   } catch ({ name, message }) {
     next({ name, message });
+    
   }
 });
 
