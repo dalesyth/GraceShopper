@@ -90,7 +90,7 @@ async function getCategoryByName(name) {
       `
             SELECT *
             FROM category
-            WHERE name = $1  
+            WHERE name = $1;  
             `,
       [name]
     );

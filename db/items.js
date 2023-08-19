@@ -121,7 +121,7 @@ async function getItemByCategory(categoryId) {
 }
 
 async function attachItemToOrder({ itemId, orderId, price, qty }) {
-  console.log('ORDER_ITEM: ', qty)
+  console.log("ORDER_ITEM: ", qty);
   try {
     const { rows } = await client.query(
       `
@@ -187,39 +187,41 @@ async function removeItemFromCategory({ itemId, categoryId }) {
 
     return rows;
   } catch (error) {
-    throw error;
+    // throw error;
+    console.error(error)
   }
 }
 
-async function itemInCategory({ itemId, categoryId }){
-  const data = [itemId, categoryId]
-  const sql = `SELECT * FROM item_category WHERE item_id = $1 AND category_id = $2`
-  const { rows: item_category } = await client.query( sql, data );
+async function itemInCategory({ itemId, categoryId }) {
+  const data = [itemId, categoryId];
+  const sql = `SELECT * FROM item_category WHERE item_id = $1 AND category_id = $2`;
+  const { rows: item_category } = await client.query(sql, data);
 
   //if row === 0 then there are no records.  so result is the item is NOT in the category
-  rows.length === 0? result = false : result = true;
-  return item_category.id
+
+  const result = item_category.length === 0 ? false : true;
+
+  return result;
 }
 
 async function deleteItem(itemId) {
   try {
-    const { rows: [item]} = await client.query(
+    const {
+      rows: [item],
+    } = await client.query(
       `
       DELETE FROM items
       WHERE id = $1
       RETURNING *; 
       `,
       [itemId]
-    )
+    );
 
     return item;
   } catch (error) {
-    throw error
+    throw error;
   }
 }
-
-
-
 
 export {
   createItem,

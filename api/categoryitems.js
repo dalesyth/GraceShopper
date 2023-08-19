@@ -36,6 +36,7 @@ itemCategoryRouter.post("/", async (req, res, next) => {
 // DELETE /api/categories/:categoryId - Delete a category by ID
 itemCategoryRouter.delete("/:itemId/:categoryId", async (req, res, next) => {
   const { itemId, categoryId  } = req.params;
+  console.log(`itemId: ${itemId}, categoryId: ${categoryId}`);
 
   try {
     const deletedItemCategory = await removeItemFromCategory(itemId, categoryId);
@@ -43,7 +44,7 @@ itemCategoryRouter.delete("/:itemId/:categoryId", async (req, res, next) => {
     if (deletedItemCategory) {
       res.status(200).send(`Item ${itemId} has been removed from Category ${categoryId}`);
     } else {
-      throw `Problem deleting Item ${itemId} from Category ${categoryId}`;
+      throw new Error(`Problem deleting Item ${itemId} from Category ${categoryId}`); 
     }
   } catch ({ name, message }) {
     next({ name, message });
