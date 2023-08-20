@@ -90,12 +90,17 @@ async function getOrderByUser(username) {
 
 // Delete an order by order id
 async function deleteOrder(id) {
+  //delete order from ordered_items table
   await client.query(
-    `
-            DELETE FROM orders
-            WHERE id=$1 
-            RETURNING *; 
-            `,
+    `DELETE FROM ordered_items
+     WHERE "orderId" = $1;
+    `,
+      [id]
+  );
+  //delete order from orders table
+  await client.query(
+    `DELETE FROM orders
+    WHERE id=$1;`,
     [id]
   );
 }
