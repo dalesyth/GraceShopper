@@ -16,7 +16,7 @@ async function createItem({ title, price, inventory, image_name }) {
 
     return item;
   } catch (error) {
-    throw error;
+    console.error(`db error Creating Item: ${error}`)
   }
 }
 
@@ -45,7 +45,7 @@ async function updateItem({ id, ...fields }) {
 
     return item;
   } catch (error) {
-    throw error;
+    console.error(`db error updating item: ${error}`)
   }
 }
 
@@ -59,7 +59,7 @@ async function getAllItems() {
     );
     return rows;
   } catch (error) {
-    throw error;
+    console.error(`db error getting all items: ${error}`);
   }
 }
 
@@ -78,7 +78,7 @@ async function getItemById(id) {
 
     return item;
   } catch (error) {
-    throw error;
+    console.error(`db error getting item by id: ${error}`)
   }
 }
 
@@ -97,7 +97,7 @@ async function getItemByTitle(title) {
 
     return item;
   } catch (error) {
-    throw error;
+    console.error(`db error getting item by title: ${error}`)
   }
 }
 
@@ -115,7 +115,7 @@ async function getItemByCategory(categoryId) {
 
     return rows;
   } catch (error) {
-    throw error;
+    console.error(`db error getting items by category ${error}`)
   }
 }
 
@@ -133,7 +133,7 @@ async function attachItemToOrder({ itemId, orderId, orderPrice , qty }) {
 
     return rows;
   } catch (error) {
-    throw error;
+    console.error(`db error attaching item to order: ${error}`)
   }
 }
 
@@ -150,7 +150,7 @@ async function removeItemFromOrder({ itemId, orderId }) {
 
     return rows;
   } catch (error) {
-    throw error;
+    console.error(`db error removing item from order: ${error}`)
   }
 }
 
@@ -168,7 +168,7 @@ async function attachItemToCategory({ itemId, categoryId }) {
 
     return rows;
   } catch (error) {
-    throw error;
+    console.error(`db error attaching item to category: ${error}`)
   }
 }
 
@@ -185,18 +185,19 @@ async function removeItemFromCategory({ itemId, categoryId }) {
 
     return rows;
   } catch (error) {
-    throw error;
+    console.error( `db error removing item from category: ${error}`)
   }
 }
 
 async function itemInCategory({ itemId, categoryId }){
   const data = [itemId, categoryId]
-  const sql = `SELECT * FROM item_category WHERE item_id = $1 AND category_id = $2`
+  const sql = `SELECT * FROM item_category WHERE item_id = $1 AND category_id = $2;`
   const { rows: item_category } = await client.query( sql, data );
 
   //if row === 0 then there are no records.  so result is the item is NOT in the category
-  rows.length === 0? result = false : result = true;
-  return item_category.id
+const result = item_category.length === 0 ? false : true;
+
+return result;
 }
 
 async function deleteItem(itemId) {
@@ -208,16 +209,13 @@ async function deleteItem(itemId) {
       RETURNING *; 
       `,
       [itemId]
-    )
+    );
 
     return item;
   } catch (error) {
-    throw error
+    console.error(`db error deleting an item: ${error}`)
   }
 }
-
-
-
 
 export {
   createItem,
