@@ -1,7 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config();
-const SERVER_PORT = process.env.REACT_APP_SERVER_PORT;
-const APIURL = process.env.REACT_APP_APIURL
+const APIURL = 'http://localhost:3000/api';
+
 // GET ROUTES
 
 // GET all items
@@ -41,7 +39,38 @@ export async function getItemById(itemId) {
     }
 }
 
+export async function login({username, password}) {
+    const fullAPIURL = `${APIURL}/users/login`;
+    const body = JSON.stringify({
+      username: username,
+      passwor: password,
+    });
+    let token = "";
+    
+    try{
+        const response = await fetch ( fullAPIURL, {
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: body,
+        })
 
+        const result = await response.JSON();
+
+        if (result.message === "you're logged in!") {
+            token = result.token;
+            localStorage.setItem("token", JSON.stringify(token));
+            localStorage.setItem("username", JSON.stringify(username));
+            return true;
+        } else {
+            window.alert("Login Failed!");
+            return false;
+        } 
+    } catch (error){
+        console.error(`Login Error: ${error}`)
+    }
+
+}
 
 
 
