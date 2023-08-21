@@ -1,5 +1,7 @@
-const APIURL = 'http://localhost:3000/api';
-
+import dotenv from "dotenv";
+dotenv.config();
+const SERVER_PORT = process.env.REACT_APP_SERVER_PORT;
+const APIURL = process.env.REACT_APP_APIURL
 // GET ROUTES
 
 // GET all items

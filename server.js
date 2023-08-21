@@ -1,8 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
+const SERVER_PORT = process.env.REACT_APP_SERVER_PORT;
+
 import express from "express";
-// import { SERVER_PORT } from "./env";
-const SERVER_PORT = 3000;
+
 
 const server = express();
 
