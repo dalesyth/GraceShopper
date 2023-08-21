@@ -7,6 +7,7 @@ const ItemDetail = () => {
   const [item, setItem] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [activeOrder, setActiveOrder] = useState(null);
 
   useEffect(() => {
     const getItemDetail = async () => {
@@ -28,6 +29,18 @@ const ItemDetail = () => {
 
   const handleAddToCart = async () => {
     console.log(`You have reached handleAddToCart, quantity is ${quantity}`);
+
+    if (!activeOrder) {
+      try {
+        const response = await createNewOrder();
+
+        console.log(`response from handleAddToCart: ${response}`);
+
+        setActiveOrder(orderId);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
