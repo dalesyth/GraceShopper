@@ -39,32 +39,34 @@ export async function getItemById(itemId) {
     }
 }
 
-export async function login({username, password}) {
+export async function login(username, password) {
+    console.log(`ApiCalls, UserName: ${username}, password: ${password}`);
     const fullAPIURL = `${APIURL}/users/login`;
     const body = JSON.stringify({
       username: username,
-      passwor: password,
+      password: password,
     });
-    let token = "";
+    console.log(`PASSWORD: ${password} Line: 48`)
     
     try{
-        const response = await fetch ( fullAPIURL, {
-            headers: {
+        const response = await fetch(fullAPIURL, {
+          method: "POST",
+          headers: {
             "Content-Type": "application/json",
-            },
-            body: body,
-        })
+          },
+          body: body,
+        });
 
-        const result = await response.JSON();
+        const result = await response.json();
 
         if (result.message === "you're logged in!") {
-            token = result.token;
-            localStorage.setItem("token", JSON.stringify(token));
-            localStorage.setItem("username", JSON.stringify(username));
-            return true;
+          const token = result.token;
+          localStorage.setItem("token", JSON.stringify(token));
+          localStorage.setItem("username", JSON.stringify(username));
+          return true;
         } else {
-            window.alert("Login Failed!");
-            return false;
+          window.alert("Login Failed!");
+          return false;
         } 
     } catch (error){
         console.error(`Login Error: ${error}`)
