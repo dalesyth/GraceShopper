@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getItemById } from "./ApiCalls";
+import { getItemById, getUserByUsername, createNewOrder } from "./ApiCalls";
 
 const ItemDetail = () => {
   const { itemId } = useParams();
@@ -28,21 +28,26 @@ const ItemDetail = () => {
   };
 
   const handleAddToCart = async () => {
-    console.log(`You have reached handleAddToCart, quantity is ${quantity}`);
+    // const username = localStorage.getItem("username");
+    const username = JSON.parse(localStorage.getItem("username"));
+    const userInfo = await getUserByUsername(username);
+    const userId = userInfo.id;
+    const userEmail = userInfo.email;
 
     if (!activeOrder) {
       try {
-        const response = await createNewOrder(userId);
+        const response = await createNewOrder({
+          userId,
+          userEmail,
+        });
 
-        console.log(`response from handleAddToCart: ${response}`);
+        console.log(`response.id from handleAddToCart: ${response.id}`);
 
-        setActiveOrder(orderId);
+        setActiveOrder(response.id);
       } catch (error) {
         console.error(error);
       }
     }
-
-    
   };
 
   return (

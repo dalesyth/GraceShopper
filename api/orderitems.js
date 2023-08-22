@@ -1,6 +1,6 @@
 import express from "express";
 const orderItemsRouter = express.Router();
-import { attachItemToOrder } from "../db/items";
+import { attachItemToOrder } from "../db/items.js";
 
 orderItemsRouter.post("/orderitems", async (req, res, next) => {
   const { itemId, orderId, orderPrice, qty } = req.body;
