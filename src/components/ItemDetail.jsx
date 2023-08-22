@@ -53,12 +53,16 @@ const ItemDetail = () => {
       }
     } else {
       try {
+        const orderPrice = quantity * item.price;
+
         const response = await addItemToOrder({
           itemId,
           activeOrder,
           orderPrice,
           quantity,
         });
+
+        console.log(`response from addItemToOrder: ${response}`)
       } catch (error) {
         console.error(error);
       }

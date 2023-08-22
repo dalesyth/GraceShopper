@@ -112,19 +112,19 @@ export async function createNewOrder({ userId, userEmail }) {
   }
 }
 
-export async function addItemToOrder({ itemId, orderId, orderPrice, qty }) {
+export async function addItemToOrder({ itemId, orderId, orderPrice, quantity }) {
   try {
     const response = await fetch(`${APIURL}/`, {
       method: "POST",
       headers: {
-        "Content-Type": "application.json",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         itemId,
         orderId,
         orderPrice,
-        qty,
+        qty: quantity,
       }),
     });
     const result = await response.json();
