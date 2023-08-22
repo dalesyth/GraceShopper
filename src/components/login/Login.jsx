@@ -87,11 +87,17 @@ const Login = () => {
       </div>
     </>)
   } else {
-   return (
-   <>
-     <label className="text-red-600  text-5xl">Already Logged In!</label>
-   </>
-   ) 
+  return (
+    <>
+      <div className="flex h-screen items-center justify-center">
+        <div className="flex flex-col h-screen items-center justify-center bg-gray-200 w-1/2 h-1/2 rounded-lg shadow-lg">
+          <h2 className="font-bold pb-2">
+            Already Logged In!
+          </h2>
+        </div>
+      </div>
+    </>
+   ); 
   }
 }
 //const LoginFailed = () => {
