@@ -74,5 +74,24 @@ export async function login(username, password) {
 
 }
 
+export async function createNewOrder(userId) {
+    try {
+        const response = await fetch(`${APIURL}/orders`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                user_id: userId,
+            }),
+        });
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error(`Create Order Error: ${error}`)
+    }
+}
+
 
 

@@ -32,7 +32,7 @@ const ItemDetail = () => {
 
     if (!activeOrder) {
       try {
-        const response = await createNewOrder();
+        const response = await createNewOrder(userId);
 
         console.log(`response from handleAddToCart: ${response}`);
 
@@ -41,6 +41,8 @@ const ItemDetail = () => {
         console.error(error);
       }
     }
+
+    
   };
 
   return (
