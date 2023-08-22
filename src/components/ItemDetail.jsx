@@ -39,6 +39,7 @@ const ItemDetail = () => {
     const userEmail = userInfo.email;
 
     if (!activeOrder) {
+      console.log(`activeOrder at start of if stmt: ${activeOrder}`);
       try {
         const response = await createNewOrder({
           userId,
@@ -62,11 +63,12 @@ const ItemDetail = () => {
           quantity,
         });
 
-        console.log(`response from addItemToOrder: ${response}`)
+        console.log(`response from addItemToOrder: ${response}`);
       } catch (error) {
         console.error(error);
       }
     }
+    console.log(`activeOrder after if stmt: ${activeOrder}`);
   };
 
   return (
