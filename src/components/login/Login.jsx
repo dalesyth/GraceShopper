@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Link } from "react-router-dom";
+import { login } from "./loginHelpers"
+import { useNavigate } from "react-router";
+//import { LoggedIn } from "./LoggedIn";
 
-import { login } from "./ApiCalls"
 
 const Login = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -25,13 +28,14 @@ const Login = () => {
         console.log(`About to log in, Login.jsx`)
         const result = await login(username, password);
         if (result) {
-          console.log(`STORED USERNAME: ${localStorage.getItem("username")}`);
-          console.log(`STORED TOKEN: ${localStorage.getItem("token")}`);
+          console.log(`STORED USERNAME: ${JSON.parse(localStorage.getItem("username"))}`);
+          console.log(`STORED TOKEN: ${JSON.parse(localStorage.getItem("token"))}`);
         } else {
+          window.alert("Login Failed!");
           console.log("Login Failed!");
         }
       }
-      //navigate("/Home");
+      navigate("/Home");
     } catch(error) {
       console.error(`Login Error: ${error}`)
     }
@@ -83,12 +87,13 @@ const Login = () => {
       </div>
     </>)
   } else {
-    return (
-      <>
-        <label className="text-red-600  text-5xl">Already Logged In!</label>;
-      </>
-    );
+   return (
+   <>
+     <label className="text-red-600  text-5xl">Already Logged In!</label>
+   </>
+   ) 
   }
 }
+//const LoginFailed = () => {
 
 export default Login
