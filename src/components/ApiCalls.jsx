@@ -39,9 +39,9 @@ export async function getItemById(itemId) {
 
 // GET user by username
 export async function getUserByUsername(username) {
-    console.log(`username passed into getUserByUsername: ${username}`)
+  console.log(`username passed into getUserByUsername: ${username}`);
   try {
-    console.log(`username inside Try Catch: ${username}`)
+    console.log(`username inside Try Catch: ${username}`);
     console.log(`${APIURL}/users/username/${username}`);
     const response = await fetch(`${APIURL}/users/username/${username}`, {
       headers: {
@@ -50,7 +50,7 @@ export async function getUserByUsername(username) {
     });
 
     const result = await response.json();
-    console.log(`result from getUserByUsername: ${result}`)
+    console.log(`result from getUserByUsername: ${result}`);
     return result;
   } catch (error) {
     console.error(error);
@@ -92,7 +92,6 @@ export async function login(username, password) {
 }
 
 export async function createNewOrder({ userId, userEmail }) {
-    
   try {
     const response = await fetch(`${APIURL}/orders`, {
       method: "POST",
@@ -106,9 +105,32 @@ export async function createNewOrder({ userId, userEmail }) {
       }),
     });
     const result = await response.json();
-    
+
     return result;
   } catch (error) {
     console.error(`Create Order Error: ${error}`);
+  }
+}
+
+export async function addItemToOrder({ itemId, orderId, orderPrice, qty }) {
+  try {
+    const response = await fetch(`${APIURL}/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application.json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        itemId,
+        orderId,
+        orderPrice,
+        qty,
+      }),
+    });
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    console.error(`Add item to order error: ${error}`);
   }
 }
