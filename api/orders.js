@@ -5,7 +5,6 @@ import {
   createOrder,
   getAllOpenOrders,
   getOrderById,
-  getOrderByUser,
   deleteOrder,
 
 } from "../db/orders.js";
@@ -17,11 +16,12 @@ ordersRouter.post("/", async (req, res, next) => {
   
   try {
     const newOrder = await createOrder(req.body);
-    // *****If error try changing to destructure all fields for orders from db*****
+   
+    console.log(`newOrder: ${newOrder}`)
     res.send(newOrder);
-  } catch (error) {
+  } catch ({ name, message }) {
 
-    next;
+    next({ name, message });
   }
 });
 
@@ -53,9 +53,9 @@ ordersRouter.get("/:orderid", async (req, res, next) => {
  }
 });
 
-// GET/api/orders/:orderUser - Get order by User
+// GET/api/orders/orderuser/:orderUser - Get order by User
 
-ordersRouter.get("/:orderUser", async ( req, res, next) => {
+ordersRouter.get("/orderuser/:orderUser", async ( req, res, next) => {
     const orderUser = req.params; })
 
 // PATCH/api/orders/:orderid

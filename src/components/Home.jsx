@@ -10,7 +10,7 @@ const Home = () => {
     const getItems = async () => {
       try {
         const response = await getAllItems();
-        console.log(`response from getItems: ${response}`);
+        
         setItems(response);
         setIsLoading(false);
       } catch (error) {

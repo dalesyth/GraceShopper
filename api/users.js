@@ -105,4 +105,17 @@ usersRouter.get("/:userid", async (req, res, next) => {
   }
 });
 
+// GET /api/users/username/:username
+
+usersRouter.get("/username/:username", async (req, res, next) => {
+  const { username } = req.params;
+
+  try {
+    const userByName = await getUserByUsername(username);
+    res.send(userByName);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
 export { usersRouter };
