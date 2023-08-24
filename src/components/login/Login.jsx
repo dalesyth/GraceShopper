@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { Link } from "react-router-dom";
+import { login } from "./loginHelpers"
+import { useNavigate } from "react-router";
+//import { LoggedIn } from "./LoggedIn";
 
-import { login } from "./ApiCalls"
 
 
 const Login = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,13 +29,14 @@ const Login = () => {
         console.log(`About to log in, Login.jsx`)
         const result = await login(username, password);
         if (result) {
-          console.log(`STORED USERNAME: ${localStorage.getItem("username")}`);
-          console.log(`STORED TOKEN: ${localStorage.getItem("token")}`);
+          console.log(`STORED USERNAME: ${JSON.parse(localStorage.getItem("username"))}`);
+          console.log(`STORED TOKEN: ${JSON.parse(localStorage.getItem("token"))}`);
         } else {
+          window.alert("Login Failed!");
           console.log("Login Failed!");
         }
       }
-      //navigate("/Home");
+      navigate("/Home");
     } catch(error) {
       console.error(`Login Error: ${error}`)
     }
@@ -84,12 +88,22 @@ const Login = () => {
       </div>
     </>)
   } else {
-    return (
-      <>
-        <label className="text-red-600  text-5xl">Already Logged In!</label>;
-      </>
-    );
+  return (
+    <>
+      <div className="flex items-center justify-center ">
+        <div className="flex flex-col h-screen items-center justify-center bg-gray-200 w-8/12 h-24  rounded-lg shadow-lg">
+          <h2 className="font-bold pb-2 text-2xl">Already Logged In!</h2>
+          <div className="flex space-x-1">
+            <Link to={`/LogOut`}>Log Out</Link>
+            <div>|</div>
+            <Link to={`/home`}>Cancel</Link>
+          </div>
+        </div>
+      </div>
+    </>
+  ); 
   }
 }
+//const LoginFailed = () => {
 
 export default Login

@@ -8,8 +8,11 @@ import Home from "./components/Home";
 import ItemDetail from "./components/ItemDetail";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
-import Login from "./components/Login";
+import Login from "./components/login/Login";
+import LoggedIn from "./components/login/LoggedIn";
+import LogOut from "./components/login/LogOut";
 import Register from "./components/Register";
+
 
 const router = createBrowserRouter([
   {
@@ -30,12 +33,20 @@ const router = createBrowserRouter([
         element: <Cart />,
       },
       {
-        path: "/CHeckout",
+        path: "/Checkout",
         element: <Checkout />,
       },
       {
         path: "/Login",
         element: <Login />,
+      },
+      {
+        path: "/LoggedIn",
+        element: <LoggedIn />
+      },
+      {
+        path: "/LogOut",
+        element: <LogOut />
       },
       {
         path: "/Register",
