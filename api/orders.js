@@ -55,8 +55,21 @@ ordersRouter.get("/:orderid", async (req, res, next) => {
 
 // GET/api/orders/orderuser/:orderUser - Get order by User
 
-ordersRouter.get("/orderuser/:orderUser", async ( req, res, next) => {
-    const orderUser = req.params; })
+// ordersRouter.get("/orderuser/:orderUser", async ( req, res, next) => {
+//     const orderUser = req.params; })
+
+ // GET/api/orders/orderuser/:user_id - GET order by user_id
+ 
+ ordersRouter.get("/orderuser/:userId", async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const orderByUserId = await getOrderByUserId(userId);
+
+    res.send(orderByUserId);
+  } catch ({ name, message }) {
+    next({ name, message })
+  }
+ })
 
 // PATCH/api/orders/:orderid
 
