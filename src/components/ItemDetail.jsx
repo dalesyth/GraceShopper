@@ -5,6 +5,7 @@ import {
   getUserByUsername,
   createNewOrder,
   addItemToOrder,
+  getOrderByUserId,
 } from "./ApiCalls";
 
 const ItemDetail = () => {
@@ -12,7 +13,6 @@ const ItemDetail = () => {
   const [item, setItem] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const [activeOrder, setActiveOrder] = useState(null);
 
   useEffect(() => {
     const getItemDetail = async () => {
@@ -37,38 +37,47 @@ const ItemDetail = () => {
     const userInfo = await getUserByUsername(username);
     const userId = userInfo.id;
     const userEmail = userInfo.email;
+    const userOrder = await getOrderByUserId(userId);
 
-    if (!activeOrder) {
-      console.log(`activeOrder at start of if stmt: ${activeOrder}`);
+    console.log(`userOrder.id: ${userOrder.id}`);
+    const userOrderId = userOrder.id;
+    console.log(`userOrder.checkout_complete: ${userOrder.checkout_complete}`);
+
+    if (!userOrder || userOrder.checkout_complete) {
+      console.log("IF stmt is truthy, createNewOrder");
       try {
         const response = await createNewOrder({
           userId,
           userEmail,
         });
 
-        console.log(`response.id from handleAddToCart: ${response.id}`);
-
-        setActiveOrder(response.id);
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      try {
-        const orderPrice = quantity * item.price;
-
-        const response = await addItemToOrder({
-          itemId,
-          activeOrder,
-          orderPrice,
-          quantity,
-        });
-
-        console.log(`response from addItemToOrder: ${response}`);
+        console.log(`response.id from createNewOrder: ${response.id}`);
+        console.log(`response.email from createNewOrder: ${response.email}`);
       } catch (error) {
         console.error(error);
       }
     }
-    console.log(`activeOrder after if stmt: ${activeOrder}`);
+
+    try {
+      
+      const itemPriceString = item.price;
+      const priceWithoutDollarSign = itemPriceString.replace('$', '');
+      const itemPrice = parseFloat(priceWithoutDollarSign);
+      const orderPrice = quantity * itemPrice;
+
+      
+
+      const response = await addItemToOrder({
+        itemId,
+        userOrderId,
+        orderPrice,
+        quantity,
+      });
+
+      console.log(`response from addItemToOrder: ${response}`)
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

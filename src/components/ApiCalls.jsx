@@ -39,10 +39,7 @@ export async function getItemById(itemId) {
 
 // GET user by username
 export async function getUserByUsername(username) {
-  console.log(`username passed into getUserByUsername: ${username}`);
   try {
-    console.log(`username inside Try Catch: ${username}`);
-    console.log(`${APIURL}/users/username/${username}`);
     const response = await fetch(`${APIURL}/users/username/${username}`, {
       headers: {
         "Content-Type": "application/json",
@@ -50,12 +47,29 @@ export async function getUserByUsername(username) {
     });
 
     const result = await response.json();
-    console.log(`result from getUserByUsername: ${result}`);
+
     return result;
   } catch (error) {
     console.error(error);
   }
 }
+
+// GET order by userId
+export async function getOrderByUserId(userId) {
+  try {
+    const response = await fetch(`${APIURL}/orders/orderuser/${userId}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// POST ROUTES
 
 export async function login(username, password) {
   console.log(`ApiCalls, UserName: ${username}, password: ${password}`);
@@ -112,9 +126,15 @@ export async function createNewOrder({ userId, userEmail }) {
   }
 }
 
-export async function addItemToOrder({ itemId, orderId, orderPrice, quantity }) {
+export async function addItemToOrder({
+  itemId,
+  userOrderId,
+  orderPrice,
+  quantity,
+}) {
   try {
-    const response = await fetch(`${APIURL}/`, {
+    
+    const response = await fetch(`${APIURL}/orderitems`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -122,13 +142,13 @@ export async function addItemToOrder({ itemId, orderId, orderPrice, quantity }) 
       },
       body: JSON.stringify({
         itemId,
-        orderId,
+        orderId: userOrderId,
         orderPrice,
         qty: quantity,
       }),
     });
     const result = await response.json();
-
+    
     return result;
   } catch (error) {
     console.error(`Add item to order error: ${error}`);
