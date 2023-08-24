@@ -27,6 +27,10 @@ apiRouter.use("/categories", categoriesRouter);
 import { itemCategoryRouter } from "./categoryitems.js";
 apiRouter.use("/categoryitems", itemCategoryRouter);
 
+// ROUTER: /api/orderItemsRouter
+import { orderItemsRouter } from "./orderitems.js";
+apiRouter.use("/orderitems", orderItemsRouter);
+
 // ERROR HANDLER
 
 apiRouter.use((error, req, res, next) => {
