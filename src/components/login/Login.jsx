@@ -43,57 +43,58 @@ const Login = () => {
   }
 
   if (!localStorage.getItem("token")) {
-    return(
-    <>
-      <div className="bg-black/50 fixed top-0 left-0 w-full h-screen">
-        <div className="fixed w-full px-4 py-24 z-50">
-          <div className="max-w-[450px] h-[450px] rounded mx-auto bg-black/80 text-white">
-            <div className="max-w-[320px] mx-auto py-16">
-              <label className="text-red-600  text-5xl">Login</label>
-              <form className="w-full flex flex-col py-4">
-                <label className="text-white font-bold">User Name</label>
-                <input
-                  type="text"
-                  required
-                  onChange={handleUserChange}
-                  className="p-3 my-2 rounded text-black"
-                  placeholder="User Name"
-                />
-                <label className="text-white font-bold">Password</label>
-                <input
-                  type="password"
-                  required
-                  className="p-3 my-2 rounded text-black"
-                  onChange={handlePasswordChange}
-                  placeholder="Password"
-                />
+    return (
+      <>
+        <div className="bg-gray-500/50 fixed top-0 left-0 w-full h-screen">
+          <div className="flex justify-center items-center  py-24">
+            <div className="w-6/12 max-w-[450px] h-100 rounded-lg mx-auto bg-gray-200 ">
+              <div className="max-w-[320px] mx-auto py-6">
+                <label className="font-bold  text-5xl">Login</label>
+                <form className="w-full flex flex-col py-4">
+                  <label className="text-xl font-bold">User Name</label>
+                  <input
+                    type="text"
+                    required
+                    onChange={handleUserChange}
+                    className="p-3 rounded text-black"
+                    placeholder="User Name"
+                  />
+                  <label className="font-bold text-xl  mt-3">Password</label>
+                  <input
+                    type="password"
+                    required
+                    className="p-3 rounded text-black"
+                    onChange={handlePasswordChange}
+                    placeholder="Password"
+                  />
 
-                <button
-                  type="submit"
-                  onClick={handleSubmitButton}
-                  className="bg-red-700 py-3 my-6 rounded font-bold px-4"
-                >
-                  Log in
-                </button>
-                <div>
-                  <Link to={`/home`}>Cancel</Link>
-                  <Link to={`/Register`} className="float-right">
-                    Register
-                  </Link>
-                </div>
-              </form>
+                  <button
+                    type="submit"
+                    onClick={handleSubmitButton}
+                    className="bg-gray-700 text-white py-3 mt-6 mb-3 rounded-lg font-bold text-2xl"
+                  >
+                    Log in
+                  </button>
+                  <div className="font-bold">
+                    <Link to={`/home`}>Cancel</Link>
+                    <Link to={`/Register`} className="float-right">
+                      Register
+                    </Link>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </>)
+      </>
+    );
   } else {
   return (
     <>
       <div className="flex items-center justify-center ">
         <div className="flex flex-col h-screen items-center justify-center bg-gray-200 w-8/12 h-24  rounded-lg shadow-lg">
           <h2 className="font-bold pb-2 text-2xl">Already Logged In!</h2>
-          <div className="flex space-x-1">
+          <div className="flex space-x-1 font-bold">
             <Link to={`/LogOut`}>Log Out</Link>
             <div>|</div>
             <Link to={`/home`}>Cancel</Link>
