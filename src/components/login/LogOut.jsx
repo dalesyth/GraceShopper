@@ -15,7 +15,7 @@ const LogOut = () => {
               </label>
               <div>
                 <br />
-                <Link to={`/`}>Home</Link>
+                <Link to={`/Home`}>Home</Link>
                 <Link to={`/Register`} className="float-right">
                   Register
                 </Link>

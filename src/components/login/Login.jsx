@@ -89,15 +89,18 @@ const Login = () => {
   } else {
   return (
     <>
-      <div className="flex h-screen items-center justify-center">
-        <div className="flex flex-col h-screen items-center justify-center bg-gray-200 w-1/2 h-1/2 rounded-lg shadow-lg">
-          <h2 className="font-bold pb-2">
-            Already Logged In!
-          </h2>
+      <div className="flex items-center justify-center ">
+        <div className="flex flex-col h-screen items-center justify-center bg-gray-200 w-8/12 h-24  rounded-lg shadow-lg">
+          <h2 className="font-bold pb-2 text-2xl">Already Logged In!</h2>
+          <div className="flex space-x-1">
+            <Link to={`/LogOut`}>Log Out</Link>
+            <div>|</div>
+            <Link to={`/home`}>Cancel</Link>
+          </div>
         </div>
       </div>
     </>
-   ); 
+  ); 
   }
 }
 //const LoginFailed = () => {
