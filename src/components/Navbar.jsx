@@ -3,14 +3,10 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   
-  let loginLink = localStorage.getItem("token")? 
-      <Link to="/LogOut" className="no-underline p-6 hover:text-blue-600">
-        Logout
-      </Link>
+  const loginLink = localStorage.getItem("token")? 
+      <Link to="/LogOut" className="no-underline p-6 hover:text-blue-600">Logout</Link>
       :
-      <Link to="/login" className="no-underline p-6     hover:text-blue-600">
-        Login
-      </Link>;
+      <Link to="/login" className="no-underline p-6     hover:text-blue-600">Login</Link>;
     
   
   return (

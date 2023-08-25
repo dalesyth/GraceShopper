@@ -76,8 +76,13 @@ const Login = () => {
                     Log in
                   </button>
                   <div className="font-bold">
-                    <Link to={`/home`}>Cancel</Link>
-                    <Link to={`/Register`} className="float-right">
+                    <Link to={`/home`} className="hover:text-blue-600">
+                      Cancel
+                    </Link>
+                    <Link
+                      to={`/Register`}
+                      className="float-right hover:text-blue-600"
+                    >
                       Register
                     </Link>
                   </div>
