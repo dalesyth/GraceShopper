@@ -65,7 +65,7 @@ async function createTables() {
       shipping_zip_code INTEGER,
       shipping_country varchar(255),
       email varchar(255),
-      order_total MONEY,
+      order_total NUMERIC,
       use_default_address BOOLEAN DEFAULT FALSE,
       checkout_complete BOOLEAN DEFAULT FALSE,
       order_fulfilled BOOLEAN DEFAULT FALSE
@@ -77,7 +77,7 @@ async function createTables() {
       CREATE TABLE items (
         id SERIAL PRIMARY KEY, 
         title varchar(255),
-        price MONEY,
+        price NUMERIC,
         inventory INTEGER,
         image_name varchar(100)
       );
@@ -89,7 +89,7 @@ async function createTables() {
       id SERIAL PRIMARY KEY,
       "itemId" INTEGER REFERENCES items(id),
       "orderId" INTEGER REFERENCES orders(id),
-      "orderPrice" MONEY,
+      "orderPrice" NUMERIC,
       qty INTEGER
       );
       `);

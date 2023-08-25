@@ -1,27 +1,26 @@
-const APIURL = 'http://localhost:3000/api';
+const APIURL = "http://localhost:3000/api";
 
 // GET ROUTES
 
 // GET all items
 export async function getAllItems() {
-    try {
-        const response = await fetch(`${APIURL}/items`, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+  try {
+    const response = await fetch(`${APIURL}/items`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-        const result = await response.json();
+    const result = await response.json();
 
-        return result;
-    } catch (error) {
-        console.error(error);
-    }
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // GET item by ID
 export async function getItemById(itemId) {
-
   try {
     const response = await fetch(`${APIURL}/items/${itemId}`, {
       headers: {
@@ -71,21 +70,13 @@ export async function getOrderByUserId(userId) {
 
 // POST ROUTES
 
-
-
-    
-   
-
-
-
-
 export async function createNewOrder({ userId, userEmail }) {
   try {
     const response = await fetch(`${APIURL}/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         user_id: userId,
@@ -107,12 +98,11 @@ export async function addItemToOrder({
   quantity,
 }) {
   try {
-    
     const response = await fetch(`${APIURL}/orderitems`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         itemId,
@@ -122,10 +112,9 @@ export async function addItemToOrder({
       }),
     });
     const result = await response.json();
-    
+
     return result;
   } catch (error) {
     console.error(`Add item to order error: ${error}`);
   }
 }
-

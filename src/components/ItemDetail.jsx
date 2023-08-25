@@ -59,13 +59,7 @@ const ItemDetail = () => {
     }
 
     try {
-      
-      const itemPriceString = item.price;
-      const priceWithoutDollarSign = itemPriceString.replace('$', '');
-      const itemPrice = parseFloat(priceWithoutDollarSign);
-      const orderPrice = quantity * itemPrice;
-
-      
+      const orderPrice = quantity * item.price;
 
       const response = await addItemToOrder({
         itemId,
@@ -74,7 +68,7 @@ const ItemDetail = () => {
         quantity,
       });
 
-      console.log(`response from addItemToOrder: ${response}`)
+      console.log(`response from addItemToOrder: ${response}`);
     } catch (error) {
       console.error(error);
     }
@@ -87,7 +81,7 @@ const ItemDetail = () => {
       ) : item ? (
         <div className="flex flex-col h-screen items-center justify-center bg-gray-200 w-1/2 h-1/2 rounded-lg shadow-lg">
           <h2 className="font-bold pb-2">{item.title}</h2>
-          <div>Price: {item.price}</div>
+          <div>Price: ${item.price}</div>
           <div>
             <label htmlFor="quantity">Quantity:</label>
             <input
