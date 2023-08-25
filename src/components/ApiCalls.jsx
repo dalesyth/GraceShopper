@@ -68,6 +68,21 @@ export async function getOrderByUserId(userId) {
   }
 }
 
+// GET cart by userId
+export async function getCartByUserId(userId) {
+  try {
+    const response = await fetch(`${APIURL}/cart/${userId}`, {
+      header: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // POST ROUTES
 
 export async function createNewOrder({ userId, userEmail }) {

@@ -69,6 +69,8 @@ const ItemDetail = () => {
       });
 
       console.log(`response from addItemToOrder: ${response}`);
+      alert(`${item.title} has been added to your cart!`);
+      setQuantity("");
     } catch (error) {
       console.error(error);
     }
