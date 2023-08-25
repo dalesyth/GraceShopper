@@ -71,14 +71,7 @@ export async function getOrderByUserId(userId) {
 
 // POST ROUTES
 
-export async function login(username, password) {
-  console.log(`ApiCalls, UserName: ${username}, password: ${password}`);
-  const fullAPIURL = `${APIURL}/users/login`;
-  const body = JSON.stringify({
-    username: username,
-    password: password,
-  });
-  console.log(`PASSWORD: ${password} Line: 48`);
+
 
     
    
