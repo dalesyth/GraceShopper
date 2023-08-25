@@ -10,7 +10,7 @@ const Home = () => {
     const getItems = async () => {
       try {
         const response = await getAllItems();
-        
+
         setItems(response);
         setIsLoading(false);
       } catch (error) {
@@ -32,7 +32,7 @@ const Home = () => {
           {items.map((item) => (
             <div key={item.id} className="border p-4 bg-gray-200">
               <h2 className="font-bold pb-2">{item.title}</h2>
-              <div className="pb-2">Price: {item.price}</div>
+              <div className="pb-2">Price: ${item.price}</div>
               <Link
                 to={`/itemdetail/${item.id}`}
                 className="bg-blue-400 text-white font-bold px-0.5 py-1 rounded-lg hover:bg-blue-600 hover:font-extrabold"

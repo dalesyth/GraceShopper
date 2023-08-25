@@ -94,6 +94,7 @@ async function createInitialOrders() {
         shipping_zip_code: 50613,
         shipping_country: "USA",
         order_total: 100.25,
+        checkout_complete: true,
       },
       {
         user_id: 2,
