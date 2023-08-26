@@ -148,7 +148,7 @@ async function createInitialItems() {
         title: "Green Shield, Shade Clot Plastic Clips",
         price: 12.75,
         inventory: 300,
-        image_name: "extension_plugs.jpg",
+        image_name: "tie_down_clips.jpg",
       },
     ];
     await Promise.all(ordersToCreate.map(createItem));

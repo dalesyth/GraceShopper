@@ -133,3 +133,21 @@ export async function addItemToOrder({
     console.error(`Add item to order error: ${error}`);
   }
 }
+
+// DELETE ROUTES
+
+export async function removeItemFromOrder(id) {
+  try {
+    const response = await fetch(`${APIURL}/orderitems/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(`result from removeItemFromOrder: ${result}`);
+    return result;
+  } catch (error) {
+    console.error(`error removing item from order: ${error}`)
+  }
+}

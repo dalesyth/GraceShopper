@@ -4,7 +4,7 @@ async function getCartData(userId) {
   try {
     const { rows } = await client.query(
       `
-              SELECT users.id, orders.id, ordered_items.id, ordered_items.qty, ordered_items."orderPrice", items.title, items.price
+              SELECT users.id, orders.id as order_id, ordered_items.id as ordered_items_id, ordered_items.qty, ordered_items."orderPrice", items.title, items.price, items.image_name
               FROM users
               JOIN orders ON users.id = orders.user_id
               JOIN ordered_items ON orders.id = ordered_items."orderId"

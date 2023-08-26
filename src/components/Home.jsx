@@ -29,9 +29,14 @@ const Home = () => {
         <p>No items available</p>
       ) : (
         <div className="grid grid-cols-3 gap-4">
-          {items.map((item) => (
-            <div key={item.id} className="border p-4 bg-gray-200">
+          {items.map((item, index) => (
+            <div key={index} className="border p-4 bg-gray-200">
               <h2 className="font-bold pb-2">{item.title}</h2>
+              <img
+                src={`../public/${item.image_name}`}
+                alt={item.title}
+                className="w-32 h-32 object-cover"
+              />
               <div className="pb-2">Price: ${item.price}</div>
               <Link
                 to={`/itemdetail/${item.id}`}
