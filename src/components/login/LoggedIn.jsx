@@ -14,8 +14,8 @@ const LoggedIn = () => {
       */}
       <label className="text-red-600  text-5xl">Already Logged In!</label>;
       <div>
-        <Link to={`/Home`}>Cancel</Link>
-        <Link to={`/Register`} className="float-right">
+        <Link to={`/home`}>Cancel</Link>
+        <Link to={`/register`} className="float-right"> 
           Register
         </Link>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getAllItems } from "./ApiCalls";
 
@@ -39,7 +39,7 @@ const Home = () => {
               />
               <div className="pb-2">Price: ${item.price}</div>
               <Link
-                to={`/itemdetail/${item.id}`}
+                to={`/item-detail/${item.id}`}
                 className="bg-blue-400 text-white font-bold px-0.5 py-1 rounded-lg hover:bg-blue-600 hover:font-extrabold"
               >
                 View Details
