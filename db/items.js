@@ -137,15 +137,15 @@ async function attachItemToOrder({ itemId, orderId, orderPrice, qty }) {
   }
 }
 
-async function removeItemFromOrder({ itemId, orderId }) {
+async function removeItemFromOrder(id) {
   try {
     const { rows } = await client.query(
       `
             DELETE FROM ordered_items
-            WHERE "itemId" = $1 AND "orderId" = $2
+            WHERE id = $1
             RETURNING *;
             `,
-      [itemId, orderId]
+      [id]
     );
 
     return rows;

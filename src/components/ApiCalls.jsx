@@ -68,6 +68,21 @@ export async function getOrderByUserId(userId) {
   }
 }
 
+// GET cart by userId
+export async function getCartByUserId(userId) {
+  try {
+    const response = await fetch(`${APIURL}/cart/${userId}`, {
+      header: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // POST ROUTES
 
 export async function createNewOrder({ userId, userEmail }) {
@@ -116,5 +131,23 @@ export async function addItemToOrder({
     return result;
   } catch (error) {
     console.error(`Add item to order error: ${error}`);
+  }
+}
+
+// DELETE ROUTES
+
+export async function removeItemFromOrder(id) {
+  try {
+    const response = await fetch(`${APIURL}/orderitems/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(`result from removeItemFromOrder: ${result}`);
+    return result;
+  } catch (error) {
+    console.error(`error removing item from order: ${error}`)
   }
 }

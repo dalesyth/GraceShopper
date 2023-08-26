@@ -69,6 +69,8 @@ const ItemDetail = () => {
       });
 
       console.log(`response from addItemToOrder: ${response}`);
+      alert(`${item.title} has been added to your cart!`);
+      setQuantity("");
     } catch (error) {
       console.error(error);
     }
@@ -81,6 +83,11 @@ const ItemDetail = () => {
       ) : item ? (
         <div className="flex flex-col h-screen items-center justify-center bg-gray-200 w-1/2 h-1/2 rounded-lg shadow-lg">
           <h2 className="font-bold pb-2">{item.title}</h2>
+          <img
+            src={`../public/${item.image_name}`}
+            alt={item.title}
+            className="w-32 h-32 object-cover"
+          />
           <div>Price: ${item.price}</div>
           <div>
             <label htmlFor="quantity">Quantity:</label>
