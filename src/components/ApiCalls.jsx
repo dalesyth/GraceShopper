@@ -148,6 +148,6 @@ export async function removeItemFromOrder(id) {
     console.log(`result from removeItemFromOrder: ${result}`);
     return result;
   } catch (error) {
-    console.error(`error removing item from order: ${error}`)
+    console.error(`error removing item from order: ${error}`);
   }
 }

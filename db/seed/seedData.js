@@ -167,13 +167,13 @@ async function createInitialOrderItem() {
       {
         itemId: 1,
         orderId: 1,
-        orderPrice: 101.2,
+        orderPrice: 202.4,
         qty: 2,
       },
       {
         itemId: 2,
         orderId: 1,
-        orderPrice: 25.75,
+        orderPrice: 77.25,
         qty: 3,
       },
       {
@@ -185,19 +185,19 @@ async function createInitialOrderItem() {
       {
         itemId: 4,
         orderId: 2,
-        orderPrice: 12.75,
+        orderPrice: 127.50,
         qty: 10,
       },
       {
         itemId: 2,
         orderId: 2,
-        orderPrice: 152.75,
+        orderPrice: 25.75,
         qty: 1,
       },
       {
         itemId: 1,
         orderId: 3,
-        orderPrice: 10.75,
+        orderPrice: 506.00,
         qty: 5,
       },
     ];

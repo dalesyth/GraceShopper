@@ -11,7 +11,7 @@ const LogOut = () => {
           <div className="mx-auto max-w-[450px] h-100 rounded-lg bg-gray-200">
             <div className="font-bold max-w-[320px] mx-auto py-6 px-3">
               <div className="text-center">
-                <label className="text-3xl">Your have been logged Out!</label>
+                <label className="text-3xl">You have been logged Out!</label>
               </div>
               <div>
                 <br />

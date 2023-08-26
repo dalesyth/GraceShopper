@@ -28,6 +28,12 @@ const Cart = () => {
     getCart();
   }, []);
 
+  const cartTotal = cartItems.reduce(
+    (accumulator, currentValue) =>
+      accumulator + parseFloat(currentValue.ordered_items_total),
+    0
+  );
+
   const handleRemoveItem = async (id) => {
     console.log(`id from handleRemoveItem: ${id}`);
 
@@ -63,8 +69,8 @@ const Cart = () => {
                 />
               </span>
               <span className="font-bold">{item.title}</span>
-              <span>${item.price}</span>
-              <span>Quantity: {item.qty}</span>
+              <span>${item.ordered_items_total}</span>
+              <span>Quantity: {item.ordered_items_qty}</span>
 
               <button
                 className="h-10 bg-blue-400 text-white font-bold px-1 py-1 rounded-lg hover:bg-blue-600 hover:font-extrabold"
@@ -74,6 +80,9 @@ const Cart = () => {
               </button>
             </div>
           ))}
+          <div className="flex justify-end">
+            <span className="font-bold">Total: ${cartTotal}</span>
+          </div>
         </div>
       )}
     </div>
