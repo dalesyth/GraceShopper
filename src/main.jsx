@@ -12,7 +12,7 @@ import Login from "./components/login/Login";
 import LoggedIn from "./components/login/LoggedIn";
 import LogOut from "./components/login/LogOut";
 import Register from "./components/Register";
-
+import Admin from "./components/admin";
 
 const router = createBrowserRouter([
   {
@@ -21,38 +21,42 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/Home",
+        path: "/home",
         element: <Home />,
       },
       {
-        path: "/ItemDetail/:itemId",
+        path: "/item-detail/:itemId",
         element: <ItemDetail />,
       },
       {
-        path: "/Cart",
+        path: "/cart",
         element: <Cart />,
       },
       {
-        path: "/Checkout",
+        path: "/checkout",
         element: <Checkout />,
       },
       {
-        path: "/Login",
+        path: "/login",
         element: <Login />,
       },
       {
-        path: "/LoggedIn",
-        element: <LoggedIn />
+        path: "/logged-in",
+        element: <LoggedIn />,
       },
       {
-        path: "/LogOut",
-        element: <LogOut />
+        path: "/logout",
+        element: <LogOut />,
       },
       {
-        path: "/Register",
+        path: "/register",
         element: <Register />,
       },
-      
+
+      {
+        path: "/admin",
+        element: <Admin />,
+      },
     ],
   },
 ]);

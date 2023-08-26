@@ -15,10 +15,10 @@ const LogOut = () => {
               </div>
               <div>
                 <br />
-                <Link to={`/Home`} className="hover:text-blue-600">
+                <Link to={`/home`} className="hover:text-blue-600">
                   Home
                 </Link>
-                <Link to={`/Register`} className="float-right hover:text-blue-600">
+                <Link to={`/register`} className="float-right hover:text-blue-600">
                   Register
                 </Link>
               </div>

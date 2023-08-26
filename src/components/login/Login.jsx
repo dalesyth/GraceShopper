@@ -36,7 +36,7 @@ const Login = () => {
           console.log("Login Failed!");
         }
       }
-      navigate("/Home");
+      navigate("/home");
     } catch(error) {
       console.error(`Login Error: ${error}`)
     }
@@ -80,7 +80,7 @@ const Login = () => {
                       Cancel
                     </Link>
                     <Link
-                      to={`/Register`}
+                      to={`/register`}
                       className="float-right hover:text-blue-600"
                     >
                       Register
@@ -100,7 +100,7 @@ const Login = () => {
         <div className="flex flex-col h-screen items-center justify-center bg-gray-200 w-8/12 h-24  rounded-lg shadow-lg">
           <h2 className="font-bold pb-2 text-2xl">Already Logged In!</h2>
           <div className="flex space-x-1 font-bold">
-            <Link to={`/LogOut`}>Log Out</Link>
+            <Link to={`/logout`}>Log Out</Link>
             <div>|</div>
             <Link to={`/home`}>Cancel</Link>
           </div>
@@ -110,6 +110,6 @@ const Login = () => {
   ); 
   }
 }
-//const LoginFailed = () => {
+
 
 export default Login
