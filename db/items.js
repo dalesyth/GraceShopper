@@ -154,6 +154,24 @@ async function removeItemFromOrder(id) {
   }
 }
 
+async function updateItemQtyInOrder(id, qty) {
+  try {
+    const { rows: [item] } = await client.query(
+      `
+      UPDATE ordered_items
+      SET qty = $1
+      WHERE id = $2
+      RETURNING *;
+      `,
+      [qty, id]
+    )
+
+    return item;
+  } catch (error) {
+    console.error(`db error updating item qty in order: ${error}`)
+  }
+}
+
 async function attachItemToCategory({ itemId, categoryId }) {
   try {
     const { rows } = await client.query(
@@ -232,4 +250,5 @@ export {
   removeItemFromCategory,
   itemInCategory,
   deleteItem,
+  updateItemQtyInOrder
 };

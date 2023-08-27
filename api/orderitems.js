@@ -1,6 +1,10 @@
 import express from "express";
 const orderItemsRouter = express.Router();
-import { attachItemToOrder, removeItemFromOrder } from "../db/items.js";
+import {
+  attachItemToOrder,
+  removeItemFromOrder,
+  updateItemQtyInOrder,
+} from "../db/items.js";
 
 orderItemsRouter.post("/", async (req, res, next) => {
   const { itemId, orderId, orderPrice, qty } = req.body;
@@ -23,11 +27,24 @@ orderItemsRouter.delete("/:orderItemId", async (req, res, next) => {
 
   try {
     const deletedItem = await removeItemFromOrder(orderItemId);
-    
+
     res.send(deletedItem);
   } catch ({ name, message }) {
-    next({ name, message })
+    next({ name, message });
   }
-})
+});
+
+orderItemsRouter.patch("/:orderItemId", async (req, res, next) => {
+  const { orderItemId } = req.params;
+  const { qty } = req.body;
+
+  try {
+    const updatedItem = await updateItemQtyInOrder(orderItemId, qty);
+
+    res.send(updatedItem);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 
 export { orderItemsRouter };
