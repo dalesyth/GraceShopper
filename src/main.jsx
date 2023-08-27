@@ -11,7 +11,7 @@ import Checkout from "./components/Checkout";
 import Login from "./components/login/Login";
 import LoggedIn from "./components/login/LoggedIn";
 import LogOut from "./components/login/LogOut";
-import Register from "./components/Register";
+import Register from "./components/register/Register";
 import Admin from "./components/admin";
 
 const router = createBrowserRouter([
