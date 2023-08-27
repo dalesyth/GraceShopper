@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   getCartByUserId,
   getUserByUsername,
@@ -8,6 +9,7 @@ import {
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getCart = async () => {
@@ -48,6 +50,12 @@ const Cart = () => {
     }
   };
 
+  const handleCheckout = () => {
+    
+    navigate("/checkout")
+
+  }
+
   return (
     <div>
       {isLoading ? (
@@ -59,7 +67,7 @@ const Cart = () => {
           {cartItems.map((item, index) => (
             <div
               key={index}
-              className="border p-4 bg-gray-200 flex justify-between"
+              className="border p-4 bg-gray-200 flex justify-between shadow-lg"
             >
               <span>
                 <img
@@ -80,8 +88,14 @@ const Cart = () => {
               </button>
             </div>
           ))}
-          <div className="flex justify-end">
-            <span className="font-bold">Total: ${cartTotal}</span>
+          <div className="flex justify-end my-3">
+            <span className="font-bold">Cart Total: ${cartTotal}</span>
+          </div>
+          <div className="flex justify-end my-3">
+            <button className="h-10 bg-yellow-400 text-black font-bold px-1 py-1 rounded-lg hover:bg-yellow-600 hover:font-extrabold shadow-lg"
+            onClick={handleCheckout}>
+              Proceed to checkout
+            </button>
           </div>
         </div>
       )}
