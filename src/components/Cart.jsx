@@ -4,6 +4,7 @@ import {
   getCartByUserId,
   getUserByUsername,
   removeItemFromOrder,
+  updateQtyInOrder,
 } from "./ApiCalls";
 
 const Cart = () => {
@@ -50,11 +51,26 @@ const Cart = () => {
     }
   };
 
-  const handleCheckout = () => {
-    
-    navigate("/checkout")
+  const handleQuantityChange = async (id, updateQty) => {
+    try {
+      await updateQtyInOrder(id, updateQty);
+      setCartItems((prevCartItems) =>
+        prevCartItems.map((item) =>
+          item.ordered_items_id === id
+            ? { ...item, 
+              ordered_items_qty: updateQty,
+              ordered_items_total: item.price * updateQty }
+            : item
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  }
+  const handleCheckout = () => {
+    navigate("/checkout");
+  };
 
   return (
     <div>
@@ -78,7 +94,19 @@ const Cart = () => {
               </span>
               <span className="font-bold">{item.title}</span>
               <span>${item.ordered_items_total}</span>
-              <span>Quantity: {item.ordered_items_qty}</span>
+              <span>
+                Quantity:{" "}
+                <input
+                  type="number"
+                  value={item.ordered_items_qty}
+                  onChange={(event) =>
+                    handleQuantityChange(
+                      item.ordered_items_id,
+                      event.target.value
+                    )
+                  }
+                ></input>
+              </span>
 
               <button
                 className="h-10 bg-blue-400 text-white font-bold px-1 py-1 rounded-lg hover:bg-blue-600 hover:font-extrabold"
@@ -92,8 +120,10 @@ const Cart = () => {
             <span className="font-bold">Cart Total: ${cartTotal}</span>
           </div>
           <div className="flex justify-end my-3">
-            <button className="h-10 bg-yellow-400 text-black font-bold px-1 py-1 rounded-lg hover:bg-yellow-600 hover:font-extrabold shadow-lg"
-            onClick={handleCheckout}>
+            <button
+              className="h-10 bg-yellow-400 text-black font-bold px-1 py-1 rounded-lg hover:bg-yellow-600 hover:font-extrabold shadow-lg"
+              onClick={handleCheckout}
+            >
               Proceed to checkout
             </button>
           </div>

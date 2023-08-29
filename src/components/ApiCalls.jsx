@@ -151,3 +151,24 @@ export async function removeItemFromOrder(id) {
     console.error(`error removing item from order: ${error}`);
   }
 }
+
+// PATCH ROUTES
+
+export async function updateQtyInOrder(id, qty) {
+  try {
+    const response = await fetch(`${APIURL}/orderitems/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        qty: qty,
+      }),
+    });
+    const result = await response.json();
+    console.log(`result from updateQtyInOrder: ${result}`);
+    return result;
+  } catch (error) {
+    console.error(`error updating qty in cart: ${error}`);
+  }
+}
