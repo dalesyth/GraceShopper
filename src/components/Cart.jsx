@@ -69,7 +69,7 @@ const Cart = () => {
   };
 
   const handleCheckout = () => {
-    navigate("/checkout");
+    navigate(`/checkout/${cartTotal}`);
   };
 
   return (
@@ -83,13 +83,13 @@ const Cart = () => {
           {cartItems.map((item, index) => (
             <div
               key={index}
-              className="border p-4 bg-gray-200 flex justify-between shadow-lg"
+              className="border p-4 bg-gray-200 flex justify-between shadow-lg mb-2"
             >
               <span>
                 <img
                   src={`../public/${item.image_name}`}
                   alt={item.title}
-                  className="w-32 h-32 object-cover"
+                  className="w-32 h-32"
                 />
               </span>
               <span className="font-bold">{item.title}</span>
