@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 const Checkout = () => {
   const [firstName, setFirstName] = useState("");
@@ -15,6 +16,8 @@ const Checkout = () => {
   const [cardNumber, setCardNumber] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
   const [cvv, setCvv] = useState("");
+
+  const { cartTotal } = useParams();
 
   const handleFirstName = (event) => {
     setFirstName(event.target.value);
@@ -74,6 +77,21 @@ const Checkout = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    alert("Your order is being processed, and will ship in 1-2 days");
+    setFirstName("");
+    setLastName("");
+    setStreetAddress("");
+    setCity("");
+    setState("");
+    setZipCode("");
+    setBillingName("");
+    setBillingAddress("");
+    setBillingCity("");
+    setBillingState("");
+    setBillingZipCode("");
+    setCardNumber("");
+    setExpirationDate("");
+    setCvv("");
   };
 
   return (
@@ -143,7 +161,10 @@ const Checkout = () => {
             />
           </div>
         </form>
-        <form className="mt-12 mx-3 bg-gray-200 p-2 shadow-lg">
+        <form
+          className="mt-12 mx-3 bg-gray-200 p-2 shadow-lg"
+          onSubmit={handleSubmit}
+        >
           <h3 className="font-bold">Payment Method</h3>
           <div>
             <input
@@ -220,6 +241,18 @@ const Checkout = () => {
               placeholder="CVV"
               required
             />
+          </div>
+          <div className="font-bold my-3 flex justify-end">
+            <span>Your Order Total:</span>
+            <span>${cartTotal}</span>
+          </div>
+          <div className="flex justify-end">
+            <button
+              className="h-10 bg-yellow-400 text-black font-bold px-1 py-1 rounded-lg hover:bg-yellow-600 hover:font-extrabold shadow-lg"
+              type="submit"
+            >
+              Submit Order
+            </button>
           </div>
         </form>
       </div>
