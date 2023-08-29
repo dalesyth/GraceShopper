@@ -30,17 +30,26 @@ const Home = () => {
       ) : (
         <div className="grid grid-cols-3 gap-4">
           {items.map((item, index) => (
-            <div key={index} className="border p-4 bg-gray-200">
-              <h2 className="font-bold pb-2">{item.title}</h2>
-              <img
-                src={`../public/${item.image_name}`}
-                alt={item.title}
-                className="w-32 h-32 object-cover"
-              />
-              <div className="pb-2">Price: ${item.price}</div>
+            <div
+              key={index}
+              className="border p-4 bg-gray-200 rounded-lg shadow-lg"
+            >
+              <h2 className="font-bold pb-2 flex justify-center">
+                {item.title}
+              </h2>
+              <div className="flex justify-center">
+                <img
+                  src={`../public/${item.image_name}`}
+                  alt={item.title}
+                  className="w-32 h-32"
+                />
+              </div>
+              <div className="pb-2 py-2 flex justify-center">
+                Price: ${item.price}
+              </div>
               <Link
                 to={`/item-detail/${item.id}`}
-                className="bg-blue-400 text-white font-bold px-0.5 py-1 rounded-lg hover:bg-blue-600 hover:font-extrabold"
+                className="bg-blue-400 text-white font-bold px-0.5 py-1 rounded-lg hover:bg-blue-600 hover:font-extrabold flex justify-center"
               >
                 View Details
               </Link>
