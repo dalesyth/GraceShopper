@@ -83,7 +83,7 @@ const Cart = () => {
           {cartItems.map((item, index) => (
             <div
               key={index}
-              className="border p-4 bg-gray-200 flex justify-between shadow-lg mb-2"
+              className="border p-4 bg-gray-200 flex justify-between shadow-lg mb-2 rounded-lg"
             >
               <span>
                 <img
@@ -97,6 +97,7 @@ const Cart = () => {
               <span>
                 Quantity:{" "}
                 <input
+                  className="w-12 text-center"
                   type="number"
                   value={item.ordered_items_qty}
                   onChange={(event) =>
@@ -109,7 +110,7 @@ const Cart = () => {
               </span>
 
               <button
-                className="h-10 bg-blue-400 text-white font-bold px-1 py-1 rounded-lg hover:bg-blue-600 hover:font-extrabold"
+                className="h-10 bg-blue-400 text-gray-100 font-bold px-1 py-1 rounded-lg hover:bg-blue-600 hover:font-extrabold"
                 onClick={() => handleRemoveItem(item.ordered_items_id)}
               >
                 Remove from Cart
@@ -117,7 +118,7 @@ const Cart = () => {
             </div>
           ))}
           <div className="flex justify-end my-3">
-            <span className="font-bold">Cart Total: ${cartTotal}</span>
+            <span className="font-bold text-gray-100">Cart Total: ${cartTotal}</span>
           </div>
           <div className="flex justify-end my-3">
             <button

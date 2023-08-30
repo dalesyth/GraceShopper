@@ -49,7 +49,7 @@ const Home = () => {
               </div>
               <Link
                 to={`/item-detail/${item.id}`}
-                className="bg-blue-400 text-white font-bold px-0.5 py-1 rounded-lg hover:bg-blue-600 hover:font-extrabold flex justify-center"
+                className="bg-blue-400 text-gray-100 font-bold px-0.5 py-1 rounded-lg hover:bg-blue-600 hover:font-extrabold flex justify-center"
               >
                 View Details
               </Link>

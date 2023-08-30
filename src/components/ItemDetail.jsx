@@ -81,7 +81,7 @@ const ItemDetail = () => {
       {isLoading ? (
         <p>Loading...</p>
       ) : item ? (
-        <div className="detail-container grid grid-cols-2 bg-gray-200 rounded-lg shadow-lg h-1/3 w-2/3">
+        <div className="detail-container grid grid-cols-2 bg-gray-200 rounded-lg shadow-lg h-2/5 w-4/5">
           <div className="photo-container flex justify-center items-center">
             <img
               src={`../public/${item.image_name}`}
@@ -92,18 +92,20 @@ const ItemDetail = () => {
 
           <div className="item-details flex justify-center items-center flex-col">
             <div>
-            <h2 className="font-bold pb-2">{item.title}</h2>
-            <div className="pb-2">Price: ${item.price}</div>
-            <div>
-              <label className="mr-2" htmlFor="quantity">Quantity:</label>
-              <input
-                
-                type="number"
-                id="quantity"
-                value={quantity}
-                onChange={handleQuantity}
-              ></input>
-            </div>
+              <h2 className="font-bold pb-2">{item.title}</h2>
+              <div className="pb-2">Price: ${item.price}</div>
+              <div>
+                <label className="mr-2" htmlFor="quantity">
+                  Quantity:
+                </label>
+                <input
+                  className="w-12 text-center"
+                  type="number"
+                  id="quantity"
+                  value={quantity}
+                  onChange={handleQuantity}
+                ></input>
+              </div>
             </div>
             <div>
               <button
