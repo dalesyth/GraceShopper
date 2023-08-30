@@ -1,61 +1,49 @@
-import { Form } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 
-export default function UpdateProduct( id ) {
-  //const { product } = useLoaderData();
-
-  const product = {
-    title: "item",
-    price: "$1",
-    inventory: "3",
-    image_name: "yourimage.img",
-  };
+export default function UpdateProduct() {
+  const { item } = useLoaderData();
 
   return (
-    <Form method="post" id="product-form">
+    <Form method="post" id="item-form">
       <p>
-        <span>Product:</span>
+        <span>Title</span>
         <input
-          placeholder="product"
-          aria-label="Product Name"
+          placeholder="Product Title"
+          aria-label="Product Title"
           type="text"
           name="product"
-          defaultValue={product.title}
+          defaultValue={item.title}
         />
       </p>
       <p>
-        <span>Price:</span>
+        <span>Price</span>
         <input
-          placeholder="price"
-          aria-label="Product Price"
+          placeholder="Price"
+          aria-label="Product price"
           type="text"
           name="price"
-          pattern="^(\{1, 3}(\, \d{3})"
-          defaultValue={product.price}
+          defaultValue={`${item.price}`}
         />
       </p>
       <p>
-        <span>Inventory:</span>
+        <span>Inventory</span>
         <input
           placeholder="inventory"
-          aria-label="Product Inventory On Hand"
-          type="text"
-          name="price"
-          defaultValue={product.inventory}
+          aria-label="Product inventory"
+          type="number"
+          name="inventory"
+          defaultValue={`${item.inventory}`}
         />
       </p>
       <p>
-        <span>Image Name:</span>
+        <span>Image Name</span>
         <input
-          placeholder="image name"
-          aria-label="Image Name"
+          placeholder="image_name"
+          aria-label="Product Image"
           type="text"
-          name="imgName"
-          defaultValue={product.image_name}
+          name="image_name"
+          defaultValue={`${item.image_name}`}
         />
-      </p>
-      <p>
-        <button type="submit">Save</button>
-        <button type="button">Cancel</button>
       </p>
     </Form>
   );
