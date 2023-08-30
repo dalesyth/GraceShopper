@@ -96,10 +96,10 @@ const Checkout = () => {
 
   return (
     <div className="checkout-container">
-      <h1 className="font-bold flex justify-center text-3xl">Checkout</h1>
+      <h1 className="font-bold flex justify-center text-3xl text-gray-100">Checkout</h1>
       <div className="checkoutForm grid grid-cols-2">
         <form
-          className="mt-12 bg-gray-200 p-2 shadow-lg"
+          className="mt-12 bg-gray-200 p-2 shadow-lg rounded-lg"
           onSubmit={handleSubmit}
         >
           <h3 className="font-bold">Shipping address</h3>
@@ -162,7 +162,7 @@ const Checkout = () => {
           </div>
         </form>
         <form
-          className="mt-12 mx-3 bg-gray-200 p-2 shadow-lg"
+          className="mt-12 mx-3 bg-gray-200 p-2 shadow-lg rounded-lg"
           onSubmit={handleSubmit}
         >
           <h3 className="font-bold">Payment Method</h3>
