@@ -81,30 +81,40 @@ const ItemDetail = () => {
       {isLoading ? (
         <p>Loading...</p>
       ) : item ? (
-        <div className="flex flex-col h-screen items-center justify-center bg-gray-200 w-1/2 h-1/2 rounded-lg shadow-lg">
-          <h2 className="font-bold pb-2">{item.title}</h2>
-          <img
-            src={`../public/${item.image_name}`}
-            alt={item.title}
-            className="w-32 h-32 object-cover"
-          />
-          <div>Price: ${item.price}</div>
-          <div>
-            <label htmlFor="quantity">Quantity:</label>
-            <input
-              type="number"
-              id="quantity"
-              value={quantity}
-              onChange={handleQuantity}
-            ></input>
+        <div className="detail-container grid grid-cols-2 bg-gray-200 rounded-lg shadow-lg h-2/5 w-4/5">
+          <div className="photo-container flex justify-center items-center">
+            <img
+              src={`../public/${item.image_name}`}
+              alt={item.title}
+              className="w-3/4 h-3/4"
+            />
           </div>
-          <div>
-            <button
-              className="bg-blue-400 text-white font-bold px-0.5 py-1 rounded-lg hover:bg-blue-600 hover:font-extrabold"
-              onClick={handleAddToCart}
-            >
-              Add To Cart
-            </button>
+
+          <div className="item-details flex justify-center items-center flex-col">
+            <div>
+              <h2 className="font-bold pb-2">{item.title}</h2>
+              <div className="pb-2">Price: ${item.price}</div>
+              <div>
+                <label className="mr-2" htmlFor="quantity">
+                  Quantity:
+                </label>
+                <input
+                  className="w-12 text-center"
+                  type="number"
+                  id="quantity"
+                  value={quantity}
+                  onChange={handleQuantity}
+                ></input>
+              </div>
+            </div>
+            <div>
+              <button
+                className="bg-blue-400 text-white font-bold px-0.5 py-1 mt-2 rounded-lg hover:bg-blue-600 hover:font-extrabold"
+                onClick={handleAddToCart}
+              >
+                Add To Cart
+              </button>
+            </div>
           </div>
         </div>
       ) : (

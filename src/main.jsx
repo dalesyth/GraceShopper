@@ -12,8 +12,9 @@ import Login from "./components/login/Login";
 import LoggedIn from "./components/login/LoggedIn";
 import LogOut from "./components/login/LogOut";
 import Register from "./components/register/Register";
-import Admin from "./components/admin";
-
+import Admin from "./components/Admin";
+import Products from "./components/products/Products";
+import UpdateProduct from "./components/products/UpdateProducts";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
         element: <Cart />,
       },
       {
-        path: "/checkout",
+        path: "/checkout/:cartTotal",
         element: <Checkout />,
       },
       {
@@ -56,6 +57,16 @@ const router = createBrowserRouter([
       {
         path: "/admin",
         element: <Admin />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
+        children: [
+          {
+            path: "/products/update",
+            element: < UpdateProduct />,
+          }
+        ],
       },
     ],
   },
