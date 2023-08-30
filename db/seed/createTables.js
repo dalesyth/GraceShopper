@@ -45,7 +45,7 @@ async function createTables() {
         shipping_city varchar(255) NOT NULL,
         shipping_state varchar(255) NOT NULL,
         shipping_zip_code INTEGER,
-        shipping_counry varchar(255) NOT NULL
+        shipping_country varchar(255) NOT NULL
         );
       `);
     console.log("users table crated");
