@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import {
   Card,
   CardHeader,
-  Delete,
   Typography,
   Button,
   CardBody,
@@ -39,7 +40,7 @@ const Products = () => {
     <>
       <Card className="h-full w-full">
         <CardHeader floated={false} shadow={false}>
-          <div>
+          <div className="p-4">
             <Typography variant="h4" color="red">
               Product Management
             </Typography>
@@ -74,15 +75,18 @@ const Products = () => {
                     <td className="border-2 ">{item.inventory}</td>
                     <td className="border-2 ">C</td>
                     <td className=" border-b border-gray-50 place-content-center">
-                      <IconButton variant="text">
-                        <img
-                          src={
-                            "../../src/assets/kisspng-computer-icons-drawing-icon.png"
-                          }
-                          alt="edit icon"
-                          className="w-6 h-6"
-                        />
-                      </IconButton>
+                      <Link
+                        to={`/products/update/`}
+                        className="float-right hover:text-blue-600"
+                      >
+                        <IconButton variant="text">
+                          <img
+                            src={"../../src/assets/kisspng-computer-icons-drawing-icon.png"}
+                            alt="edit icon"
+                            className="w-5 h-5"
+                          />
+                        </IconButton>
+                      </Link>
                     </td>
                   </tr>
                 );

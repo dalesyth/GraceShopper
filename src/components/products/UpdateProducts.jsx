@@ -1,6 +1,6 @@
 import { Form } from "react-router-dom";
 
-export default function UpdateProduct() {
+export default function UpdateProduct( id ) {
   //const { product } = useLoaderData();
 
   const product = {
