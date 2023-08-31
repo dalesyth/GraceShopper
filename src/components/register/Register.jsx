@@ -5,7 +5,7 @@ import { registerUser } from "./registerApi.js";
 import { useNavigate } from "react-router";
 
 const Register = () => {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -170,33 +170,20 @@ const Register = () => {
       if (user) {
        
            localStorage.setItem("token", user.token);
-            console.log("token");
-            localStorage.setItem("username", user.username);
-            console.log("username");
-            localStorage.setItem("password", user.password)
-            console.log("password");
-              console.log(
-          `STORED USERNAME: ${JSON.parse(localStorage.getItem("username"))}`
-        );
-        console.log(
-          `STORED TOKEN: ${JSON.parse(localStorage.getItem("token"))}`
-        );
-            setError("");
-            window.alert("Registration Successful!")
-            navigate("/Home");
-            console.log(error)
+            console.log(localStorage.getItem("token"));
+            localStorage.setItem("username", user.user.username);
+            console.log(localStorage.getItem("username"));
+         
       } else (
         window.alert("Registration failed, please try again.")
       );
-      <Link to={"/Login"}></Link>
-
+      alert("Registration Successful!");
+      navigate("/home");
       } catch (error) {
         console.error;
-      } finally {
-        setUsername("");
-        setPassword("");
+
       }
-       
+      
      
   };
 
