@@ -1,8 +1,8 @@
 import { Form, useLoaderData } from "react-router-dom";
 
-export default function UpdateProduct() {
-  const { item } = useLoaderData();
-
+export default function UpdateProduct(item) {
+//  const { item } = useLoaderData();
+console.log("PASSED_ITEM:",  item)
   return (
     <Form method="post" id="item-form">
       <p>
@@ -44,6 +44,10 @@ export default function UpdateProduct() {
           name="image_name"
           defaultValue={`${item.image_name}`}
         />
+      </p>
+      <p>
+        <button type="submit">Save</button>
+        <button type="button">Cancel</button>
       </p>
     </Form>
   );
