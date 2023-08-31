@@ -71,7 +71,7 @@ const Products = () => {
                     <td className="border-2 px-2">C</td>
                     <td className=" border-2 pl-3">
                       <Link
-                        to={`/products/1/update`}
+                        to={`/update/1`}
                         className="float-right hover:text-blue-600 "
                       >
                         <IconButton variant="text">
