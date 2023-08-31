@@ -2,7 +2,7 @@ const APIURL = "http://localhost:3000/api";
 
 const logout = () => {
   localStorage.removeItem("token");
-  localStorage.removeItem("passWord");
+  localStorage.removeItem("username");
   console.log("Purged");
 };
 
