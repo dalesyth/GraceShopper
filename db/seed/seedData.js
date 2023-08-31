@@ -46,7 +46,7 @@ async function createInitialUsers() {
         shipping_city: "Omaha",
         shipping_state: "NE",
         shipping_zip_code: 84324,
-        shipping_counry: "USA"
+        shipping_country: "USA"
       }
     ];
 
