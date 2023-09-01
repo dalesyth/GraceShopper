@@ -3,7 +3,7 @@ import express from "express";
 const apiRouter = express.Router();
 
 // GET /api/health
-apiRouter.get("/health", async (req, res, next) => {
+apiRouter.get("/health", async (req, res) => {
   res.send({ message: "All is well" });
 });
 
@@ -37,7 +37,7 @@ apiRouter.use("/cart", cartRouter);
 
 // ERROR HANDLER
 
-apiRouter.use((error, req, res, next) => {
+apiRouter.use((error, req, res) => {
   res.status(500).json({
     name: error.name,
     message: error.message,

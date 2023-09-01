@@ -3,6 +3,7 @@ import { useState } from "react";
 import { registerUser } from "./registerApi.js";
 
 import { useNavigate } from "react-router";
+import { input } from "@material-tailwind/react";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -181,180 +182,188 @@ const Register = () => {
       navigate("/home");
       } catch (error) {
         console.error;
-
+        setError("");
       }
       
      
   };
 
     return (
-      <div>
-        <div>
-          <div>
+      <>
+        <div className="flex w-full justify-center">
+          <div className="bg-gray-200 w-5/12 px-5 rounded-lg shadow-lg">
             <div>
-              <label>To register: Please Fill out all fields</label>
+              <div className="border">
+                <label className="font-bold text-xl pb-2 py-4 flex justify-center">
+                  To Register: Please Fill out all fields
+                </label>
 
-              <form className="w-full flex m-2 flex-col py-5">
-                <label>Username</label>
-                <input
-                  className="m-2"
-                  type="text"
-                  required
-                  placeholder="Username"
-                  onChange={handleUsernameChange}
-                />
-                <label>Password</label>
-                <input
-                  className="m-2"
-                  type="password"
-                  required
-                  placeholder="Password"
-                  onChange={handlePasswordChange}
-                />
+                <form className="w-full flex m-2 flex-col py-2">
+                  <label className="font-bold">Username</label>
+                  <input
+                    className="m-2"
+                    type="text"
+                    required
+                    placeholder="Username"
+                    onChange={handleUsernameChange}
+                  />
+                  <label className="font-bold">Password</label>
+                  <input
+                    className="m-2"
+                    type="password"
+                    required
+                    placeholder="Password"
+                    onChange={handlePasswordChange}
+                  />
 
-                <label>Email</label>
-                <input
-                  className="m-2"
-                  type="text"
-                  required
-                  placeholder="Email"
-                  onChange={handleEmailChange}
-                ></input>
+                  <label className="font-bold">Email</label>
+                  <input
+                    className="m-2"
+                    type="text"
+                    required
+                    placeholder="Email"
+                    onChange={handleEmailChange}
+                  ></input>
 
-                <label>First Name</label>
-                <input
-                  className="m-2"
-                  type="text"
-                  required
-                  placeholder="First Name"
-                  onChange={handleFirst_name}
-                ></input>
+                  <label className="font-bold">First Name</label>
+                  <input
+                    className="m-2"
+                    type="text"
+                    required
+                    placeholder="First Name"
+                    onChange={handleFirst_name}
+                  ></input>
 
-                <label>Last Name</label>
-                <input
-                  className="m-2"
-                  type="text"
-                  required
-                  placeholder="Last Name"
-                  onChange={handleLast_name}
-                ></input>
+                  <label className="font-bold">Last Name</label>
+                  <input
+                    className="m-2"
+                    type="text"
+                    required
+                    placeholder="Last Name"
+                    onChange={handleLast_name}
+                  ></input>
 
-                <label>Address 1</label>
-                <input
-                  className="m-2"
-                  type="text"
-                  required
-                  placeholder="Address 1"
-                  onChange={handleAddress_1}
-                ></input>
+                  <label className="font-bold">Address 1</label>
+                  <input
+                    className="m-2"
+                    type="text"
+                    required
+                    placeholder="Address 1"
+                    onChange={handleAddress_1}
+                  ></input>
 
-                <label>Address 2</label>
-                <input
-                  className="m-2"
-                  type="text"
-                  required
-                  placeholder="Address 2"
-                  onChange={handleAddress_2}
-                ></input>
+                  <label className="font-bold">Address 2</label>
+                  <input
+                    className="m-2"
+                    type="text"
+                    required
+                    placeholder="Address 2"
+                    onChange={handleAddress_2}
+                  ></input>
 
-                <label>City</label>
-                <input
-                  className="m-2"
-                  required
-                  onChange={handleCityChange}
-                  placeholder="City"
-                ></input>
+                  <label className="font-bold">City</label>
+                  <input
+                    className="m-2"
+                    required
+                    onChange={handleCityChange}
+                    placeholder="City"
+                  ></input>
 
-                <label>State</label>
-                <input
-                  className="m-2"
-                  required
-                  onChange={handleStateChange}
-                  placeholder="State"
-                ></input>
+                  <label className="font-bold">State</label>
+                  <input
+                    className="m-2"
+                    required
+                    onChange={handleStateChange}
+                    placeholder="State"
+                  ></input>
 
-                <label>Zip Code</label>
-                <input
-                  className="m-2"
-                  required
-                  onChange={handleZip_codeChange}
-                  placeholder="Zip Code"
-                ></input>
+                  <label className="font-bold">Zip Code</label>
+                  <input
+                    className="m-2"
+                    required
+                    onChange={handleZip_codeChange}
+                    placeholder="Zip Code"
+                  ></input>
 
-                <label>Country</label>
-                <input
-                  className="m-2"
-                  required
-                  onChange={handleCountryChange}
-                  placeholder="State"
-                ></input>
+                  <label className="font-bold">Country</label>
+                  <input
+                    className="m-2"
+                    required
+                    onChange={handleCountryChange}
+                    placeholder="Country"
+                  ></input>
 
-                <label>Shipping Address 1</label>
-                <input
-                  className="m-2"
-                  required
-                  onChange={handleShipAddress1Change}
-                  placeholder="Shipping Address 1"
-                ></input>
+                  <label className="font-bold">Shipping Address 1</label>
+                  <input
+                    className="m-2"
+                    required
+                    onChange={handleShipAddress1Change}
+                    placeholder="Shipping Address 1"
+                  ></input>
 
-                <label>Shipping Address 2</label>
-                <input
-                  className="m-2"
-                  required
-                  onChange={handleShipAddress2Change}
-                  placeholder="Shipping Address 2"
-                ></input>
+                  <label className="font-bold">Shipping Address 2</label>
+                  <input
+                    className="m-2"
+                    required
+                    onChange={handleShipAddress2Change}
+                    placeholder="Shipping Address 2"
+                  ></input>
 
-                <label>Shipping City</label>
-                <input
-                  className="m-2"
-                  required
-                  onChange={handleShipCityChange}
-                  placeholder="Shipping City"
-                ></input>
+                  <label className="font-bold">Shipping City</label>
+                  <input
+                    className="m-2"
+                    required
+                    onChange={handleShipCityChange}
+                    placeholder="Shipping City"
+                  ></input>
 
-                <label>Shipping State</label>
-                <input
-                  className="m-2"
-                  required
-                  onChange={handleShipStateChange}
-                  placeholder="Shipping State"
-                ></input>
+                  <label className="font-bold">Shipping State</label>
+                  <input
+                    className="m-2"
+                    required
+                    onChange={handleShipStateChange}
+                    placeholder="Shipping State"
+                  ></input>
 
-                <label>Shipping Zip Code</label>
-                <input
-                  className="m-2"
-                  required
-                  onChange={handleShipZip_codeChange}
-                  placeholder="Shipping Zip Code"
-                ></input>
+                  <label className="font-bold">Shipping Zip Code</label>
+                  <input
+                    className="m-2"
+                    required
+                    onChange={handleShipZip_codeChange}
+                    placeholder="Shipping Zip Code"
+                  ></input>
 
-                <label>Shipping Country</label>
-                <input
-                  className="m-2"
-                  required
-                  onChange={handleShipCountryChange}
-                  placeholder="Shipping Country"
-                ></input>
+                  <label className="font-bold">Shipping Country</label>
+                  <input
+                    className="m-2"
+                    required
+                    onChange={handleShipCountryChange}
+                    placeholder="Shipping Country"
+                  ></input>
 
-                <button type="submit" onClick={handleSubmitButton}>
-                  Register
-                </button>
-                <div>
-                  <Link to={`/home`}>Cancel</Link>
-                </div>
-              </form>
-              {error && <p className="text-red-500">{setError}</p>}
-              <p>
-                Already have an account?{" "}
-                <Link to="/login" className="text-blue-500">
-                  Login
-                </Link>
-              </p>
+                  <button
+                    className="bg-blue-400 flex justify-center text-gray-100 font-bold p-1.5 m-1 rounded-lg hover:bg-blue-600"
+                    type="submit"
+                    onClick={handleSubmitButton}
+                  >
+                    Register
+                  </button>
+                  <button className="flex justify-center bg-gray-300 rounded-lg font-bold p-1.5 m-1 hover:bg-gray-400">
+                    <Link to={`/home`}>Cancel</Link>
+                  </button>
+                </form>
+                {error && <p className="text-red-500">{setError}</p>}
+                <p>
+                  Already have an account?{" "}
+                  <Link to="/login" className="text-blue-500">
+                    Login
+                  </Link>
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   } 
 
