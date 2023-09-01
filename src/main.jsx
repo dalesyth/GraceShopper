@@ -15,6 +15,10 @@ import Register from "./components/register/Register";
 import Admin from "./components/Admin";
 import Products from "./components/products/Products";
 import UpdateProduct from "./components/products/UpdateProducts";
+import itemLoader from "./components/products/ProductHelpers"
+import Users from "./components/user/manageUser"
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -64,8 +68,14 @@ const router = createBrowserRouter([
       },
       {
         path: "/update/:itemId/",
+        loader:{itemLoader},
         element: <UpdateProduct />,
+
       },
+      {
+        path: "/users/",
+        element: <Users />
+      }
     ],
   },
 ]);
