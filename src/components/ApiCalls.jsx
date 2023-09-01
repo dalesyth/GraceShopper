@@ -61,7 +61,18 @@ export async function getOrderByUserId(userId) {
         "Content-Type": "application/json",
       },
     });
+
+    console.log(`response from getOrderByUserId: ${response}`)
+
+    if (!response) {
+      return null;
+    } 
+
+    console.log(`response.length: ${response.length}`);
+    console.log(`typeof response: ${typeof response}`);
+
     const result = await response.json();
+
     return result;
   } catch (error) {
     console.error(error);
@@ -113,6 +124,10 @@ export async function addItemToOrder({
   quantity,
 }) {
   try {
+    console.log(`itemId from add item to order: ${itemId}`)
+    console.log(`userOrderId from addItemToOrder: ${userOrderId}`);
+    console.log(`orderPrice from addItemToOrder: ${orderPrice}`);
+    console.log(`quantity from addItemToOrder: ${quantity}`);
     const response = await fetch(`${APIURL}/orderitems`, {
       method: "POST",
       headers: {

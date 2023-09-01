@@ -13,6 +13,7 @@ const ItemDetail = () => {
   const [item, setItem] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [userOrderId, setUserOrderId] = useState(null);
 
   useEffect(() => {
     const getItemDetail = async () => {
@@ -34,17 +35,28 @@ const ItemDetail = () => {
 
   const handleAddToCart = async () => {
     const username = JSON.parse(localStorage.getItem("username"));
+    console.log(`username in handleAddToCart: ${username}`)
     const userInfo = await getUserByUsername(username);
     const userId = userInfo.id;
+    console.log(`userId in handleAddToCart: ${userId}`)
     const userEmail = userInfo.email;
     const userOrder = await getOrderByUserId(userId);
 
-    console.log(`userOrder.id: ${userOrder.id}`);
-    const userOrderId = userOrder.id;
-    console.log(`userOrder.checkout_complete: ${userOrder.checkout_complete}`);
+    console.log(`userOrder in handleAddToCart: ${userOrder}`)
+    console.log(`Obj.keys(userOrder) in handleAddToCart: ${Object.keys(userOrder)}`)
+    console.log(`Object.values(userOrder) in handleAddToCart: ${Object.values(userOrder)}`)
+    // console.log(`userOrder.id: ${userOrder.id}`);
+
+    if (userOrder) {
+      setUserOrderId(userOrder.id);
+    }
+
+    console.log(`userOrderId from handleAddToCart: ${userOrderId}`)
+    
+    // console.log(`userOrder.checkout_complete: ${userOrder.checkout_complete}`);
 
     if (!userOrder || userOrder.checkout_complete) {
-      console.log("IF stmt is truthy, createNewOrder");
+      // console.log("IF stmt is truthy, createNewOrder");
       try {
         const response = await createNewOrder({
           userId,
@@ -60,6 +72,10 @@ const ItemDetail = () => {
 
     try {
       const orderPrice = quantity * item.price;
+      console.log(`itemId from itemDetail: ${itemId}`)
+      console.log(`userOrderId from itemDetail: ${userOrderId}`)
+      console.log(`orderPrice from itemDetail: ${orderPrice}`)
+      console.log(`quantity from itemDetail: ${quantity}`)
 
       const response = await addItemToOrder({
         itemId,
