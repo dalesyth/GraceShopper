@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const adminLink = localStorage.getItem("role") === "admin" ? (
-    <Link to="/admin" className="no-underline p-6 hover:text-blue-600">
-      Admin
-    </Link>
-  ) : null;
+  const role = JSON.parse(localStorage.getItem("role"));
+  const adminLink = role == "admin" ? (
+      <Link to="/admin" className="no-underline p-6 hover:text-blue-600">
+        Admin
+      </Link>) : null;
 
   const loginLink = localStorage.getItem("token") ? (
     <Link to="/logout" className="no-underline p-6 hover:text-blue-600">
@@ -27,7 +27,6 @@ const Navbar = () => {
         <Link to="/cart" className="no-underline p-6 hover:text-blue-600">
           Cart
         </Link>
-            <Link to="/admin" className="no-underline p-6 hover:text-blue-600"></Link>
         {adminLink}
         {loginLink}
       </div>
