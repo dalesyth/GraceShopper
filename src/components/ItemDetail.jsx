@@ -13,7 +13,6 @@ const ItemDetail = () => {
   const [item, setItem] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const [userOrderId, setUserOrderId] = useState(null);
 
   useEffect(() => {
     const getItemDetail = async () => {
@@ -34,63 +33,52 @@ const ItemDetail = () => {
   };
 
   const handleAddToCart = async () => {
-    const username = JSON.parse(localStorage.getItem("username"));
-    console.log(`username in handleAddToCart: ${username}`)
-    const userInfo = await getUserByUsername(username);
-    const userId = userInfo.id;
-    console.log(`userId in handleAddToCart: ${userId}`)
-    const userEmail = userInfo.email;
-    const userOrder = await getOrderByUserId(userId);
+    try {
+      const username = JSON.parse(localStorage.getItem("username"));
+      const userInfo = await getUserByUsername(username);
+      const userId = userInfo.id;
+      const userEmail = userInfo.email;
 
-    console.log(`userOrder in handleAddToCart: ${userOrder}`)
-    console.log(`Obj.keys(userOrder) in handleAddToCart: ${Object.keys(userOrder)}`)
-    console.log(`Object.values(userOrder) in handleAddToCart: ${Object.values(userOrder)}`)
-    // console.log(`userOrder.id: ${userOrder.id}`);
+      const userOrder = await getOrderByUserId(userId);
 
-    if (userOrder) {
-      setUserOrderId(userOrder.id);
-    }
+      // Check if userOrder is undefined or checkout_complete is true
+      if (!userOrder || userOrder.checkout_complete) {
+        console.log("IF stmt is truthy, createNewOrder");
+        try {
+          const response = await createNewOrder({
+            userId,
+            userEmail,
+          });
 
-    console.log(`userOrderId from handleAddToCart: ${userOrderId}`)
-    
-    // console.log(`userOrder.checkout_complete: ${userOrder.checkout_complete}`);
+          console.log(`response.id from createNewOrder: ${response.id}`);
+          console.log(`response.email from createNewOrder: ${response.email}`);
+        } catch (error) {
+          console.error(error);
+        }
+      }
 
-    if (!userOrder || userOrder.checkout_complete) {
-      // console.log("IF stmt is truthy, createNewOrder");
-      try {
-        const response = await createNewOrder({
-          userId,
-          userEmail,
+      // Check if userOrder is defined before accessing its properties
+      if (userOrder && userOrder.id) {
+        const orderPrice = quantity * item.price;
+
+        const response = await addItemToOrder({
+          itemId,
+          userOrderId: userOrder.id, // Use the id property
+          orderPrice,
+          quantity,
         });
 
-        console.log(`response.id from createNewOrder: ${response.id}`);
-        console.log(`response.email from createNewOrder: ${response.email}`);
-      } catch (error) {
-        console.error(error);
+        console.log(`response from addItemToOrder: ${response}`);
+        alert(`${item.title} has been added to your cart!`);
+        setQuantity(1); // Set quantity to 1
+      } else {
+        console.log("userOrder is undefined or doesn't have an id");
       }
-    }
-
-    try {
-      const orderPrice = quantity * item.price;
-      console.log(`itemId from itemDetail: ${itemId}`)
-      console.log(`userOrderId from itemDetail: ${userOrderId}`)
-      console.log(`orderPrice from itemDetail: ${orderPrice}`)
-      console.log(`quantity from itemDetail: ${quantity}`)
-
-      const response = await addItemToOrder({
-        itemId,
-        userOrderId,
-        orderPrice,
-        quantity,
-      });
-
-      console.log(`response from addItemToOrder: ${response}`);
-      alert(`${item.title} has been added to your cart!`);
-      setQuantity("");
     } catch (error) {
       console.error(error);
     }
   };
+
 
   return (
     <div className="flex h-screen items-center justify-center">

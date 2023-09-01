@@ -55,6 +55,7 @@ export async function getUserByUsername(username) {
 
 // GET order by userId
 export async function getOrderByUserId(userId) {
+  console.log(`userId from getOrderByUserId: ${userId}`)
   try {
     const response = await fetch(`${APIURL}/orders/orderuser/${userId}`, {
       headers: {
@@ -63,8 +64,12 @@ export async function getOrderByUserId(userId) {
     });
 
     console.log(`response from getOrderByUserId: ${response}`)
+    console.log(`type response from getOrderByUserId: ${typeof response}`)
+    console.log(`Object.keys(response) from getOrderByUserId: ${Object.keys(response)}`)
+    console.log(`Object.values(response) from getOrderByUserId: ${Object.values(response)}`)
 
     if (!response) {
+      console.log(`!response`)
       return null;
     } 
 
