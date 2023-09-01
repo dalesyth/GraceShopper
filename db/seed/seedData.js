@@ -16,6 +16,7 @@ async function createInitialUsers() {
         email: "albert@myurl.com",
         first_name: "albert",
         last_name: "soxs",
+        role: "guest",
         address_1: "353 My Street",
         address_2: "apt. 2",
         city: "Hit",
@@ -35,6 +36,7 @@ async function createInitialUsers() {
         email: "billy@myurl.com",
         first_name: "billy",
         last_name: "bob",
+        role: "admin",
         address_1: "233 My Street",
         address_2: "apt. 27",
         city: "Ames",
@@ -46,8 +48,8 @@ async function createInitialUsers() {
         shipping_city: "Omaha",
         shipping_state: "NE",
         shipping_zip_code: 84324,
-        shipping_country: "USA"
-      }
+        shipping_country: "USA",
+      },
     ];
 
     await Promise.all(usersToCreate.map(createUser));
@@ -110,9 +112,9 @@ async function createInitialOrders() {
         shipping_state: "NE",
         shipping_zip_code: 84324,
         shipping_country: "USA",
-        order_total: 2500.36
-      }
-    ]
+        order_total: 2500.36,
+      },
+    ];
     await Promise.all(ordersToCreate.map(createOrder));
 
     console.log("Finished creating initial orders!");
@@ -185,7 +187,7 @@ async function createInitialOrderItem() {
       {
         itemId: 4,
         orderId: 2,
-        orderPrice: 127.50,
+        orderPrice: 127.5,
         qty: 10,
       },
       {
@@ -197,7 +199,7 @@ async function createInitialOrderItem() {
       {
         itemId: 1,
         orderId: 3,
-        orderPrice: 506.00,
+        orderPrice: 506.0,
         qty: 5,
       },
     ];
@@ -210,7 +212,6 @@ async function createInitialOrderItem() {
   }
 }
 
-
 async function createInitialCategories() {
   console.log("Starting to create categories!");
   try {
@@ -222,10 +223,10 @@ async function createInitialCategories() {
         name: "Paint Guns",
       },
       {
-        name: "Home Electronics"
+        name: "Home Electronics",
       },
       {
-        name: "Out Door Equipment"
+        name: "Out Door Equipment",
       },
     ];
     await Promise.all(ordersToCreate.map(createCategory));
@@ -243,19 +244,19 @@ async function createItemCategoryLinks() {
     const ordersToCreate = [
       {
         itemId: 1,
-        categoryId: 2, 
+        categoryId: 2,
       },
       {
         itemId: 2,
-        categoryId: 3, 
+        categoryId: 3,
       },
       {
         itemId: 3,
-        categoryId: 1, 
+        categoryId: 1,
       },
       {
         itemId: 4,
-        categoryId: 4 
+        categoryId: 4,
       },
     ];
     await Promise.all(ordersToCreate.map(attachItemToCategory));

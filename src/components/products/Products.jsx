@@ -7,30 +7,24 @@ import {
   Typography,
   Button,
   CardBody,
-  Chip,
   CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab,
-  Avatar,
   IconButton,
-  Tooltip,
-} from "@material-tailwind/react";
+ } from "@material-tailwind/react";
 import { getAllItems } from "../ApiCalls";
 
 const Products = () => {
   const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+ //const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getItems = async () => {
       try {
         const response = await getAllItems();
         setItems(response);
-        setIsLoading(false);
+        //setIsLoading(false);
       } catch (error) {
         console.error(error);
-        setIsLoading(false);
+        //setIsLoading(false);
       }
     };
     getItems();
@@ -48,7 +42,7 @@ const Products = () => {
         </CardHeader>
         <CardBody className="flex overflow-scroll px-0">
           {/* ToDo: add pagination to the table */}
-          <table className="table-auto border-collapse  border-slate-300 border-2 m-8 p-2">
+          <table className="table-auto border-collapse  border-slate-300 border-2 m-8 p-2 ">
             <thead>
               <tr className="border-2">
                 <th>Image </th>
@@ -57,6 +51,7 @@ const Products = () => {
                 <th>Inventory</th>
                 <th>Category</th>
                 <th>Edit</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -70,19 +65,37 @@ const Products = () => {
                         className="w-10 h-10 hover:scale-150"
                       />
                     </td>
-                    <td className="border-2">{item.title}</td>
-                    <td className="border-2 text-center">{`$${item.price}`}</td>
-                    <td className="border-2 ">{item.inventory}</td>
-                    <td className="border-2 ">C</td>
-                    <td className=" border-b border-gray-50 place-content-center">
+                    <td className="border-2 px-2">{item.title}</td>
+                    <td className="border-2 px-2">{`$${item.price}`}</td>
+                    <td className="border-2 px-2">{item.inventory}</td>
+                    <td className="border-2 px-2">C</td>
+                    <td className=" border-2 pl-3">
                       <Link
-                        to={`/products/update/`}
+                        to={`/update/1`}
+                        className="float-right hover:text-blue-600 "
+                      >
+                        <IconButton variant="text">
+                          <img
+                            src={
+                              "../../src/assets/kisspng-computer-icons-drawing-icon.png"
+                            }
+                            alt="edit icon"
+                            className="w-5 h-5 "
+                          />
+                        </IconButton>
+                      </Link>
+                    </td>
+                    <td className=" border-2 pl-3">
+                      <Link
+                        to={`/products/delete/`}
                         className="float-right hover:text-blue-600"
                       >
                         <IconButton variant="text">
                           <img
-                            src={"../../src/assets/kisspng-computer-icons-drawing-icon.png"}
-                            alt="edit icon"
+                            src={
+                              "../../src/assets/kisspng-computer-icons-x-icon.png"
+                            }
+                            alt="Delete Icon"
                             className="w-5 h-5"
                           />
                         </IconButton>

@@ -10,26 +10,36 @@ import {
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
   useEffect(() => {
     const getCart = async () => {
       const username = JSON.parse(localStorage.getItem("username"));
-      const userInfo = await getUserByUsername(username);
-      const userId = userInfo.id;
+      console.log(`username from cart: ${username}`);
+      console.log(`token from cart: ${token}`);
+      // const userInfo = await getUserByUsername(username);
+      // const userId = userInfo.id;
 
-      try {
-        const response = await getCartByUserId(userId);
+      if (token) {
+        const userInfo = await getUserByUsername(username);
+        const userId = userInfo.id;
 
-        setCartItems(response);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setIsLoading(false);
+        try {
+          const response = await getCartByUserId(userId);
+
+          setCartItems(response);
+          // setIsLoading(false);
+        } catch (error) {
+          console.error(error);
+          // setIsLoading(false);
+        }
       }
+
+      setIsLoading(false);
     };
     getCart();
-  }, []);
+  }, [token]);
 
   const cartTotal = cartItems.reduce(
     (accumulator, currentValue) =>
@@ -57,9 +67,11 @@ const Cart = () => {
       setCartItems((prevCartItems) =>
         prevCartItems.map((item) =>
           item.ordered_items_id === id
-            ? { ...item, 
-              ordered_items_qty: updateQty,
-              ordered_items_total: item.price * updateQty }
+            ? {
+                ...item,
+                ordered_items_qty: updateQty,
+                ordered_items_total: item.price * updateQty,
+              }
             : item
         )
       );
@@ -75,9 +87,9 @@ const Cart = () => {
   return (
     <div>
       {isLoading ? (
-        <p>Loading...</p>
+        <p className="text-gray-100">Loading...</p>
       ) : cartItems.length === 0 ? (
-        <p>Your cart is empty!</p>
+        <p className="text-gray-100">Your cart is empty!</p>
       ) : (
         <div className="flex-col justify-between">
           {cartItems.map((item, index) => (
@@ -118,7 +130,9 @@ const Cart = () => {
             </div>
           ))}
           <div className="flex justify-end my-3">
-            <span className="font-bold text-gray-100">Cart Total: ${cartTotal}</span>
+            <span className="font-bold text-gray-100">
+              Cart Total: ${cartTotal}
+            </span>
           </div>
           <div className="flex justify-end my-3">
             <button
