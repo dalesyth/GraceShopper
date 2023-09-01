@@ -61,12 +61,10 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
-        children: [
-          {
-            path: "/products/update",
-            element: < UpdateProduct />,
-          }
-        ],
+      },
+      {
+        path: "/update/:itemId/",
+        element: <UpdateProduct />,
       },
     ],
   },

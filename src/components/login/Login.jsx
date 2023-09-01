@@ -25,12 +25,13 @@ const Login = () => {
     event.preventDefault();
     try {
       if (password && username) {
-        console.log(`UserName: ${username}, password: ${password}`)
-        console.log(`About to log in, Login.jsx`)
+        //console.log(`UserName: ${username}, password: ${password}`)
+        //console.log(`About to log in, Login.jsx`)
         const result = await login(username, password);
         if (result) {
-          console.log(`STORED USERNAME: ${JSON.parse(localStorage.getItem("username"))}`);
-          console.log(`STORED TOKEN: ${JSON.parse(localStorage.getItem("token"))}`);
+          //console.log(`STORED USERNAME: ${JSON.parse(localStorage.getItem("username"))}`);
+          //console.log(`STORED TOKEN: ${JSON.parse(localStorage.getItem("token"))}`);
+          console.log(`STORED ROLE: ${JSON.parse(localStorage.getItem("role"))}`);
         } else {
           window.alert("Login Failed!");
           console.log("Login Failed!");
