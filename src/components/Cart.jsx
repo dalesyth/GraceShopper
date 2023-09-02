@@ -16,6 +16,7 @@ const Cart = () => {
   useEffect(() => {
     const getCart = async () => {
       const username = JSON.parse(localStorage.getItem("username"));
+      // const username = localStorage.getItem("username")
       console.log(`username from cart: ${username}`);
       console.log(`token from cart: ${token}`);
       // const userInfo = await getUserByUsername(username);
