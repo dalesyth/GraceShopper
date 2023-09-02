@@ -2,12 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
-  Card,
-  CardHeader,
   Typography,
   Button,
-  CardBody,
-  CardFooter,
   IconButton,
  } from "@material-tailwind/react";
 import { getAllItems } from "../ApiCalls";
@@ -32,20 +28,20 @@ const Products = () => {
 
   return (
     <>
-      <Card className="h-full w-full">
-        <CardHeader floated={false} shadow={false}>
-          <div className="p-4">
-            <Typography variant="h4" color="red">
-              Product Management
-            </Typography>
-          </div>
-        </CardHeader>
-        <CardBody className="flex overflow-scroll px-0">
+      <div className="flex-col rounded-lg h-5/6 w-max bg-gray-200">
+        <div
+          id="title"
+          className="p-4 pb-0 bg-gray-200 font-bold rounded-lg text-3xl "
+        >
+          Product Management
+        </div>
+        <div id="body" className="m-4 p-2 overflow-scroll ">
+          {/* ToDo: use <div>s for table instead of table tags */}
           {/* ToDo: add pagination to the table */}
-          <table className="table-auto border-collapse  border-slate-300 border-2 m-8 p-2 ">
+          <table className="table-auto ">
             <thead>
-              <tr className="border-2">
-                <th>Image </th>
+              <tr>
+                <th className="px-4">Image </th>
                 <th>Title</th>
                 <th>Price</th>
                 <th>Inventory</th>
@@ -71,7 +67,7 @@ const Products = () => {
                     <td className="border-2 px-2">C</td>
                     <td className=" border-2 pl-3">
                       <Link
-                        to={`/update/1`}
+                        to={`/products/${item.id}/update`}
                         className="float-right hover:text-blue-600 "
                       >
                         <IconButton variant="text">
@@ -106,8 +102,8 @@ const Products = () => {
               })}
             </tbody>
           </table>
-        </CardBody>
-        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+        </div>
+        <div className="flex items-center justify-between border-t border-blue-gray-50 p-4 h-fit">
           <Typography variant="small" color="blue-gray" className="font-normal">
             Page 1 of 10
           </Typography>
@@ -119,8 +115,8 @@ const Products = () => {
               Next
             </Button>
           </div>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     </>
   );
 };

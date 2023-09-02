@@ -15,6 +15,10 @@ import Register from "./components/register/Register";
 import Admin from "./components/Admin";
 import Products from "./components/products/Products";
 import UpdateProduct from "./components/products/UpdateProducts";
+import DeleteProduct from "./components/products/DeleteProducts";
+//mport { loader as itemLoader } from "./components/products/ProductHelpers";
+import Users from "./components/user/manageUser";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -63,8 +67,17 @@ const router = createBrowserRouter([
         element: <Products />,
       },
       {
-        path: "/update/:itemId/",
+        id: "prod_update",
+        path: "/products/:itemId/update",
         element: <UpdateProduct />,
+      },
+      {
+        path: "./products/:itemId/delete",
+        element: <DeleteProduct />,
+      },
+      {
+        path: "/users/",
+        element: <Users />,
       },
     ],
   },
