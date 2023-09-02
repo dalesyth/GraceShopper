@@ -38,14 +38,32 @@ export async function getItemById(itemId) {
 
 // GET user by username
 export async function getUserByUsername(username) {
+  // console.log(`username passed into getUserByUsername: ${username}`);
   try {
+    console.log(`username passed into getUserByUsername: ${username}`);
     const response = await fetch(`${APIURL}/users/username/${username}`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    const result = await response.json();
+    if (!response.ok) {
+      console.log(`Response not okay: ${response.status}`)
+      return null;
+    }
+
+    const responseText = await response.text();
+   
+    if (!responseText) {
+      console.log(`Empty response from getUserByUsername.`)
+      return null;
+    }
+
+    
+
+    const result = JSON.parse(responseText);
+
+    console.log(`result from getUserByUsername: `, result)
 
     return result;
   } catch (error) {

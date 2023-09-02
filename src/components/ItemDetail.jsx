@@ -33,15 +33,16 @@ const ItemDetail = () => {
   };
 
   const handleAddToCart = async () => {
+    const username = JSON.parse(localStorage.getItem("username"));
+
+    const userInfo = await getUserByUsername(username);
     try {
-      const username = JSON.parse(localStorage.getItem("username"));
-      const userInfo = await getUserByUsername(username);
+      console.log(`userInfo.id: ${userInfo.id}`);
       const userId = userInfo.id;
       const userEmail = userInfo.email;
 
       const userOrder = await getOrderByUserId(userId);
 
-      // Check if userOrder is undefined or checkout_complete is true
       if (!userOrder || userOrder.checkout_complete) {
         console.log("IF stmt is truthy, createNewOrder");
         try {
@@ -63,14 +64,14 @@ const ItemDetail = () => {
 
         const response = await addItemToOrder({
           itemId,
-          userOrderId: userOrder.id, // Use the id property
+          userOrderId: userOrder.id,
           orderPrice,
           quantity,
         });
 
         console.log(`response from addItemToOrder: ${response}`);
         alert(`${item.title} has been added to your cart!`);
-        setQuantity(1); // Set quantity to 1
+        setQuantity(1);
       } else {
         console.log("userOrder is undefined or doesn't have an id");
       }
@@ -78,7 +79,6 @@ const ItemDetail = () => {
       console.error(error);
     }
   };
-
 
   return (
     <div className="flex h-screen items-center justify-center">

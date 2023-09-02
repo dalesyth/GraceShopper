@@ -17,7 +17,7 @@ import Products from "./components/products/Products";
 import UpdateProduct from "./components/products/UpdateProducts";
 import DeleteProduct from "./components/products/DeleteProducts";
 //mport { loader as itemLoader } from "./components/products/ProductHelpers";
-import Users from "./components/user/manageUser";
+// import Users from "./components/user/manageUser";
 
 const router = createBrowserRouter([
   {
@@ -75,10 +75,10 @@ const router = createBrowserRouter([
         path: "./products/:itemId/delete",
         element: <DeleteProduct />,
       },
-      {
-        path: "/users/",
-        element: <Users />,
-      },
+      // {
+      //   path: "/users/",
+      //   element: <Users />,
+      // },
     ],
   },
 ]);
