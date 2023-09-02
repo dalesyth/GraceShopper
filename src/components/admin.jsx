@@ -27,9 +27,8 @@ const Admin = () => {
                 >
                   <button
                     type="button"
-                    className="w-full h-10 bg-blue-400 text-gray-100 font-bold px-1 py-1 my-6 rounded-lg hover:bg-blue-600 hover:font-extrabold"
-                  >
-                    Home
+                    className="w-full h-10 bg-blue-400 text-gray-100 font-bold px-1 py-1 my-6 rounded-lg hover:bg-blue-600 hover:font-extrabold">
+                    Exit
                   </button>
                 </Link>
               </div>
