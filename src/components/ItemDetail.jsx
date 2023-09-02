@@ -53,13 +53,21 @@ const ItemDetail = () => {
 
           console.log(`response.id from createNewOrder: ${response.id}`);
           console.log(`response.email from createNewOrder: ${response.email}`);
+          const userOrderId = response.id
+          const orderPrice = quantity * item.price;
+
+          await addItemToOrder({
+            itemId,
+            userOrderId,
+            orderPrice,
+            quantity,
+          });
+          
         } catch (error) {
           console.error(error);
         }
-      }
-
-      // Check if userOrder is defined before accessing its properties
-      if (userOrder && userOrder.id) {
+        
+      } else if (userOrder && userOrder.id) {
         const orderPrice = quantity * item.price;
 
         const response = await addItemToOrder({
