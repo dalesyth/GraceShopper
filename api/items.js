@@ -96,34 +96,17 @@ itemsRouter.post("/", async (req, res, next) => {
 // PATCH /api/items/:itemId - Update an existing item
 itemsRouter.patch("/:itemId", async (req, res, next) => {
   const { itemId } = req.params;
-
   const { title, price, inventory, image_name } = req.body;
 
-  const updateFields = {};
-
-  if (itemId) {
-    updateFields.id = itemId;
-  }
-
-  if (title) {
-    updateFields.title = title;
-  }
-
-  if (price) {
-    updateFields.price = price;
-  }
-
-  if (inventory) {
-    updateFields.inventory = inventory;
-  }
-
-  if (image_name) {
-    updateFields.image_name = image_name;
-  }
+  const item = await createItem({
+    itemId,
+    title,
+    price,
+    inventory,
+    image_name,
+  });
 
   const existingItemId = await getItemById(itemId);
-
-  const existingItemTitle = await getItemByTitle(title);
 
   if (!existingItemId) {
     next({
@@ -132,17 +115,10 @@ itemsRouter.patch("/:itemId", async (req, res, next) => {
     });
   }
 
-  if (existingItemTitle) {
-    next({
-      name: "itemTitleAlreadyExistsError",
-      message: `An item with title ${title} already exists`,
-    });
-  }
-
   try {
-    const updatedItem = await updateItem(updateFields);
-
+    const updatedItem = await updateItem(item);
     res.send(updatedItem);
+
   } catch ({ name, message }) {
     next({ name, message });
   }
