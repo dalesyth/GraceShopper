@@ -20,14 +20,18 @@ const Admin = () => {
                     <Link to={`/users`}>Manage Users</Link>
                   </li>
                 </ul>
-                <button
-                  type="button"
-                  className="h-10 bg-blue-400 text-gray-100 font-bold px-1 py-1 my-6 rounded-lg hover:bg-blue-600 hover:font-extrabold"
+
+                <Link
+                  to="/home"
+                  className="no-underline p-6 "
                 >
-                  <Link to={`/home`} className="">
-                    Exit
-                  </Link>
-                </button>
+                  <button
+                    type="button"
+                    className="w-full h-10 bg-blue-400 text-gray-100 font-bold px-1 py-1 my-6 rounded-lg hover:bg-blue-600 hover:font-extrabold"
+                  >
+                    Home
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
