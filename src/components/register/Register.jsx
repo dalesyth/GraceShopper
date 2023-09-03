@@ -147,16 +147,17 @@ const Register = () => {
         console.log(user);
       if (user) {
        
-           localStorage.setItem("token", JSON.stringify(user.token));
-            console.log(localStorage.getItem("token"));
+           localStorage.setItem("password", JSON.stringify(user.password));
+            console.log(localStorage.getItem("password"));
             localStorage.setItem("username", JSON.stringify(user.user.username));
             console.log(localStorage.getItem("username"));
+            alert("Registration Successful!");
+            navigate("/login");
          
       } else (
         window.alert("Registration failed, please try again.")
       );
-      alert("Registration Successful!");
-      navigate("/login");
+      
       } catch (error) {
         console.error;
         setError("");
