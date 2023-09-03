@@ -1,6 +1,7 @@
 import { Form, useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getItemById } from "../ApiCalls";
+import { input } from "@material-tailwind/react";
 
 const token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
@@ -10,22 +11,25 @@ const role = localStorage.getItem("role");
 //////////////////////////////////////////////
 const UpdateProduct = () => {
   const { itemId } = useParams();
-  console.log("ITEM+ID", itemId);
-  const [item, setItem] = useState([]);
+  //console.log("ITEM+ID", itemId);
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState(0.0);
-  const [qty, setQty] = useState(0);
+  const [price, setPrice] = useState("");
+  const [inventory, setInventory] = useState(0);
   const [fileName, setFileName] = useState("");
 
   useEffect(() => {
     const getItemDetail = async () => {
       try {
         const product = await getItemById(itemId);
-        console.log("PRODUCTS:",product);
-        setItem(product);
+        //console.log("PRODUCTS:",product);
+        //setItem(product);
         setTitle(product.title);
-        setPrice(product.price);
-        setQty(product.inventory);
+        //console.log("PRICE:", product.price)
+        setPrice(`$${product.price}`);
+        //console.log("PRICE:", price);
+        //console.log("INVENTORY1:", product.inventory);
+        setInventory(product.inventory);
+        //console.log("INVENTORY:", inventory);
         setFileName(product.image_name);
       } catch (error) {
         console.error(`Getting Items ERROR: ${error}`);
@@ -39,10 +43,18 @@ const UpdateProduct = () => {
     setTitle(event.target.value);
   }
   const handlePriceChange = (event) => {
-    setPrice(event.target.value);
+    let inputValue = event.target.value.replaceAll(
+      "^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?$", "" );
+    if (inputValue[1]=== "$"){
+      inputValue = Number(inputValue.slice(1));
+    } else {
+      inputValue = Number(inputValue);
+    }
+    setPrice(`$${inputValue}`);
+    
   };
   const handleQuantityChange = (event) => {
-    setQty(event.target.value);
+    setInventory(event.target.value);
   };
   const handleFileNameChange = (event) => {
     setFileName(event.target.value);
@@ -52,20 +64,32 @@ const UpdateProduct = () => {
   const handleSave = async () => {
     event.preventDefault();
 
+    //strip out $ signb and convert price from string to number
+    const newPrice=Number(price.slice(1))
+
+    //validate user has permissions to change product valuess
     const role = JSON.parse(localStorage.getItem("role"));
-      const fields = {
-        title: title,
-        price: price,
-        inventory: qty,
-        image_name: fileName,
+
+    //store state in an object to be passed to api.
+    const fields = {
+      title: title,
+      price: newPrice,
+      inventory: inventory,
+      image_name: fileName,
       };
     if (role === "admin") {
       try {
         console.log(fields);
+
+
       } catch (error) {
         console.error("Error Saving product: ", error);
       }
+    } else {
+      alert('You are not logged in as "admin."  Log out and log back in with "admin" credentials.  Have a nice day. :>)')
     }
+
+
   };
   ///////////////////////////////
   return (
@@ -75,7 +99,7 @@ const UpdateProduct = () => {
           <div className="photo-container flex justify-center items-center rounded-lg">
             <img
               src={`../../public/${fileName}`}
-              alt={item.title}
+              alt={title}
               className="w-3/4 h-3/4"
             />
           </div>
@@ -88,7 +112,7 @@ const UpdateProduct = () => {
                   aria-label="Product Title"
                   type="text"
                   name="product"
-                  defaultValue={item.title}
+                  value={title}
                   className="flex-grow pl-2"
                   onChange={handleTitleChange}
                 />
@@ -100,7 +124,8 @@ const UpdateProduct = () => {
                   aria-label="Product price"
                   type="text"
                   name="price"
-                  defaultValue={`$${price}`}
+                  
+                  value={price}
                   className="flex-grow pl-2"
                   onChange={handlePriceChange}
                 />
@@ -112,7 +137,7 @@ const UpdateProduct = () => {
                   aria-label="Product inventory"
                   type="number"
                   name="inventory"
-                  defaultValue={qty}
+                  value={inventory}
                   className="flex-grow pl-2"
                   onChange={handleQuantityChange}
                 />
@@ -124,7 +149,7 @@ const UpdateProduct = () => {
                   aria-label="Product Image"
                   type="text"
                   name="image_name"
-                  defaultValue={fileName}
+                  value={fileName}
                   className="flex-grow pl-2"
                   onChange={handleFileNameChange}
                 />
