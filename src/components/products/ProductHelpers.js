@@ -8,17 +8,20 @@ export async function loader({ params }) {
 
 }
 
-xport async function updateProduct({ id, title, price, inventory, image_name }) {
+export async function updateProduct( id, {title, price, inventory, image_name }) {
   try {
-    const response = await fetch(`${APIURL}/orders`, {
+    const response = await fetch(`${APIURL}/items`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        // "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify({
-        user_id: userId,
-        email: userEmail,
+        id,
+        title,
+        price,
+        inventory, 
+        image_name,
       }),
     });
     const result = await response.json();
