@@ -37,7 +37,7 @@ usersRouter.post("/register", async (req, res, next) => {
     );
 
     res.send({
-      message: "Thank you for registering",
+      message: "Thank you for registering, please login",
       token,
       user,
     });

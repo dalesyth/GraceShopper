@@ -3,7 +3,7 @@ import { useState } from "react";
 import { registerUser } from "./registerApi.js";
 
 import { useNavigate } from "react-router";
-import { input } from "@material-tailwind/react";
+// import { input } from "@material-tailwind/react";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -133,29 +133,6 @@ const Register = () => {
   const handleSubmitButton = async (event) => {
     event.preventDefault();
     console.log("Inside handleSubmitButton");
-
-    // const username = event.target.username.value
-
-    // const userToCreate =  {
-    //     username: "albert1",
-    //     password: "soxAreGreat",
-    //     email: "albert1@myurl.com",
-    //     first_name: "albert",
-    //     last_name: "soxs",
-    //     address_1: "353 My Street",
-    //     address_2: "apt. 2",
-    //     city: "Hit",
-    //     state: "IA",
-    //     zip_code: 50613,
-    //     country: "USA",
-    //     shipping_address_1: "250 Yourstreet",
-    //     shipping_address_2: null,
-    //     shipping_city: "Mantua",
-    //     shipping_state: "UT",
-    //     shipping_zip_code: 84324,
-    //     shipping_country: "USA"
-    //   }
-
    
       if(!username || !password){
         setError("Please fill out all fields!")
@@ -170,24 +147,23 @@ const Register = () => {
         console.log(user);
       if (user) {
        
-           localStorage.setItem("token", user.token);
-            console.log(localStorage.getItem("token"));
-            localStorage.setItem("username", user.user.username);
+           localStorage.setItem("password", JSON.stringify(user.password));
+            console.log(localStorage.getItem("password"));
+            localStorage.setItem("username", JSON.stringify(user.user.username));
             console.log(localStorage.getItem("username"));
+            alert("Registration Successful!");
+            navigate("/login");
          
       } else (
         window.alert("Registration failed, please try again.")
       );
-      alert("Registration Successful!");
-      navigate("/home");
+      
       } catch (error) {
         console.error;
         setError("");
       }
       
-     
   };
-
     return (
       <>
         <div className="flex w-full justify-center">
