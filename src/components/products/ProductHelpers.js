@@ -10,7 +10,7 @@ export async function loader({ params }) {
 
 export async function updateProduct( id, {title, price, inventory, image_name }) {
   try {
-    const response = await fetch(`${APIURL}/updateItem`, {
+    const response = await fetch(`${APIURL}/items`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
