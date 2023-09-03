@@ -129,6 +129,7 @@ itemsRouter.patch("/:itemId", async (req, res, next) => {
 // DELETE /api/items/:itemId - Delete an item by Id
 itemsRouter.delete("/:itemId", async (req, res, next) => {
   const { itemId } = req.params;
+  console.log(`itemId from delete API route: ${itemId}`)
 
   try {
     const deletedItem = await deleteItem(itemId);
