@@ -45,7 +45,7 @@ const Cart = () => {
     (accumulator, currentValue) =>
       accumulator + parseFloat(currentValue.ordered_items_total),
     0
-  );
+  ).toFixed(2);
 
   const handleRemoveItem = async (id) => {
     console.log(`id from handleRemoveItem: ${id}`);
