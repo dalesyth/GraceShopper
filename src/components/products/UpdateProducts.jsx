@@ -1,12 +1,7 @@
 import { Form, useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getItemById } from "../ApiCalls";
-
-
-const token = localStorage.getItem("token");
-const role = localStorage.getItem("role");
-
-
+import { updateProduct } from "./ProductHelpers"
 
 //////////////////////////////////////////////
 const UpdateProduct = () => {
@@ -21,16 +16,7 @@ const UpdateProduct = () => {
     const getItemDetail = async () => {
       try {
         const product = await getItemById(itemId);
-        //console.log("PRODUCTS:",product);
-        //setItem(product);
-        setTitle(product.title);
-        //console.log("PRICE:", product.price)
-        setPrice(`$${product.price}`);
-        //console.log("PRICE:", price);
-        //console.log("INVENTORY1:", product.inventory);
-        setInventory(product.inventory);
-        //console.log("INVENTORY:", inventory);
-        setFileName(product.image_name);
+        setItemDetail(product);
       } catch (error) {
         console.error(`Getting Items ERROR: ${error}`);
       }
@@ -38,21 +24,28 @@ const UpdateProduct = () => {
     getItemDetail();
   }, [itemId]);
 
+  function setItemDetail ( item ) {
+    setTitle(item.title);
+    setPrice(`$${item.price}`);
+    setInventory(item.inventory);
+    setFileName(item.image_name);
+  }
+
   ///////////////////////////////////
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   }
   const handlePriceChange = (event) => {
     let inputValue = event.target.value.replaceAll(
-      "^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?$", "" );
-    if (inputValue[1]=== "$"){
+      "^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:.[0-9]{2})?$", "" );
+        
+    if (inputValue[0]=== "$"){
       inputValue = Number(inputValue.slice(1));
     } else {
       inputValue = Number(inputValue);
     }
     setPrice(`$${inputValue}`);
-    
-  };
+    };
   const handleQuantityChange = (event) => {
     setInventory(event.target.value);
   };
@@ -61,15 +54,12 @@ const UpdateProduct = () => {
   };
 
   ///////////////////////////////
-  const handleSave = async () => {
+  const handleSave = async (event) => {
     event.preventDefault();
-
     //strip out $ signb and convert price from string to number
     const newPrice=Number(price.slice(1))
-
     //validate user has permissions to change product valuess
     const role = JSON.parse(localStorage.getItem("role"));
-
     //store state in an object to be passed to api.
     const fields = {
       title: title,
@@ -79,14 +69,18 @@ const UpdateProduct = () => {
       };
     if (role === "admin") {
       try {
-        console.log(fields);
-
+        //console.log(fields);
+        const result = await updateProduct(itemId ,fields);
+        console.log("RETURN RESULTS", result)
+        setItemDetail(result);
 
       } catch (error) {
         console.error("Error Saving product: ", error);
       }
     } else {
-      alert('You are not logged in as "admin."  Log out and log back in with "admin" credentials.  Have a nice day. :>)')
+      alert(
+        'You are not logged in as "admin."  Log out and log back in with "admin" credentials.  Have a nice day. :>)'
+      );
     }
 
 
@@ -124,7 +118,6 @@ const UpdateProduct = () => {
                   aria-label="Product price"
                   type="text"
                   name="price"
-                  
                   value={price}
                   className="flex-grow pl-2"
                   onChange={handlePriceChange}
@@ -162,7 +155,7 @@ const UpdateProduct = () => {
                   Save
                 </button>
                 <Link
-                  to={`/home`}
+                  to={`/products`}
                   className="bg-blue-400 w-1/2 text-white font-bold px-0.5 py-1 mt-2 rounded-lg hover:bg-blue-600 hover:font-extrabold items-center text-center"
                 >
                   Cancel

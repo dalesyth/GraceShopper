@@ -20,10 +20,24 @@ async function createItem({ title, price, inventory, image_name }) {
   }
 }
 
-async function updateItem({ id, ...fields }) {
-  const setString = Object.keys(fields)
+async function updateItem(id, ...fields) {
+  console.log("DB FIELDS: ", fields[0]);
+  let dataArray = Object.values(fields[0]);
+
+  const setString = Object.keys(fields[0])
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(",");
+
+  const sql = `
+            UPDATE items
+            SET ${setString}
+            WHERE id=$${dataArray.length + 1}
+            RETURNING *;
+            `;
+  console.log("SQL", sql);
+
+  dataArray.push(id);
+  console.log("DATA_ARRAY: ", dataArray)
 
   if (setString.length === 0) {
     return;
@@ -32,16 +46,7 @@ async function updateItem({ id, ...fields }) {
   try {
     const {
       rows: [item],
-    } = await client.query(
-      `
-            UPDATE items
-            SET ${setString}
-            WHERE id=${id}
-            RETURNING *;
-            
-            `,
-      Object.values(fields)
-    );
+    } = await client.query(sql, dataArray);
 
     return item;
   } catch (error) {

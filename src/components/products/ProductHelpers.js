@@ -8,24 +8,19 @@ export async function loader({ params }) {
   return { products };
 }
 
-export async function updateProduct(
-  id,
-  { title, price, inventory, image_name }
+export async function updateProduct(id, {title, price, inventory, image_name }
 ) {
+  console.log('INPUTES', id, title, price, inventory, image_name)
+  const fields = {title, price, inventory, image_name}
+  console.log("FIELDS", fields);
   try {
-    const response = await fetch(`${APIURL}/items`, {
-      method: "POST",
+    const response = await fetch(`${APIURL}/items/${id}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         // "Authorization": `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        id,
-        title,
-        price,
-        inventory,
-        image_name,
-      }),
+      body: JSON.stringify({fields}),
     });
     const result = await response.json();
 

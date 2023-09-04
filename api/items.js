@@ -95,11 +95,12 @@ itemsRouter.post("/", async (req, res, next) => {
 
 // PATCH /api/items/:itemId - Update an existing item
 itemsRouter.patch("/:itemId", async (req, res, next) => {
+  console.log('API Params:', req.params);
+  console.log('API Body:', req.body);
   const { itemId } = req.params;
   const { title, price, inventory, image_name } = req.body;
 
-  const item = await createItem({
-    itemId,
+  const item = await updateItem(itemId, {
     title,
     price,
     inventory,

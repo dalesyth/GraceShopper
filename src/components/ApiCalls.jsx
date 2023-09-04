@@ -192,7 +192,7 @@ export async function removeItemFromOrder(id) {
     console.error(`error removing item from order: ${error}`);
   }
 }
-
+ 
 // PATCH ROUTES
 
 export async function updateQtyInOrder(id, qty) {
