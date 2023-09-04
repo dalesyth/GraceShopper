@@ -106,8 +106,8 @@ async function createTables() {
     await client.query(`
       CREATE TABLE item_category (
       id SERIAL PRIMARY KEY,
-      "item_id" INTEGER REFERENCES items(id),
-      "category_id" INTEGER REFERENCES category(id)
+      item_id INTEGER REFERENCES items(id),
+      category_id INTEGER REFERENCES category(id)
       );
       `);
     console.log("item_category table created");

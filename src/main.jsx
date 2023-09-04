@@ -72,7 +72,7 @@ const router = createBrowserRouter([
         element: <UpdateProduct />,
       },
       {
-        path: "./products/:itemId/delete",
+        path: "/products/:itemId/delete",
         element: <DeleteProduct />,
       },
       {
