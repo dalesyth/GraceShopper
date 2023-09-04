@@ -156,7 +156,9 @@ async function removeItemFromOrder(id) {
 
 async function updateItemQtyInOrder(id, qty) {
   try {
-    const { rows: [item] } = await client.query(
+    const {
+      rows: [item],
+    } = await client.query(
       `
       UPDATE ordered_items
       SET qty = $1
@@ -164,11 +166,11 @@ async function updateItemQtyInOrder(id, qty) {
       RETURNING *;
       `,
       [qty, id]
-    )
+    );
 
     return item;
   } catch (error) {
-    console.error(`db error updating item qty in order: ${error}`)
+    console.error(`db error updating item qty in order: ${error}`);
   }
 }
 
@@ -219,7 +221,24 @@ async function itemInCategory({ itemId, categoryId }) {
 }
 
 async function deleteItem(itemId) {
+  console.log(`itemId from deleteItem:`, itemId);
   try {
+    await client.query(
+      `
+      DELETE FROM item_category
+      WHERE item_id=$1
+      `,
+      [itemId]
+    );
+
+    await client.query(
+      `
+      DELETE FROM ordered_items
+      WHERE "itemId"=$1
+      `,
+      [itemId]
+    );
+
     const {
       rows: [item],
     } = await client.query(
@@ -250,5 +269,5 @@ export {
   removeItemFromCategory,
   itemInCategory,
   deleteItem,
-  updateItemQtyInOrder
+  updateItemQtyInOrder,
 };
