@@ -53,7 +53,7 @@ const ItemDetail = () => {
 
           console.log(`response.id from createNewOrder: ${response.id}`);
           console.log(`response.email from createNewOrder: ${response.email}`);
-          const userOrderId = response.id
+          const userOrderId = response.id;
           const orderPrice = quantity * item.price;
 
           await addItemToOrder({
@@ -62,11 +62,9 @@ const ItemDetail = () => {
             orderPrice,
             quantity,
           });
-          
         } catch (error) {
           console.error(error);
         }
-        
       } else if (userOrder && userOrder.id) {
         const orderPrice = quantity * item.price;
 
