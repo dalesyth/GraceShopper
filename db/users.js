@@ -112,9 +112,48 @@ async function getUserById(userId) {
 
     return user;
   } catch (error) {
-    console.log("Error getting users");
+    console.log("Error getting users:", error);
     throw error;
   }
 }
 
-export { createUser, getAllUsers, getUser, getUserById, getUserByUsername };
+async function deleteUser(userId) {
+  try {
+    await client.query(
+      `
+      DELETE FROM ordered_items
+      WHERE "orderId" IN (
+        SELECT id
+        FROM orders
+        WHERE user_id=$1
+      ) 
+      `,
+      [userId]
+    );
+
+    await client.query(
+      `
+      DELETE FROM orders
+      WHERE user_id=$1 
+      `,
+      [userId]
+    );
+
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+      DELETE FROM users
+      WHERE id=$1
+      RETURNING *; 
+      `,
+      [userId]
+    );
+
+    return user;
+  } catch (error) {
+    console.log("Error deleting user:", error);
+  }
+}
+
+export { createUser, getAllUsers, getUser, getUserById, getUserByUsername, deleteUser };
