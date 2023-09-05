@@ -12,6 +12,7 @@ import {
   getUserByUsername,
   getUser,
   createUser,
+  deleteUser,
 } from "../db/users.js";
 
 // POST /api/users/register
@@ -117,5 +118,22 @@ usersRouter.get("/username/:username", async (req, res, next) => {
     next({ name, message });
   }
 });
+
+
+
+
+// DELETE /api/users/:userId
+
+usersRouter.delete("/:userId", async (req, res, next) => {
+  const { userId } = req.params;
+
+  try {
+    const deletedUser = await deleteUser(userId);
+
+    res.send(deletedUser);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+})
 
 export { usersRouter };

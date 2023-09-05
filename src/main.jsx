@@ -18,6 +18,8 @@ import UpdateProduct from "./components/products/UpdateProducts";
 import DeleteProduct from "./components/products/DeleteProducts";
 //mport { loader as itemLoader } from "./components/products/ProductHelpers";
 import Users from "./components/user/manageUser";
+import DeleteUser from "./components/user/DeleteUser";
+import UpdateUser from "./components/user/updateUser";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +81,14 @@ const router = createBrowserRouter([
         path: "/users/",
         element: <Users />,
       },
+      {
+        path: "/users/:userId/update",
+        element: <UpdateUser />,
+      },
+      {
+        path: "/users/:userId/delete",
+        element: <DeleteUser />,
+      }
     ],
   },
 ]);

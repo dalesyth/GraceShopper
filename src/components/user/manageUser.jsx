@@ -84,7 +84,7 @@ const Users = () => {
                     </td>
                     <td className=" border-2 pl-3">
                       <Link
-                        to={`/products/delete/`}
+                        to={`/users/${user.id}/delete/`}
                         className="float-right hover:text-blue-600"
                       >
                         <IconButton variant="text">
