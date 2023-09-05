@@ -152,6 +152,78 @@ async function createInitialItems() {
         inventory: 300,
         image_name: "tie_down_clips.jpg",
       },
+      {
+        title: "3D Printer",
+        price: 150.0,
+        inventory: 115,
+        image_name: "3d_printer.jpg",
+      },
+      {
+        title: "Li-Ion Battery Pack",
+        price: 15.75,
+        inventory: 85,
+        image_name: "battery_packs.jpeg",
+      },
+      {
+        title: "GoPro Camera",
+        price: 250.0,
+        inventory: 75,
+        image_name: "gopro.jpeg",
+      },
+      {
+        title: "Model Paints",
+        price: 2.5,
+        inventory: 135,
+        image_name: "model_paints.jpg",
+      },
+      {
+        title: "Modeling Tools",
+        price: 35.0,
+        inventory: 65,
+        image_name: "modeling_tools.jpg",
+      },
+      {
+        title: "Paint Booth",
+        price: 75.0,
+        inventory: 35,
+        image_name: "paint_booth.jpeg",
+      },
+      {
+        title: "Air Compressor",
+        price: 115.0,
+        inventory: 27,
+        image_name: "portable_air_compressor.jpg",
+      },
+      {
+        title: "Radio-Control QuadCopter",
+        price: 350.0,
+        inventory: 16,
+        image_name: "quadcopter.jpeg",
+      },
+      {
+        title: "Radio",
+        price: 145.0,
+        inventory: 23,
+        image_name: "radio.jpeg",
+      },
+      {
+        title: "RC Buggy",
+        price: 225.0,
+        inventory: 32,
+        image_name: "rc_buggy.jpeg",
+      },
+      {
+        title: "RC Helicopter",
+        price: 325.0,
+        inventory: 12,
+        image_name: "rc_helicopter.jpeg",
+      },
+      {
+        title: "RC Airplane",
+        price: 275.0,
+        inventory: 18,
+        image_name: "rc_plane.jpeg",
+      },
     ];
     await Promise.all(ordersToCreate.map(createItem));
 

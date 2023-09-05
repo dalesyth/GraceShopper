@@ -28,7 +28,7 @@ const Products = () => {
 
   return (
     <>
-      <div className="flex-col rounded-lg h-5/6 w-max bg-gray-200">
+      <div className="flex-col rounded-lg h-100 w-max bg-gray-200">
         <div
           id="title"
           className="p-4 pb-0 bg-gray-200 font-bold rounded-lg text-3xl "

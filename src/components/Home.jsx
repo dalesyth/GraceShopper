@@ -28,7 +28,7 @@ const Home = () => {
       ) : items.length === 0 ? (
         <p>No items available</p>
       ) : (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map((item, index) => (
             <div
               key={index}
@@ -39,13 +39,13 @@ const Home = () => {
               </h2>
               <div className="flex justify-center">
                 <img
-                  src={`../public/${item.image_name}`}
+                  src={`/${item.image_name}`}
                   alt={item.title}
                   className="w-32 h-32"
                 />
               </div>
               <div className="pb-2 py-2 flex justify-center">
-                Price: ${item.price}
+                Price: ${parseFloat(item.price).toFixed(2)}
               </div>
               <Link
                 to={`/item-detail/${item.id}`}

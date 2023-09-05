@@ -107,7 +107,7 @@ const ItemDetail = () => {
           <div className="item-details flex justify-center items-center flex-col">
             <div>
               <h2 className="font-bold pb-2">{item.title}</h2>
-              <div className="pb-2">Price: ${item.price}</div>
+              <div className="pb-2">Price: ${parseFloat(item.price).toFixed(2)}</div>
               <div>
                 <label className="mr-2" htmlFor="quantity">
                   Quantity:

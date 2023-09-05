@@ -105,7 +105,7 @@ const Cart = () => {
                 />
               </span>
               <span className="font-bold">{item.title}</span>
-              <span>${item.ordered_items_total}</span>
+              <span>${parseFloat(item.ordered_items_total).toFixed(2)}</span>
               <span>
                 Quantity:{" "}
                 <input
