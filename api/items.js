@@ -96,16 +96,7 @@ itemsRouter.post("/", async (req, res, next) => {
 // PATCH /api/items/:itemId - Update an existing item
 itemsRouter.patch("/:itemId", async (req, res, next) => {
   const { itemId } = req.params;
-  const { title, price, inventory, image_name } = req.body;
-
-  const item = await createItem({
-    itemId,
-    title,
-    price,
-    inventory,
-    image_name,
-  });
-
+  const item = req.body;
   const existingItemId = await getItemById(itemId);
 
   if (!existingItemId) {
@@ -116,9 +107,8 @@ itemsRouter.patch("/:itemId", async (req, res, next) => {
   }
 
   try {
-    const updatedItem = await updateItem(item);
+    const updatedItem = await updateItem(itemId, item);
     res.send(updatedItem);
-
   } catch ({ name, message }) {
     next({ name, message });
   }
@@ -129,8 +119,6 @@ itemsRouter.patch("/:itemId", async (req, res, next) => {
 // DELETE /api/items/:itemId - Delete an item by Id
 itemsRouter.delete("/:itemId", async (req, res, next) => {
   const { itemId } = req.params;
-  console.log(`itemId from delete API route: ${itemId}`)
-
   try {
     const deletedItem = await deleteItem(itemId);
 
