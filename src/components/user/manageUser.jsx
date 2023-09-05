@@ -32,7 +32,7 @@ const Users = () => {
 
   return (
     <div>
-      <div className="flex-col rounded-lg h-5/6 w-max bg-gray-200">
+      <div className="flex-col rounded-lg h-100 w-max bg-gray-200">
         
         <div
           id="title"
