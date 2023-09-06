@@ -50,7 +50,7 @@ const Login = () => {
           <div className="flex justify-center items-center  py-24">
             <div className="w-6/12 max-w-[450px] h-100 rounded-lg mx-auto bg-gray-200 ">
               <div className="max-w-[320px] mx-auto py-6">
-                <label className="font-bold  text-5xl">Login</label>
+                <label className="font-bold  text-5xl text-pink-600">Login</label>
                 <form className="w-full flex flex-col py-4">
                   <label className="text-xl font-bold">User Name</label>
                   <input
@@ -72,7 +72,7 @@ const Login = () => {
                   <button
                     type="submit"
                     onClick={handleSubmitButton}
-                    className="bg-gray-700 text-white py-3 mt-6 mb-3 rounded-lg font-bold text-2xl"
+                    className="bg-blue-400 hover:bg-blue-600 hover:font-extrabold text-white py-3 mt-6 mb-3 rounded-lg font-bold text-2xl"
                   >
                     Log in
                   </button>
