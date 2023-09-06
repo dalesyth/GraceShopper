@@ -1,30 +1,17 @@
-import { Form, useParams, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getItemById } from "../ApiCalls";
-import { updateProduct } from "./ProductHelpers"
+import { Form, Link } from "react-router-dom";
+import { useState } from "react";
+
+import { addProduct } from "./ProductHelpers";
 
 //////////////////////////////////////////////
-const UpdateProduct = () => {
-  const { itemId } = useParams();
+const AddProduct = () => {
   //console.log("ITEM+ID", itemId);
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [inventory, setInventory] = useState(0);
   const [fileName, setFileName] = useState("");
 
-  useEffect(() => {
-    const getItemDetail = async () => {
-      try {
-        const product = await getItemById(itemId);
-        setItemDetail(product);
-      } catch (error) {
-        console.error(`Getting Items ERROR: ${error}`);
-      }
-    };
-    getItemDetail();
-  }, [itemId]);
-
-  function setItemDetail ( item ) {
+   function setItemDetail ( item ) {
     setTitle(item.title);
     setPrice(`$${item.price}`);
     setInventory(item.inventory);
@@ -36,8 +23,8 @@ const UpdateProduct = () => {
     setTitle(event.target.value);
   }
   const handlePriceChange = (event) => {
-    let inputValue = event.target.value.replaceAll(
-      "^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:.[0-9]{2})?$", "" );
+    let inputValue = event.target.value//.replaceAll(
+      //"^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:.[0-9]{2})?$", "" );
         
     if (inputValue[0]=== "$"){
       inputValue = Number(inputValue.slice(1));
@@ -70,7 +57,7 @@ const UpdateProduct = () => {
     if (role === "admin") {
       try {
         //console.log(fields);
-        const result = await updateProduct(itemId ,fields);
+        const result = await addProduct(fields);
         console.log("RETURN RESULTS", result)
         setItemDetail(result);
 
@@ -99,7 +86,7 @@ const UpdateProduct = () => {
           </div>
           <div className="relative item-detail flex flex-col justify-center items-center rounded-lg">
             <div className="absolute top-0 p-4 left-0 text-pink-600 text-2xl font-bold">
-              Update Product
+              Add Product
             </div>
             <Form method="post" id="item-form" className="flex  flex-col">
               <div className="flex gap-1 items-center">
@@ -172,4 +159,4 @@ const UpdateProduct = () => {
   );
 };
 
-export default UpdateProduct;
+export default AddProduct;

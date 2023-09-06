@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
-  Typography,
-  Button,
   IconButton,
  } from "@material-tailwind/react";
 import { getAllItems } from "../ApiCalls";
@@ -17,10 +15,8 @@ const Products = () => {
       try {
         const response = await getAllItems();
         setItems(response);
-        //setIsLoading(false);
       } catch (error) {
         console.error(error);
-        //setIsLoading(false);
       }
     };
     getItems();
@@ -29,11 +25,21 @@ const Products = () => {
   return (
     <>
       <div className="flex-col rounded-lg h-100 w-max bg-gray-200">
-        <div
-          id="title"
-          className="p-4 pb-0 bg-gray-200 font-bold rounded-lg text-3xl "
-        >
-          Product Management
+        <div className="relative flex flex-row">
+          <div
+            id="title"
+            className="p-4 pb-0 bg-gray-200 font-bold rounded-lg text-3xl"
+          >
+            Product Management
+          </div>
+          <div className="absolute right-0 m-3 w-1/6 border-1 border-black">
+            <Link
+              to={`/products/addProduct`}
+              className=" bg-blue-400 text-gray-100 font-bold px-0.5 py-1 rounded-lg hover:bg-blue-600 hover:font-extrabold flex justify-center"
+            >
+              Add
+            </Link>
+          </div>
         </div>
         <div id="body" className="m-4 p-2 overflow-scroll ">
           {/* ToDo: use <div>s for table instead of table tags */}
@@ -102,19 +108,6 @@ const Products = () => {
               })}
             </tbody>
           </table>
-        </div>
-        <div className="flex items-center justify-between border-t border-blue-gray-50 p-4 h-fit">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            Page 1 of 10
-          </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
-              Previous
-            </Button>
-            <Button variant="outlined" size="sm">
-              Next
-            </Button>
-          </div>
         </div>
       </div>
     </>
