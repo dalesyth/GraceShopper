@@ -18,7 +18,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="navbar p-8 flex justify-between items-center max-w-screen-lg mx-auto border-b border-gray-200 bg-gray-200 shadow-lg font-bold text-lg">
+    <nav className="navbar p-8 flex justify-between items-center w-screen mx-auto border-b border-gray-200 bg-gray-200 shadow-lg font-bold text-lg">
       <h1 className="text-pink-600 text-3xl font-bold">Graceshopper</h1>
       <div className="links">
         <Link to="/home" className="no-underline p-6 hover:text-blue-600">
