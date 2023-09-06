@@ -97,7 +97,10 @@ const UpdateProduct = () => {
               className="w-3/4 h-3/4"
             />
           </div>
-          <div className="item-detail flex justify-center items-center rounded-lg">
+          <div className="relative item-detail flex flex-col justify-center items-center rounded-lg">
+            <div className="absolute top-0 p-4 left-0 text-pink-600 text-2xl font-bold">
+              Update Product
+            </div>
             <Form method="post" id="item-form" className="flex  flex-col">
               <div className="flex gap-1 items-center">
                 <span className="font-bold pb-2">Title: </span>

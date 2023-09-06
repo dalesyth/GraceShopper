@@ -8,6 +8,26 @@ export async function loader({ params }) {
   return { products };
 }
 
+export async function addProduct(
+  { title, price, inventory, image_name }
+) {
+  const fields = { title, price, inventory, image_name };
+  try {
+    const response = await fetch(`${APIURL}/items/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify(fields),
+    });
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    console.error(`Create Order Error: ${error}`);
+  }
+}
 export async function updateProduct( id, { title, price, inventory, image_name }) {
   const fields = { title, price, inventory, image_name };
   try {

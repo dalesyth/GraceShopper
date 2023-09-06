@@ -15,10 +15,8 @@ const Products = () => {
       try {
         const response = await getAllItems();
         setItems(response);
-        //setIsLoading(false);
       } catch (error) {
         console.error(error);
-        //setIsLoading(false);
       }
     };
     getItems();
