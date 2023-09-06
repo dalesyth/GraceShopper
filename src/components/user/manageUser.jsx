@@ -42,7 +42,7 @@ const Users = () => {
            
         </div>
         
-        <div id="body" className="m-4 p-2 overflow-scroll ">
+        <div id="body" className="m-4 p-2 ">
           {/* ToDo: use <div>s for table instead of table tags */}
           {/* ToDo: add pagination to the table */}
           <table className="table-auto ">
@@ -68,7 +68,7 @@ const Users = () => {
 
                     <td className=" border-2 pl-3">
                       <Link
-                        to={`/products/${user.id}/update`}
+                        // to={`/products/${user.id}/update`}
                         className="float-right hover:text-blue-600 "
                       >
                         <IconButton variant="text">
@@ -104,20 +104,7 @@ const Users = () => {
             </tbody>
           </table>
         </div>
-        <div className="flex items-center justify-between border-t border-blue-gray-50 p-4 h-fit">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            Page 1 of 2
-          </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
-              Previous
-            </Button>
-            <Button variant="outlined" size="sm">
-              Next
-            </Button>
-            <Link to={("/admin")} type="text" className="flex gap-2 items-center justify-between font-bold hover:text-gray-400">Cancel</Link>
-          </div>
-        </div>
+       
       </div>
     </div>
   );
